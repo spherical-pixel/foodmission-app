@@ -45,6 +45,18 @@ namespace eu.foodmission.platform
 #endif
         }
 
+#if !UNITY_EDITOR && !DEVELOPMENT_BUILD
+        /// <summary>
+        /// Release builds only keep warnings and errors, so request/response bodies and
+        /// user data logged with Debug.Log never reach logcat / the iOS console.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void FilterReleaseLogs()
+        {
+            Debug.unityLogger.filterLogType = LogType.Warning;
+        }
+#endif
+
         public override void InitializeComponent()
         {
             Debug.Log($"[{GetType().Name}] InitializeComponent");

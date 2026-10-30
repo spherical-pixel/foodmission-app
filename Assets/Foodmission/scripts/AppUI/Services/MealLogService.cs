@@ -35,7 +35,9 @@ namespace eu.foodmission.platform
             byte[] body = request.ToJsonBody();
             string url = $"{ApiConfig.BaseUrl}/api/v1/meal-logs";
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] CreateAsync calling: {url} body={Encoding.UTF8.GetString(body)}");
+#endif
 
             using UnityWebRequest req = new UnityWebRequest(url, "POST")
             {
@@ -54,7 +56,9 @@ namespace eu.foodmission.platform
             }
 
             string raw = req.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] CreateAsync response: {raw}");
+#endif
             return (JsonConvert.DeserializeObject<MealLog>(raw), null);
         }
 
@@ -91,7 +95,9 @@ namespace eu.foodmission.platform
             }
 
             string raw = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] GetLogsAsync response ({raw.Length} chars): {raw}");
+#endif
             return (JsonConvert.DeserializeObject<PaginatedMealLogResponse>(raw), null);
         }
 
@@ -121,7 +127,9 @@ namespace eu.foodmission.platform
 
             byte[] body = request.ToJsonBody();
             string url = $"{ApiConfig.BaseUrl}/api/v1/meal-logs/{Uri.EscapeDataString(id)}";
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] UpdateLogAsync calling: {url} body={Encoding.UTF8.GetString(body)}");
+#endif
 
             using UnityWebRequest req = new UnityWebRequest(url, "PATCH")
             {
@@ -140,7 +148,9 @@ namespace eu.foodmission.platform
             }
 
             string raw = req.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] UpdateLogAsync response: {raw}");
+#endif
             return (JsonConvert.DeserializeObject<MealLog>(raw), null);
         }
 
@@ -174,7 +184,9 @@ namespace eu.foodmission.platform
 
             byte[] body = facts.ToJsonBody();
             string url = $"{ApiConfig.BaseUrl}/api/v1/meal-logs/{Uri.EscapeDataString(id)}/confirm";
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] ConfirmAsync calling: {url} body={Encoding.UTF8.GetString(body)}");
+#endif
 
             using UnityWebRequest req = new UnityWebRequest(url, "POST")
             {
@@ -193,7 +205,9 @@ namespace eu.foodmission.platform
             }
 
             string raw = req.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] ConfirmAsync response: {raw}");
+#endif
             return (JsonConvert.DeserializeObject<MealLog>(raw), null);
         }
     }

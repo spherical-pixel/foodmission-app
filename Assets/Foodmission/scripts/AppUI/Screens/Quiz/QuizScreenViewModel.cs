@@ -63,7 +63,9 @@ namespace eu.foodmission.platform
 
                 QuizData = result;
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log("LoadQuizDataByCodeOrId -> " + JsonUtility.ToJson(result));
+#endif
             }
         }
 
@@ -105,7 +107,9 @@ namespace eu.foodmission.platform
                 _storeService?.store?.Dispatch(AppActions.addWalletReward.Invoke(new AppActions.WalletPayload(progress.reward.xp ?? 0, progress.reward.points ?? 0)));
             }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log("SubmitResponse -> " + JsonUtility.ToJson(progress));
+#endif
         }
 
 

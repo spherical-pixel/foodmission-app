@@ -23,7 +23,9 @@ namespace eu.foodmission.platform
                 if (logAsError)
                 {
                     Debug.LogError($"{context}: {code} [{error.error}] {error.message} traceId={error.traceId}");
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                     Debug.LogError($"{context}:  full log: {body}");
+#endif
                 }
                 else
                 {

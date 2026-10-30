@@ -119,7 +119,9 @@ namespace eu.foodmission.platform
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] GetRecipeAsync {id}"));
 
             string rawJson = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[RecipeService] GetRecipeAsync raw response for {id}:\n{rawJson}");
+#endif
             var recipe = JsonConvert.DeserializeObject<Recipe>(rawJson);
             Debug.Log($"[RecipeService] GetRecipeAsync parsed recipe: title='{recipe?.title}', category='{recipe?.category}', cuisineType='{recipe?.cuisineType}', servings={recipe?.servings}");
             return (recipe, null);
@@ -177,10 +179,14 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", AuthHeader);
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] CreateRecipeAsync sending request to {url}: {jsonBody}");
+#endif
             await request.SendAsync();
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] CreateRecipeAsync result={request.result}, code={request.responseCode}, body={request.downloadHandler?.text}");
+#endif
             if (request.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] CreateRecipeAsync"));
 
@@ -207,10 +213,14 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Accept", "application/json");
             request.SetRequestHeader("Authorization", AuthHeader);
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] UpdateRecipeAsync sending request to {url}: {jsonBody}");
+#endif
             await request.SendAsync();
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] UpdateRecipeAsync result={request.result}, code={request.responseCode}, body={request.downloadHandler?.text}");
+#endif
             if (request.result != UnityWebRequest.Result.Success)
                 return (null, ApiErrorHelper.Parse(request, $"[{GetType().Name}] UpdateRecipeAsync {id}"));
 

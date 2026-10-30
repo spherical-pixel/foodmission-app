@@ -172,7 +172,9 @@ namespace eu.foodmission.platform
         {
             _localStorageService.SetValue<string>(ConsentStorageKey, "true");
             _storeService?.store?.Dispatch(AppActions.setPilotConsent.Invoke(true));
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] Pilot consent accepted for user '{CurrentUserId}'.");
+#endif
 
             var state = GetCurrentCycleState();
             SyncToPreferencesAsync(state, true);

@@ -88,7 +88,9 @@ namespace eu.foodmission.platform
         /// </summary>
         private void OnAuthStateChanged((bool isAuthenticating, string authError, string userId) authState)
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] OnAuthStateChanged: isAuthenticating={authState.isAuthenticating}, userId={authState.userId}, authError={authState.authError}");
+#endif
 
             IsLoading = authState.isAuthenticating;
 
@@ -150,7 +152,9 @@ namespace eu.foodmission.platform
 
 
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] Login started for user: {Username}");
+#endif
             _hasNavigated = false; // Reset navigation flag on new login attempt
 
             bool fieldsOk = true;

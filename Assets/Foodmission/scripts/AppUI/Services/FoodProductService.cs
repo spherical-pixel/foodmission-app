@@ -232,7 +232,9 @@ namespace eu.foodmission.platform
             string url = $"{ApiConfig.BaseUrl}/api/v1/food-products";
             string bodyJson = requestDto.ToJsonBody();
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             UnityEngine.Debug.Log($"[FoodProductService] CreateAsync request JSON payload: {bodyJson}");
+#endif
 
             using UnityWebRequest request = new UnityWebRequest(url, "POST")
             {

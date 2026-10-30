@@ -179,7 +179,9 @@ namespace eu.foodmission.platform
             request.SetRequestHeader("Authorization", AuthHeader);
             request.SetRequestHeader("Accept", "application/json");
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] AddItemAsync: Sending request to {url} with body: {Encoding.UTF8.GetString(bodyJson)}");
+#endif
 
             await request.SendAsync();
 

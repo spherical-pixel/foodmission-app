@@ -64,7 +64,9 @@ namespace eu.foodmission.platform
 
         protected override Task OnFlowCompletedAsync()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[TestSurvey] Survey Completed! Diet: Vegan={IsVegan}, Veg={IsVegetarian}, Omni={IsOmnivore}, Rating={RatingValue}, Feedback={FeedbackText}");
+#endif
             // Navigate back home or pop back stack
             CancelFlow();
             return Task.CompletedTask;

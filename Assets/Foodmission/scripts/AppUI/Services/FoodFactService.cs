@@ -222,7 +222,9 @@ namespace eu.foodmission.platform
             try
             {
                 string raw = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] MarkAsReadAsync {codeOrId} response: {raw}");
+#endif
                 var progress = JsonConvert.DeserializeObject<FoodFactProgressResponse>(raw);
                 if (progress != null)
                 {

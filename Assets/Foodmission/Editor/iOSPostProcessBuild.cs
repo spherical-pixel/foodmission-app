@@ -37,7 +37,7 @@ namespace eu.foodmission.platform.Editor
             string entitlementsPath = Path.Combine(pathToBuiltProject, entitlementsFileName);
 
             var capabilityManager = new ProjectCapabilityManager(projPath, entitlementsPath, mainTargetName);
-            capabilityManager.AddPushNotifications(true); // true = development
+            capabilityManager.AddPushNotifications(EditorUserBuildSettings.development);
             capabilityManager.AddBackgroundModes(BackgroundModesOptions.RemoteNotifications);
             capabilityManager.WriteToFile();
 

@@ -11,6 +11,12 @@ namespace eu.foodmission.platform
         {
             new()
             {
+                Name = "Production",
+                ApiBaseUrl = "https://api.foodmission.eu",
+                AuthBaseUrl = "https://auth.foodmission.eu",
+            },
+            new()
+            {
                 Name = "Staging",
                 ApiBaseUrl = "https://staging.api.foodmission.eu",
                 AuthBaseUrl = "https://staging.auth.foodmission.eu",

@@ -386,7 +386,9 @@ namespace eu.foodmission.platform
                 }
 
                 string responseJson = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] Login response: {responseJson}");
+#endif
 
                 LoginResponse response = JsonUtility.FromJson<LoginResponse>(responseJson);
 
@@ -433,7 +435,9 @@ namespace eu.foodmission.platform
                 }
 
                 ScheduleProactiveRefresh(response.expires_in, response.refresh_expires_in);
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] Login successful for user: {userId}. Access Token lifespan: {response.expires_in}s ({response.expires_in / 60f:F1} min), Refresh Token lifespan: {response.refresh_expires_in}s ({response.refresh_expires_in / 60f:F1} min)");
+#endif
 
                 var eventService = App.current?.services?.GetService<IEventService>();
                 if (eventService != null)
@@ -506,14 +510,18 @@ namespace eu.foodmission.platform
                     Debug.LogError($"[{GetType().Name}] Register failed: {errorMessage} (Code: {request.responseCode})");
                     // Log the backend body (Keycloak / validation reason) and what was sent, without the password
                     ApiErrorHelper.Parse(request, $"[{GetType().Name}] Register");
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                     Debug.LogError($"[{GetType().Name}] Register request: username='{username}' (len {username?.Length}), email='{email}', " +
                                    $"passwordLength={password?.Length}, yearOfBirth={yearOfBirth}, country={country}, region={region}, zip={zip}");
+#endif
                     _storeService.store.Dispatch(AppActions.registerFailure.Invoke(errorMessage));
                     return (false, null, errorMessage, errorReason);
                 }
 
                 string responseJson = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] Register response: {responseJson}");
+#endif
 
                 RegisterResponse response = JsonUtility.FromJson<RegisterResponse>(responseJson);
 
@@ -526,10 +534,14 @@ namespace eu.foodmission.platform
 
                 // Register successful - dispatch success
                 _storeService.store.Dispatch(AppActions.registerSuccess.Invoke(response.createdUser.id));
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] Register successful for user: {response.createdUser.username}");
+#endif
 
                 // Auto-login after successful registration
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] Attempting auto-login for: {username}");
+#endif
                 var loginResult = await LoginAsync(username, password);
 
                 if (loginResult.success)
@@ -673,7 +685,9 @@ namespace eu.foodmission.platform
                 if (request.result == UnityWebRequest.Result.Success)
                 {
                     string responseJson = request.downloadHandler.text;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                     Debug.Log($"[{GetType().Name}] Profile response: {responseJson}");
+#endif
 
                     // Use Newtonsoft.Json (not JsonUtility) so the StringOrArrayConverter
                     // on ProfilePreferences.dietaryPreference handles both old single-string
@@ -886,7 +900,9 @@ namespace eu.foodmission.platform
             try
             {
                 string json = request.ToJson();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[{GetType().Name}] UpdateProfile JSON: {json}");
+#endif
 
                 string url = $"{ApiConfig.BaseUrl}/api/v1/users/me";
                 byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
@@ -949,7 +965,9 @@ namespace eu.foodmission.platform
                 }
 
                 string responseBody = request.downloadHandler?.text ?? "no body";
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.LogError($"[{GetType().Name}] DeleteAccount failed: {request.responseCode} {request.error} — Body: {responseBody}");
+#endif
                 return (false, $"Request failed: {request.responseCode}");
             }
             catch (Exception ex)
