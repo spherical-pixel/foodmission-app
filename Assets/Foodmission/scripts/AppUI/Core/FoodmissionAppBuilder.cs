@@ -212,35 +212,44 @@ namespace eu.foodmission.platform
 
         private async void CheckSessionOnResume()
         {
-            var authService = App.current?.services?.GetService<IAuthService>();
-            if (authService != null)
+            try
             {
-                var storeService = App.current?.services?.GetService<IStoreService>();
-                if (storeService != null && !string.IsNullOrEmpty(storeService.GetAppState().accessToken))
+                var authService = App.current?.services?.GetService<IAuthService>();
+                if (authService != null)
                 {
-                    Debug.Log($"[{GetType().Name}] App resumed — verifying auth session");
-                    bool valid = await authService.CheckSessionAsync();
-                    if (!valid)
+                    var storeService = App.current?.services?.GetService<IStoreService>();
+                    if (storeService != null && !string.IsNullOrEmpty(storeService.GetAppState().accessToken))
                     {
-                        // A 401 handler sharing the same rejected refresh may have ended the session already
-                        if (string.IsNullOrEmpty(storeService.GetAppState().accessToken))
+                        Debug.Log($"[{GetType().Name}] App resumed — verifying auth session");
+                        bool valid = await authService.CheckSessionAsync();
+                        if (!valid)
                         {
-                            return;
-                        }
+                            // A 401 handler sharing the same rejected refresh may have ended the session already
+                            if (string.IsNullOrEmpty(storeService.GetAppState().accessToken))
+                            {
+                                return;
+                            }
 
-                        Debug.LogWarning($"[{GetType().Name}] Session invalid on app resume — navigating to login");
-                        authService.Logout();
-                        HandleSessionExpired();
-                    }
-                    else
-                    {
-                        var eventService = App.current?.services?.GetService<IEventService>();
-                        if (eventService != null)
+                            Debug.LogWarning($"[{GetType().Name}] Session invalid on app resume — navigating to login");
+                            authService.Logout();
+                            HandleSessionExpired();
+                        }
+                        else
                         {
-                            _ = eventService.TrackSessionStartAsync();
+                            var eventService = App.current?.services?.GetService<IEventService>();
+                            if (eventService != null)
+                            {
+                                _ = eventService.TrackSessionStartAsync();
+                            }
                         }
                     }
                 }
+        
+            }
+            catch (System.Exception e)
+            {
+                // The next request still gets the 401 handling; nothing on screen waits for this check
+                Debug.LogError($"[{GetType().Name}] Session check on resume failed: {e}");
             }
         }
 

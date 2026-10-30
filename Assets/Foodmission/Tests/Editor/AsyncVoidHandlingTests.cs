@@ -27,7 +27,6 @@ namespace eu.foodmission.platform.Tests
         private static readonly HashSet<string> k_WithoutCatchBaseline = new HashSet<string>
         {
             "AppUI/Components/FMAvatarView.cs:AttachMode",
-            "AppUI/Core/FoodmissionAppBuilder.cs:CheckSessionOnResume",
             "AppUI/Core/FoodmissionAppBuilder.cs:InitializeNotificationSystem",
             "AppUI/Screens/AvatarEditor/AvatarEditorScreen.cs:OnSaveClicked",
             "AppUI/Screens/EditProfile/EditProfileScreen.cs:OnConsentClicked",
@@ -60,9 +59,7 @@ namespace eu.foodmission.platform.Tests
             "AppUI/Screens/Recipes/RecipeDetailScreen.cs:ShowQuickMealLogOptionsDialog",
             "AppUI/Screens/Recipes/RecipeEditorScreen.cs:OnEnter",
             "AppUI/Screens/Register/RegisterScreen.cs:OnEnter",
-            "AppUI/Screens/Register/RegisterViewModel.cs:Register",
             "AppUI/Screens/Settings/SettingsViewModel.cs:SetPushNotifications",
-            "AppUI/Screens/Splash/SplashScreen.cs:OnEnter",
         };
 
         [Test]

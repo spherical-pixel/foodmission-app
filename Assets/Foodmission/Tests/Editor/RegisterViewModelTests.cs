@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Moq;
 using NUnit.Framework;
 
 using Unity.AppUI.UI;
+
+using UnityEngine;
+using UnityEngine.TestTools;
 
 using eu.foodmission.platform;
 
@@ -599,6 +603,42 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(Unity.AppUI.Navigation.Generated.Actions.go_to_onboarding_progress, action);
             Assert.IsTrue(run.IsActive);
             vm.Dispose();
+        }
+
+        // ── Exceptions (async void: nobody else catches them) ──
+
+        [Test]
+        public async Task Register_AuthServiceThrows_ShowsErrorAndStopsSubmitting()
+        {
+            _mockAuthService
+                .Setup(x => x.RegisterAsync(
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(),
+                    It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .ThrowsAsync(new InvalidOperationException("boom"));
+            string shownError = null;
+            _vm.ShowErrorRequest += message => shownError = message;
+            FillValidForm(_vm);
+            LogAssert.Expect(LogType.Error, new Regex(@"\[RegisterViewModel\].*boom"));
+
+            _vm.Register();
+            await Task.Delay(200);
+
+            Assert.AreEqual("@UI:UNEXPECTED_ERROR", shownError);
+            Assert.IsFalse(_vm.IsSubmitting);
+        }
+
+        private static void FillValidForm(RegisterViewModel vm)
+        {
+            vm.Username = "testuser";
+            vm.Email = "test@example.com";
+            vm.Password = "password123";
+            vm.SelectedYearOfBirthIndex = vm.YearOfBirthOptions.IndexOf("2000");
+            vm.SelectedCountryIndex = 0;
+            vm.SelectedRegionIndex = 0;
+            vm.PostalCode = "12345";
+            vm.HasAcceptedTerms = CheckboxState.Checked;
+            vm.HasAcceptedPrivacyPolicy = CheckboxState.Checked;
+            vm.HasAcceptedPilotConsent = CheckboxState.Checked;
         }
     }
 }

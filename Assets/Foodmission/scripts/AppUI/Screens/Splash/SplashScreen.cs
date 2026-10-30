@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Unity.AppUI.Navigation;
 using Unity.AppUI.Navigation.Generated;
@@ -43,35 +44,42 @@ namespace eu.foodmission.platform
         {
             base.OnEnter(controller, destination, args);
 
-            await Task.Delay(500);
-            _logo.AddToClassList("visible");
-            await Task.Delay(500);
-
-            if (_viewModel != null)
+            try
             {
-                string navigationAction = await _viewModel.InitializeAppAsync();
+                await Task.Delay(500);
+                _logo.AddToClassList("visible");
+                await Task.Delay(500);
 
-                if (navigationAction == Actions.loading_to_forceupdate && _viewModel.PendingUpdate != null)
+                if (_viewModel != null)
                 {
-                    string jsonData = JsonUtility.ToJson(_viewModel.PendingUpdate);
-                    string returnAction = _viewModel.ReturnActionOnSkip;
+                    string navigationAction = await _viewModel.InitializeAppAsync();
 
-                    if (string.IsNullOrEmpty(returnAction))
-                        returnAction = Actions.loading_to_auth;
-
-                    _navController.Navigate(navigationAction, new[]
+                    if (navigationAction == Actions.loading_to_forceupdate && _viewModel.PendingUpdate != null)
                     {
-                        new Argument("updateData", jsonData),
-                        new Argument("returnAction", returnAction)
-                    });
-                    return;
-                }
+                        string jsonData = JsonUtility.ToJson(_viewModel.PendingUpdate);
+                        string returnAction = _viewModel.ReturnActionOnSkip;
 
-                await ExitAnimation(navigationAction);
+                        if (string.IsNullOrEmpty(returnAction))
+                            returnAction = Actions.loading_to_auth;
+
+                        _navController.Navigate(navigationAction, new[]
+                        {
+                            new Argument("updateData", jsonData),
+                            new Argument("returnAction", returnAction)
+                        });
+                        return;
+                    }
+
+                    await ExitAnimation(navigationAction);
+                }
+                else
+                {
+                    Debug.LogError($"[{GetType().Name}] ViewModel is null - cannot initialize");
+                }
             }
-            else
+            catch (Exception e)
             {
-                Debug.LogError($"[{GetType().Name}] ViewModel is null - cannot initialize");
+                Debug.LogError($"[{GetType().Name}] Splash failed: {e}");
             }
         }
 
