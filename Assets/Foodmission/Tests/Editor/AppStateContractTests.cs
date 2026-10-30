@@ -16,8 +16,9 @@ namespace eu.foodmission.platform.Tests
     [TestFixture]
     public class AppStateContractTests
     {
-        // Written with the 0.0.8 release (first build in the pilot): what users have saved on their devices
-        private const string SavedStateFixture = "Assets/Foodmission/Tests/Editor/Data/app_state_0.0.8.json";
+        // What users of each release have saved on their devices: 0.0.8 (first build for testers), 0.1.0 (first pilot version).
+        // Never edit one; add a fixture when a release changes AppState.
+        private const string SavedStateFixtures = "Assets/Foodmission/Tests/Editor/Data/";
 
         [Test]
         public void Copy_KeepsEveryField()
@@ -51,10 +52,12 @@ namespace eu.foodmission.platform.Tests
                 "A field doesn't survive the save/restore done by LocalStorageService");
         }
 
-        [Test]
-        public void StateSavedByPreviousRelease_StillLoadsEveryValue()
+        [TestCase("app_state_0.0.8.json")]
+        [TestCase("app_state_0.1.0.json")]
+        public void StateSavedByPreviousRelease_StillLoadsEveryValue(string fixture)
         {
-            JObject saved = JObject.Parse(File.ReadAllText(SavedStateFixture));
+            string path = SavedStateFixtures + fixture;
+            JObject saved = JObject.Parse(File.ReadAllText(path));
 
             AppState restored = JsonConvert.DeserializeObject<AppState>(saved.ToString());
             JObject reloaded = JObject.FromObject(restored);
@@ -73,7 +76,7 @@ namespace eu.foodmission.platform.Tests
                     problems.Add($"{property.Name}: saved {property.Value.ToString(Formatting.None)} loads as {now.ToString(Formatting.None)}");
                 }
             }
-            Assert.Greater(saved.Properties().Count(), 0, SavedStateFixture);
+            Assert.Greater(saved.Properties().Count(), 0, path);
             StaticAssetScan.AssertNoProblems(problems, "saved value(s) that a user updating the app would lose");
         }
     }
