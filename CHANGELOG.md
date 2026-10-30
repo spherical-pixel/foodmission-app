@@ -1,3 +1,21 @@
+v0.1.0 - Changelog
+First version for the pilot participants. The in-app notes summarise what the platform offers; the technical changes since 0.0.12 are below.
+
+✨ New Features & Modules
+- Environment: builds point to Production by default (active `ApiEnvironmentConfig` entry and `ApiConfig` fallback).
+- Searchable picker (`FMSearchablePicker`) for country, region, year of birth, cuisine and recipe category (#94).
+
+🐛 Bug Fixes
+- Edit Profile: the saved region is kept when the region list reloads, and no longer overwritten on save (#90).
+- Forms: long field questions wrap instead of being truncated (#92).
+- Dialogs: full-screen info dialogs (What's New) respect the safe area.
+- Login: the screen scrolls on small screens.
+
+🔒 Release hardening
+- Release builds filter `Debug.Log` to warnings and errors; logs with request/response bodies, tokens or user data only in `UNITY_EDITOR || DEVELOPMENT_BUILD`. `ApiErrorHelper` keeps code/message/traceId, full error body only in development builds.
+- iOS: `aps-environment` follows the development build flag. Insecure HTTP allowed only in development builds.
+- Android: not flagged as a game; notifications open `AppUIGameActivity`.
+
 v0.0.12 - Changelog
 ✨ New Features & Modules
 - Progress wheels: tapping a wheel card on Home opens an explanation screen with the partner text, the 20 scenarios with this wheel's values (local copy of the backend impact coefficients) and the scientific sources; 9 languages.
