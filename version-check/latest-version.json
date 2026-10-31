@@ -1,11 +1,11 @@
 {
   "ios": {
-    "latestVersion": "0.0.12",
+    "latestVersion": "0.1.0",
     "isForced": true,
     "storeUrl": "https://testflight.apple.com/join/eVPDEzhq"
   },
   "android": {
-    "latestVersion": "0.0.12",
+    "latestVersion": "0.1.0",
     "isForced": true,
     "storeUrl": "https://play.google.com/apps/testing/eu.foodmission.platform"
   }
