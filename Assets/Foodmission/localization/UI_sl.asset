@@ -5064,9 +5064,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203770
-    m_Localized: "Prihranki so prikazani v kilogramih ekvivalenta ogljikovega dioksida
-      (kg CO\u2082e). Ekvivalent ogljikovega dioksida je standardna enota za izra\u017Eanje
-      podnebnega vpliva razli\u010Dnih toplogrednih plinov.\n"
+    m_Localized: "Prihranki so prikazani v <b>kilogramih ekvivalenta ogljikovega
+      dioksida (kg CO\u2082e)</b>. Ekvivalent ogljikovega dioksida je standardna
+      enota za izra\u017Eanje podnebnega vpliva razli\u010Dnih toplogrednih plinov.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
