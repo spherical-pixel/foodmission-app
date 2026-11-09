@@ -195,14 +195,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: 'Insieme, uniremo la tua cucina alla tutela del pianeta.
+    m_Localized: 'Insieme, porteremo la cura del pianeta nella tua cucina.
 
 
       Cucina,
       impara, condividi e cresci ogni giorno.
 
 
-      Pronto a iniziare?'
+      Iniziamo?'
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -259,7 +259,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 38465306467753984
     m_Localized: "Questa operazione canceller\xE0 definitivamente tutti i tuoi dati
-      dalla piattaforma.\n\nSei sicuro?"
+      dalla piattaforma.\n\nVuoi continuare?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -271,7 +271,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39878882189369344
-    m_Localized: Contesto
+    m_Localized: Sfondo
     m_Metadata:
       m_Items: []
   - m_Id: 39878980084424704
@@ -295,11 +295,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39892766241579008
-    m_Localized: Luce
+    m_Localized: Chiaro
     m_Metadata:
       m_Items: []
   - m_Id: 39892875138293760
-    m_Localized: Buio
+    m_Localized: Scuro
     m_Metadata:
       m_Items: []
   - m_Id: 39892914422145024
@@ -355,11 +355,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
-    m_Localized: Attive
+    m_Localized: Attiva
     m_Metadata:
       m_Items: []
   - m_Id: 39897588734877696
-    m_Localized: Disattivate
+    m_Localized: Disattiva
     m_Metadata:
       m_Items: []
   - m_Id: 39897610318766080
@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910356015898624
-    m_Localized: Libro di ricette
+    m_Localized: Libro delle ricette
     m_Metadata:
       m_Items: []
   - m_Id: 39910387632562176
@@ -531,7 +531,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
-    m_Localized: Motivo infondato
+    m_Localized: 'Motivo dello spreco '
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
@@ -543,7 +543,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
-    m_Localized: Spostare nei rifiuti
+    m_Localized: Sposta nei rifiuti
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000023
@@ -595,7 +595,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000059
-    m_Localized: Elenco delle rinominazioni
+    m_Localized: Rinomina la lista
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000060
@@ -623,7 +623,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000066
-    m_Localized: Nome dell'elenco
+    m_Localized: Nome della lista
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000068
@@ -744,7 +744,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000110
-    m_Localized: "Codice di invito non valido o sei gi\xE0 iscritto"
+    m_Localized: "Codice di invito non valido o fai gi\xE0 parte del gruppo"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000111
@@ -824,7 +824,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985734
-    m_Localized: Viziato
+    m_Localized: Deteriorato
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985735
@@ -916,7 +916,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
-    m_Localized: Rigenerare
+    m_Localized: Rigenera
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986013
@@ -989,7 +989,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986030
-    m_Localized: Mi sono unito al gruppo!
+    m_Localized: Sei nel gruppo!
     m_Metadata:
       m_Items: []
   - m_Id: 319685458386944
@@ -1096,7 +1096,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18736267513114624
-    m_Localized: Peli sul viso
+    m_Localized: Barba
     m_Metadata:
       m_Items: []
   - m_Id: 18736302107734016
@@ -1244,11 +1244,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819913
-    m_Localized: Impronta ecologica
+    m_Localized: Impronta di Carbonio
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819911
-    m_Localized: Paesi di vendita
+    m_Localized: "Paesi in cui \xE8 venduto"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819912
@@ -1707,7 +1707,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28911397441101824
-    m_Localized: Punteggio ecologico
+    m_Localized: Eco- score
     m_Metadata:
       m_Items: []
   - m_Id: 28911707144314880
@@ -1727,7 +1727,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 29234156377464832
-    m_Localized: Sei sicuro di voler nominare questo utente amministratore del gruppo?
+    m_Localized: Vuoi davvero nominare questo utente amministratore del gruppo?
     m_Metadata:
       m_Items: []
   - m_Id: 29234503556784128
@@ -1841,7 +1841,7 @@ MonoBehaviour:
     m_Localized: "Ciao! Per personalizzare la tua esperienza su Foodmission e aiutarti
       a raggiungere i tuoi obiettivi, vorremmo conoscerti un po\u2019 meglio. Ti
       va?\n\nRispondi a qualche domanda facoltativa, cos\xEC potremo personalizzare
-      i tuoi consigli, i suggerimenti sulle ricette e le sfide."
+      i consigli, i suggerimenti sulle ricette e le sfide per te"
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
@@ -1850,8 +1850,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34023051975712768
-    m_Localized: "Alcune informazioni su di te ci aiutano a personalizzare l'app
-      in base alle persone della tua cerchia e alla tua fascia d'et\xE0."
+    m_Localized: "Alcune informazioni su di te ci aiutano ad adattare l\u2019app
+      al tuo contesto e alla tua fascia d\u2019et\xE0."
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
@@ -1910,7 +1910,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34040348811452416
-    m_Localized: Acquisti responsabili
+    m_Localized: "Responsabilit\xE0 della spesa"
     m_Metadata:
       m_Items: []
   - m_Id: 34040572049088512
@@ -1918,7 +1918,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34040672355868672
-    m_Localized: Quanto tempo riesci a dedicare a questa app ogni giorno?
+    m_Localized: Quanto tempo puoi dedicare a questa app ogni giorno?
     m_Metadata:
       m_Items: []
   - m_Id: 34040837200404480
@@ -1966,7 +1966,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37187477251809280
-    m_Localized: Tutti gli stati
+    m_Localized: Tutti
     m_Metadata:
       m_Items: []
   - m_Id: 37187522730647552
@@ -2132,7 +2132,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44130493631815680
-    m_Localized: LO SAPEVATE CHE...?
+    m_Localized: LO SAPEVI CHE...?
     m_Metadata:
       m_Items: []
   - m_Id: 44130682094477312
@@ -2160,7 +2160,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
-    m_Localized: "Hai gi\xE0 un percorso attivo in corso. Sei sicuro di voler apportare
+    m_Localized: "Hai gi\xE0 un percorso attivo in corso. Vuoi davvero apportare
       questa modifica?"
     m_Metadata:
       m_Items: []
@@ -2603,7 +2603,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48826426596515840
-    m_Localized: Sei sicuro di voler eliminare questa ricetta?
+    m_Localized: Vuoi davvero eliminare questa ricetta?
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672704
@@ -2611,7 +2611,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672705
-    m_Localized: Sei sicuro di voler eliminare questa registrazione del pasto?
+    m_Localized: Vuoi davvero eliminare questa registrazione del pasto?
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672706
@@ -2667,7 +2667,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380161
-    m_Localized: Sostituzioni alimentari (Swaps)
+    m_Localized: Sostituzioni alimentari
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380162
@@ -2759,47 +2759,48 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49560392702091264
-    m_Localized: "\U0001F969 -> \U0001F957 Manzo con legumi"
+    m_Localized: "\U0001F969 -> \U0001F957 Manzo con i legumi"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392706285568
-    m_Localized: "\U0001F969 -> \U0001F357 Manzo con pollo"
+    m_Localized: "\U0001F969 -> \U0001F357 Manzo con il pollo"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479872
-    m_Localized: "\U0001F969 -> \U0001F437 Manzo con maiale"
+    m_Localized: "\U0001F969 -> \U0001F437 Manzo con il maiale"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479873
-    m_Localized: "\U0001F437 -> \U0001F957 Maiale con legumi"
+    m_Localized: "\U0001F437 -> \U0001F957 Maiale con i legumi"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479874
-    m_Localized: "\U0001F437 -> \U0001F357 Maiale con pollo"
+    m_Localized: "\U0001F437 -> \U0001F357 Maiale con il pollo"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479875
-    m_Localized: "\U0001F357 -> \U0001F957 Pollo con legumi"
+    m_Localized: "\U0001F357 -> \U0001F957 Pollo con il legumi"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479876
-    m_Localized: "\U0001F964 -> \U0001F4A7 Bevanda zuccherata con acqua"
+    m_Localized: "\U0001F964 -> \U0001F4A7 Bevanda zuccherata con l'acqua"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479877
-    m_Localized: "\U0001F36A -> \U0001F34E Snack con frutta / frutta secca"
+    m_Localized: "\U0001F36A -> \U0001F34E Snack con la frutta / frutta secca"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392714674176
-    m_Localized: "\U0001F963 -> \U0001F33E Cereali zuccherati con avena"
+    m_Localized: "\U0001F963 -> \U0001F33E Cereali zuccherati con l'avena"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392718868480
-    m_Localized: "\U0001F355 -> \U0001F372 Ultra-processato con cibo fatto in casa"
+    m_Localized: "\U0001F355 -> \U0001F372 Ultra-processato con un cibo fatto in
+      casa"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392718868481
-    m_Localized: "\U0001F32D -> \U0001FAD8 Carne lavorata con legumi"
+    m_Localized: "\U0001F32D -> \U0001FAD8 Carne lavorata con i legumi"
     m_Metadata:
       m_Items: []
   - m_Id: 49593946022600704
@@ -2830,8 +2831,8 @@ MonoBehaviour:
   - m_Id: 49915767645265921
     m_Localized: "Ciao! Vorremmo sapere quali temi di sostenibilit\xE0 e nutrizione
       ti interessano di pi\xF9. Nei prossimi passaggi seleziona quelli che ti stanno
-      a cuore: ogni area e ogni tema hanno una breve spiegazione. Le tue risposte
-      aiutano la ricerca del progetto. Puoi modificarle in qualsiasi momento!"
+      a cuore: ogni area e ogni tema ha una breve spiegazione. Le tue risposte aiutano
+      la ricerca del progetto. Puoi modificarle in qualsiasi momento!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
@@ -3129,7 +3130,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232924
-    m_Localized: Grado di trasformazione (NOVA)
+    m_Localized: Grado di processamento (NOVA)
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232925
@@ -3342,13 +3343,13 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347403
     m_Localized: In quanti prodotti hai controllato il gruppo NOVA? Va da 1 (non
-      trasformato o minimamente trasformato) a 4 (ultra-processato).
+      processato o minimamente processato) a 4 (ultra-processato).
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
     m_Localized: In quanti prodotti hai letto l'elenco degli ingredienti cercando
-      segni di lavorazione? Molti ingredienti raffinati o additivi di solito indicano
-      un alimento ultra-processato.
+      indicazioni sul processamento? Molti ingredienti raffinati o additivi di solito
+      indicano un alimento ultra-processato.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
@@ -3359,7 +3360,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 52041725676347406
     m_Localized: In quanti prodotti con gruppi NOVA e Green-Score molto diversi hai
-      notato le differenze? Per esempio un prodotto poco lavorato con un Green-Score
+      notato le differenze? Per esempio un prodotto poco processato con un Green-Score
       scarso rispetto a uno ultra-processato con un buon Green-Score.
     m_Metadata:
       m_Items: []
@@ -3870,7 +3871,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347527
-    m_Localized: Campione FOODMISSION
+    m_Localized: Campione di FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347528
@@ -3914,7 +3915,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347538
-    m_Localized: "Comunit\xE0"
+    m_Localized: Community
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347539
@@ -3922,7 +3923,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347540
-    m_Localized: "\U0001F465 Ricetta della comunit\xE0"
+    m_Localized: "\U0001F465 Ricetta della Community"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347541
@@ -4119,7 +4120,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247374
-    m_Localized: Sei salito di livello!
+    m_Localized: Hai raggiunto un nuovo livello!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247375
@@ -4343,7 +4344,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203627
     m_Localized: "Inizia ogni pasto con una porzione pi\xF9 piccola e aggiungine
-      solo se ne hai bisogno. Segnalalo quando cos\xEC hai evitato di sprecare cibo."
+      solo se ne hai bisogno. Segnalalo quando  hai evitato di sprecare cibo."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203628
@@ -4432,8 +4433,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203647
-    m_Localized: Hai mangiato questo alimento vegetale durante la missione? Ogni
-      tipo conta una volta, per quante volte tu lo mangi.
+    m_Localized: "Hai mangiato questo alimento vegetale durante la missione? Ogni
+      tipo conta una sola volta, anche se lo mangi pi\xF9 volte."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
@@ -4459,8 +4460,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203652
-    m_Localized: Ti sei chiesto se la confezione di questo prodotto valga la pena?
-      Guarda dimensioni, materiali e se protegge il cibo dal deterioramento.
+    m_Localized: "Hai valutato se la confezione di questo prodotto \xE8 giustificata?
+      Guarda dimensioni, materiali e se protegge il cibo dal deterioramento."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203653
@@ -4522,7 +4523,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203664
-    m_Localized: "Cosa hai notato della confezione di questo prodotto? Valgono il
+    m_Localized: "Cosa hai notato della confezione di questo prodotto? Osserva il
       materiale, le istruzioni per il riciclo o se si pu\xF2 riutilizzare."
     m_Metadata:
       m_Items: []
@@ -4689,7 +4690,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203697
-    m_Localized: Sei sicuro di voler rimuovere {0} dal gruppo?
+    m_Localized: Vuoi davvero rimuovere {0} dal gruppo?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203698
@@ -5013,7 +5014,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203763
-    m_Localized: 'Il quadro di calcolo si basa su:'
+    m_Localized: 'Il calcolo si basa su:'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203764
@@ -5285,8 +5286,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203905
-    m_Localized: Hai evitato cibi e bevande con zuccheri aggiunti tra i primi tre
-      ingredienti?
+    m_Localized: Hai evitato cibi e bevande con zuccheri aggiunti presenti tra i
+      primi tre ingredienti?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
@@ -5414,7 +5415,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203932
     m_Localized: "Perch\xE9 \xE8 importante: gran parte del cibo che produciamo viene
-      buttata, insieme alla terra, all\u2019acqua e all\u2019energia usate per produrla.
+      buttato, insieme alla terra, all\u2019acqua e all\u2019energia usate per produrlo.
       Pianificare i pasti, conservare correttamente gli alimenti e utilizzare gli
       avanzi pu\xF2 ridurre lo spreco alimentare e far risparmiare denaro."
     m_Metadata:
@@ -5461,8 +5462,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203942
-    m_Localized: "In quale misura un alimento \xE8 stato trasformato, ad esempio
-      minimamente trasformato, trasformato o ultra-trasformato."
+    m_Localized: "In quale misura un alimento \xE8 stato processato, ad esempio minimamente
+      processato, processato o ultra-processato."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203943
