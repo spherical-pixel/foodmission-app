@@ -48,6 +48,7 @@
                     <ui:VisualElement name="meta-body" class="fm-fi-meta-body"/>
                 </appui:AccordionItem>
             </appui:Accordion>
+            <appui:Text name="data-source-note" size="S" class="fm-fi-source-note fm-fi-section--hidden"/>
         </ui:VisualElement>
         <ui:VisualElement name="action-container" class="fm-fi-action-container hidden">
             <eu.foodmission.platform.Components.FMButton name="action-button" variant="Accent" class="fm-button fm-fi-action hidden"/>

@@ -3898,10 +3898,6 @@ MonoBehaviour:
     m_Localized: Community
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347539
-    m_Localized: 'Source: TheMealDB'
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347540
     m_Localized: "\U0001F465 Community recipe"
     m_Metadata:
@@ -5500,6 +5496,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203959
     m_Localized: How much energy a food gives you, measured in calories.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203960
+    m_Localized: Product data from Open Food Facts, available under the Open Database
+      License. Data may contain errors; not for medical use.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203961
+    m_Localized: Based on data from NEVO online version 2025/9.0, RIVM, Bilthoven
+      and other data sources
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203962
+    m_Localized: Recipes and images from TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203963
+    m_Localized: Shelf-life guidance based on USDA FoodKeeper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203964
+    m_Localized: Estimated date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203965
+    m_Localized: Data sources
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203966
+    m_Localized: About the app
     m_Metadata:
       m_Items: []
   references:

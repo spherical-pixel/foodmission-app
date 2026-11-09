@@ -23,6 +23,7 @@
                 </appui:Text>
                 <appui:DateField name="expiry-date-field" class="fm-pido-date-field"/>
                 <ui:VisualElement name="quick-date-row" class="fm-pido-quick-date-row"/>
+                <appui:Text name="expiry-source-note" size="S" class="fm-pido-source-note fm-pido-source-note--hidden"/>
             </ui:VisualElement>
             <ui:VisualElement class="fm-pido-field-group">
                 <appui:Text class="fm-pido-field-label">

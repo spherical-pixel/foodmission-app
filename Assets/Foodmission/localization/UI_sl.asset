@@ -3923,10 +3923,6 @@ MonoBehaviour:
     m_Localized: Skupnost
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347539
-    m_Localized: 'Vir: TheMealDB'
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347540
     m_Localized: "\U0001F465 Recept skupnosti"
     m_Metadata:
@@ -5554,6 +5550,37 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203959
     m_Localized: "Koliko energije ti da \u017Eivilo, merjeno v kalorijah."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203960
+    m_Localized: Podatki o izdelkih iz Open Food Facts, na voljo pod licenco Open
+      Database License. Podatki lahko vsebujejo napake; niso namenjeni medicinski
+      uporabi.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203961
+    m_Localized: Na podlagi podatkov iz NEVO online version 2025/9.0, RIVM, Bilthoven
+      in drugih virov podatkov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203962
+    m_Localized: Recepti in slike iz TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203963
+    m_Localized: Smernice o roku uporabnosti na podlagi USDA FoodKeeper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203964
+    m_Localized: Ocenjen datum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203965
+    m_Localized: Viri podatkov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203966
+    m_Localized: O aplikaciji
     m_Metadata:
       m_Items: []
   references:

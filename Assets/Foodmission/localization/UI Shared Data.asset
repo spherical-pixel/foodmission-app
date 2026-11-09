@@ -3767,10 +3767,6 @@ MonoBehaviour:
     m_Key: RECIPE_ORIGIN_COMMUNITY
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347539
-    m_Key: RECIPE_SOURCE_THEMEALDB
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347540
     m_Key: RECIPE_SOURCE_COMMUNITY
     m_Metadata:
@@ -5145,6 +5141,34 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203959
     m_Key: GOALS_TOPIC_HELP_ENERGY_VALUE_CALORIES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203960
+    m_Key: DATA_SOURCE_OFF
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203961
+    m_Key: DATA_SOURCE_NEVO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203962
+    m_Key: DATA_SOURCE_THEMEALDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203963
+    m_Key: DATA_SOURCE_FOODKEEPER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203964
+    m_Key: EXPIRY_DATE_ESTIMATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203965
+    m_Key: DATA_SOURCES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203966
+    m_Key: ABOUT
     m_Metadata:
       m_Items: []
   m_Metadata:

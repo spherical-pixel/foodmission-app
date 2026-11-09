@@ -30,6 +30,7 @@ namespace eu.foodmission.platform
         private static DateField _expiryDateField;
         private static bool _expiryDateTouched;
         private static VisualElement _quickDateRow;
+        private static Unity.AppUI.UI.Text _expirySourceNote;
         private static Unity.AppUI.UI.TextArea _notesField;
         private static Unity.AppUI.UI.Button _btnSave;
         private static Unity.AppUI.UI.Button _btnDelete;
@@ -179,6 +180,7 @@ namespace eu.foodmission.platform
             _unitDropdown = null;
             _expiryDateField = null;
             _quickDateRow = null;
+            _expirySourceNote = null;
             _notesField = null;
             _btnSave = null;
             _btnDelete = null;
@@ -193,6 +195,8 @@ namespace eu.foodmission.platform
             _unitDropdown = root.Q<Dropdown>("unit-field");
             _expiryDateField = root.Q<DateField>("expiry-date-field");
             _quickDateRow = root.Q<VisualElement>("quick-date-row");
+            _expirySourceNote = root.Q<Unity.AppUI.UI.Text>("expiry-source-note");
+            DataSources.BindLinks(_expirySourceNote);
             _notesField = root.Q<Unity.AppUI.UI.TextArea>("notes-field");
             _btnSave = root.Q<Unity.AppUI.UI.Button>("btn-save");
             _btnDelete = root.Q<Unity.AppUI.UI.Button>("btn-delete");
@@ -260,6 +264,22 @@ namespace eu.foodmission.platform
                     _expiryDateField.SetValueWithoutNotify(new Date(DateTime.Now.Date.AddDays(30)));
                 }
             }
+
+            UpdateExpirySourceNote();
+        }
+
+        /// <summary>Attribution for a date the backend estimated from FoodKeeper; hidden once the user picks a date.</summary>
+        private static void UpdateExpirySourceNote()
+        {
+            if (_expirySourceNote == null) return;
+            bool show = !_expiryDateTouched
+                && !string.IsNullOrEmpty(_viewModel?.ExpiryDate)
+                && DataSources.IsFoodKeeperExpiry(_viewModel?.ItemView?.Item?.expiryDateSource);
+            if (show)
+            {
+                _expirySourceNote.text = DataSources.EstimatedExpiryNotice();
+            }
+            _expirySourceNote.EnableInClassList("fm-pido-source-note--hidden", !show);
         }
 
         private static void UpdateLoadingState()
@@ -311,6 +331,7 @@ namespace eu.foodmission.platform
         private static void OnExpiryDateChanged(ChangeEvent<Date> evt)
         {
             _expiryDateTouched = true;
+            UpdateExpirySourceNote();
         }
 
         private static async void OnSaveClicked()

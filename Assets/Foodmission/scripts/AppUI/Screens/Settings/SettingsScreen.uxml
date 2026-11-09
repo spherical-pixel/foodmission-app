@@ -48,6 +48,12 @@
                     <UnityEngine.Localization.LocalizedString property="HeadingText" table="GUID:e58ac225f892840658d216244603ef45" entry="Id(39879174494609408)"/>
                 </Bindings>
             </components:FormFieldItemArrowStepperSettings>
+            <appui:Spacer spacing="XL"/>
+            <components:FMButton variant="Primary" title="About the app" name="btn-about" trailing-icon="fm-arrow-right" class="fm-button fm-button-shadow fm-button-align-left">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="title" table="GUID:e58ac225f892840658d216244603ef45" entry="ABOUT"/>
+                </Bindings>
+            </components:FMButton>
             <appui:Spacer spacing="M"/>
             <appui:Accordion name="developer-options">
                 <appui:AccordionItem title="Developer settings">

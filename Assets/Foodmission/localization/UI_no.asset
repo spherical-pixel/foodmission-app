@@ -3910,10 +3910,6 @@ MonoBehaviour:
     m_Localized: Fellesskap
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347539
-    m_Localized: 'Kilde: TheMealDB'
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347540
     m_Localized: "\U0001F465 Oppskrift fra fellesskapet"
     m_Metadata:
@@ -5530,6 +5526,36 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203959
     m_Localized: "Hvor mye energi en matvare gir deg, m\xE5lt i kalorier."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203960
+    m_Localized: Produktdata fra Open Food Facts, tilgjengelig under Open Database
+      License. Dataene kan inneholde feil; ikke til medisinsk bruk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203961
+    m_Localized: "Basert p\xE5 data fra NEVO online version 2025/9.0, RIVM, Bilthoven
+      og andre datakilder"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203962
+    m_Localized: Oppskrifter og bilder fra TheMealDB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203963
+    m_Localized: "Holdbarhetsveiledning basert p\xE5 USDA FoodKeeper"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203964
+    m_Localized: "Ansl\xE5tt dato"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203965
+    m_Localized: Datakilder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203966
+    m_Localized: Om appen
     m_Metadata:
       m_Items: []
   references:

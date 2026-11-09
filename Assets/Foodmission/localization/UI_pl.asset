@@ -3960,10 +3960,6 @@ MonoBehaviour:
     m_Localized: "Spo\u0142eczno\u015B\u0107"
     m_Metadata:
       m_Items: []
-  - m_Id: 52041725676347539
-    m_Localized: "\u0179r\xF3d\u0142o: TheMealDB"
-    m_Metadata:
-      m_Items: []
   - m_Id: 52041725676347540
     m_Localized: "\U0001F465 Przepis spo\u0142eczno\u015Bci"
     m_Metadata:
@@ -5645,6 +5641,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203959
     m_Localized: "Ile energii dostarcza \u017Cywno\u015B\u0107, mierzonej w kaloriach."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203960
+    m_Localized: "Dane produkt\xF3w z Open Food Facts, dost\u0119pne na licencji
+      Open Database License. Dane mog\u0105 zawiera\u0107 b\u0142\u0119dy; nie do
+      u\u017Cytku medycznego."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203961
+    m_Localized: "Na podstawie danych z NEVO online version 2025/9.0, RIVM, Bilthoven
+      oraz innych \u017Ar\xF3de\u0142 danych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203962
+    m_Localized: "Przepisy i zdj\u0119cia z TheMealDB"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203963
+    m_Localized: "Wskaz\xF3wki dotycz\u0105ce trwa\u0142o\u015Bci na podstawie USDA
+      FoodKeeper"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203964
+    m_Localized: Data szacunkowa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203965
+    m_Localized: "\u0179r\xF3d\u0142a danych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203966
+    m_Localized: O aplikacji
     m_Metadata:
       m_Items: []
   references:

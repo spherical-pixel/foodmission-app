@@ -29,6 +29,7 @@ namespace eu.foodmission.platform
         private FMButton _testSurveyButton;
 
         private VisualElement _developerOptions;
+        private FMButton _aboutButton;
         private AppearanceSettingsBinder _appearanceBinder;
 
 
@@ -66,6 +67,7 @@ namespace eu.foodmission.platform
             _localUrlFieldComponent = contentContainer.Q<FormFieldItemTextField>("local-url-field");
             _versionValue = contentContainer.Q<Unity.AppUI.UI.Text>("version-value");
             _testSurveyButton = contentContainer.Q<FMButton>("btn-test-survey");
+            _aboutButton = contentContainer.Q<FMButton>("btn-about");
 
             _developerOptions = contentContainer.Q<VisualElement>("developer-options");
 
@@ -90,6 +92,22 @@ namespace eu.foodmission.platform
             {
                 _testSurveyButton.clicked += OnTestSurveyClicked;
             }
+
+            if (_aboutButton != null)
+            {
+                _aboutButton.clicked += OnAboutClicked;
+            }
+        }
+
+        private void OnAboutClicked()
+        {
+            FMDialog.ShowScrollableMD(
+                this,
+                "@UI:" + DataSources.AboutTitleKey,
+                DataSources.AboutMarkdown(ApiConfig.AppVersion),
+                acceptLabel: null,
+                cancelLabel: "@UI:TXT_BACK"
+            );
         }
 
         private void OnViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -133,6 +151,7 @@ namespace eu.foodmission.platform
             _notificationsStepper?.CreateAccessibilityNode(h, "Notifications");
             _notificationTimeStepper?.CreateAccessibilityNode(h, "Reminder time");
             _environmentStepper?.CreateAccessibilityNode(h, "Environment");
+            CreateButtonNode(h, _aboutButton, "About the app");
         }
 
         protected override void TeardownAccessibilityNodes()
@@ -145,6 +164,28 @@ namespace eu.foodmission.platform
             _environmentStepper?.DestroyAccessibilityNode();
 
             base.TeardownAccessibilityNodes();
+        }
+
+        private AccessibilityNode CreateButtonNode(AccessibilityHierarchy hierarchy, VisualElement button, string label)
+        {
+            if (button == null) return null;
+            var node = hierarchy.AddNode(label);
+            node.role = AccessibilityRole.Button;
+            node.frameGetter = () =>
+            {
+                if (button.panel == null) return Rect.zero;
+                var r = button.worldBound;
+                var s = button.panel.scaledPixelsPerPoint;
+                return new Rect(r.position * s, r.size * s);
+            };
+            node.invoked += () =>
+            {
+                using var evt = NavigationSubmitEvent.GetPooled();
+                evt.target = button;
+                button.SendEvent(evt);
+                return true;
+            };
+            return node;
         }
 
         private void SetupSteppers()
@@ -214,6 +255,11 @@ namespace eu.foodmission.platform
             if (_testSurveyButton != null)
             {
                 _testSurveyButton.clicked -= OnTestSurveyClicked;
+            }
+
+            if (_aboutButton != null)
+            {
+                _aboutButton.clicked -= OnAboutClicked;
             }
 
             _appearanceBinder?.Unbind();

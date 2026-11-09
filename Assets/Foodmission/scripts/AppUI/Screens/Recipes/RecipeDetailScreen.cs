@@ -801,8 +801,9 @@ namespace eu.foodmission.platform
             }
             Recipe recipe = _viewModel?.Recipe;
             string url = RecipeOriginLinks.SourceUrl(recipe);
+            // Imported recipes show the same TheMealDB attribution as About (DataSources), linking to the recipe page
             string key = url != null
-                ? "RECIPE_SOURCE_THEMEALDB"
+                ? DataSources.Get(DataSource.TheMealDb).NoticeKey
                 : recipe?.origin == RecipeOriginLinks.CommunityOrigin ? "RECIPE_SOURCE_COMMUNITY" : null;
 
             _recipeSource.EnableInClassList("fm-rd-action--hidden", key == null);
