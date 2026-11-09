@@ -54,6 +54,19 @@
     justify-content: space-between;
 }
 
+/* Shown only when the backend estimated the expiry date (FoodKeeper) */
+.fm-pido-source-note {
+    margin-top: 30px;
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: italic;
+    white-space: normal;
+    color: var(--appui-foregrounds-200);
+}
+
+.fm-pido-source-note--hidden {
+    display: none;
+}
+
 .fm-pido-quick-btn {
     margin-right: 8px;
 }

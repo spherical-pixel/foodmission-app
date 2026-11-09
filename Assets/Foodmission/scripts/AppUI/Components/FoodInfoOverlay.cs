@@ -35,6 +35,7 @@ namespace eu.foodmission.platform
         private static Heading _foodName;
         private static Text _foodSubtitle;
         private static VisualElement _badgesRow;
+        private static Text _dataSourceNote;
         private static Text _nutriscoreBadge;
         private static Text _novaBadge;
         private static Text _ecoBadge;
@@ -189,6 +190,8 @@ namespace eu.foodmission.platform
             _foodName = content.Q<Heading>("food-name");
             _foodSubtitle = content.Q<Text>("food-subtitle");
             _badgesRow = content.Q<VisualElement>("badges-row");
+            _dataSourceNote = content.Q<Text>("data-source-note");
+            DataSources.BindLinks(_dataSourceNote);
             _nutriscoreBadge = content.Q<Text>("nutriscore-badge");
             _novaBadge = content.Q<Text>("nova-badge");
             _ecoBadge = content.Q<Text>("eco-badge");
@@ -338,7 +341,7 @@ namespace eu.foodmission.platform
 
             _foodImageContainer = null;
             _foodImage = null; _foodEmoji = null; _foodName = null; _foodSubtitle = null;
-            _badgesRow = null; _nutriscoreBadge = null; _novaBadge = null; _ecoBadge = null;
+            _badgesRow = null; _dataSourceNote = null; _nutriscoreBadge = null; _novaBadge = null; _ecoBadge = null;
             _trafficLights = null; _macroCards = null; _macroHeader = null;
             _ingredientsSection = null; _ingredientsBody = null;
             _allergensSection = null; _allergensBody = null;
@@ -431,6 +434,7 @@ namespace eu.foodmission.platform
                     break;
                 case nameof(FoodInfoViewModel.IsLoading):
                     UpdateLoadingState();
+                    UpdateDataSourceNote();
                     break;
                 case nameof(FoodInfoViewModel.ErrorDetail):
                     UpdateApiErrorState();
@@ -553,6 +557,19 @@ namespace eu.foodmission.platform
 
             // Ingredients, allergens, nutrition-detail and meta sections
             // are self-managed by their respective Update*() methods.
+            UpdateDataSourceNote();
+        }
+
+        /// <summary>Attribution under the details: Open Food Facts for products, NEVO for generic foods.</summary>
+        private static void UpdateDataSourceNote()
+        {
+            if (_dataSourceNote == null || _viewModel == null) return;
+            bool show = !_viewModel.IsLoading;
+            if (show)
+            {
+                _dataSourceNote.text = DataSources.NoticeWithLinks(DataSources.ForFoodType(_viewModel.FoodType));
+            }
+            _dataSourceNote.EnableInClassList("fm-fi-section--hidden", !show);
         }
 
         private static void UpdateNutriScoreBadge()

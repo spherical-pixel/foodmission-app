@@ -294,6 +294,16 @@
     white-space: normal;
 }
 
+/* Data attribution (Open Food Facts / NEVO) under the sections */
+.fm-fi-source-note {
+    color: var(--appui-foregrounds-200, #c0c0c0);
+    font-size: var(--appui-font-sizes-body-sm);
+    -unity-font-style: italic;
+    white-space: normal;
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
 /* ── NUTRITION TABLE ─────────────────────────────────────── */
 
 .fm-fi-nutrition-table {
