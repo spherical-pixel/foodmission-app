@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Moq;
 using NUnit.Framework;
 
+using Unity.AppUI.Navigation.Generated;
+
 using eu.foodmission.platform;
 using UnityEngine;
 
@@ -97,24 +99,34 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual("loading_to_home", _vm.ReturnActionOnSkip);
         }
 
+        // A failing init step (here App.current is null in EditMode) must not leave the app on the splash
         [Test]
-        public async Task InitializeAppAsync_CanBeCalled()
+        public async Task InitializeAppAsync_StepFails_WithSavedSession_GoesHome()
+        {
+            AppState state = _storeService.GetAppState().Copy();
+            state.accessToken = "tok-123";
+            _storeService.SetAppState(state);
+
+            string action = await InitializeIgnoringLogsAsync();
+
+            Assert.AreEqual(Actions.loading_to_home, action);
+        }
+
+        [Test]
+        public async Task InitializeAppAsync_StepFails_WithoutSession_GoesToAuth()
+        {
+            string action = await InitializeIgnoringLogsAsync();
+
+            Assert.AreEqual(Actions.loading_to_auth, action);
+        }
+
+        private async Task<string> InitializeIgnoringLogsAsync()
         {
             bool previousIgnore = UnityEngine.TestTools.LogAssert.ignoreFailingMessages;
             UnityEngine.TestTools.LogAssert.ignoreFailingMessages = true;
             try
             {
-                await _vm.InitializeAppAsync();
-            }
-            catch (NullReferenceException)
-            {
-                // InitializeAppAsync calls App.current.services.GetService<>()
-                // which throws NullReferenceException in test environment.
-                // The method is not testable as-is due to this static dependency.
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail($"Unexpected exception type: {ex.GetType().Name} - {ex.Message}");
+                return await _vm.InitializeAppAsync();
             }
             finally
             {

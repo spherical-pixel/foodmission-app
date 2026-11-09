@@ -458,6 +458,11 @@ namespace eu.foodmission.platform
                         ShowErrorRequest?.Invoke(result.error);
                     }
                 }
+                catch (Exception e)
+                {
+                    Debug.LogError($"[RegisterViewModel] Register failed: {e}");
+                    ShowErrorRequest?.Invoke("@UI:UNEXPECTED_ERROR");
+                }
                 finally
                 {
                     IsSubmitting = false;

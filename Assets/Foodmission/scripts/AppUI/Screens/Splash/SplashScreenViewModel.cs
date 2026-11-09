@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 
 using eu.foodmission.platform.Components;
@@ -42,6 +43,22 @@ namespace eu.foodmission.platform
         }
 
         public async Task<string> InitializeAppAsync()
+        {
+            try
+            {
+                return await InitializeStepsAsync();
+            }
+            catch (Exception e)
+            {
+                // Any failed step would otherwise leave the app on the splash: go on with what is saved,
+                // the next screen reloads what it needs and a stale session ends at the first 401
+                Debug.LogError($"[SplashScreenViewModel] Init failed, continuing with the saved session: {e}");
+                bool hasSession = !string.IsNullOrEmpty(_storeService.GetAppState().accessToken);
+                return hasSession ? Actions.loading_to_home : Actions.loading_to_auth;
+            }
+        }
+
+        private async Task<string> InitializeStepsAsync()
         {
             AndroidSystemBar.ShowAndSetTransparent();
 
