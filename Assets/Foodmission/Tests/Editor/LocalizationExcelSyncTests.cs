@@ -106,6 +106,9 @@ namespace eu.foodmission.platform.Tests
         [TestCase("Stage {0}/{1}", "Etapa {0}", false)]
         [TestCase("Stage {0}", "Etapa {0} {2}", false)]
         [TestCase("{0:0}%", "{0}%", false)]
+        // Plurals: Slovenian/Polish have 4 forms where English has 2, so {0} repeats a different number of times
+        [TestCase("{0:plural:{0} coin|{0} coins}", "{0:plural:{0} a|{0} b|{0} c|{0} d}", true)]
+        [TestCase("{0:plural:{0} coin|{0} coins}", "{0:plural:a|b|c|d}", false)]
         public void Placeholders_MatchReference(string reference, string translation, bool expected)
         {
             Assert.AreEqual(expected, LocalizationPlaceholders.Match(reference, translation));

@@ -3,7 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace eu.foodmission.platform.EditorTools
 {
-    /// <summary>Format placeholders such as {0}, {1} or {0:0.##} must survive translation unchanged (order may differ).</summary>
+    /// <summary>
+    /// Format placeholders such as {0}, {1} or {0:0.##} must survive translation unchanged (order may differ).
+    /// Only which ones appear is compared, not how often: a plural repeats {0} once per form, and languages
+    /// like Slovenian or Polish have more forms than English.
+    /// </summary>
     public static class LocalizationPlaceholders
     {
         private static readonly Regex Placeholder = new Regex(@"\{[^{}]*\}", RegexOptions.Compiled);
@@ -23,6 +27,7 @@ namespace eu.foodmission.platform.EditorTools
             }
             return Placeholder.Matches(text).Cast<System.Text.RegularExpressions.Match>()
                 .Select(m => m.Value)
+                .Distinct()
                 .OrderBy(v => v, System.StringComparer.Ordinal)
                 .ToArray();
         }

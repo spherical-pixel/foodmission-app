@@ -40,15 +40,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18113535941795840
-    m_Localized: Nalaganje datotek
+    m_Localized: Nalaganje virov
     m_Metadata:
       m_Items: []
   - m_Id: 18114763199340544
-    m_Localized: Preverjanje avtentifikacije
+    m_Localized: Preverjanje pristnosti
     m_Metadata:
       m_Items: []
   - m_Id: 18417184911908864
-    m_Localized: "Igrajte se, u\u010Dite se in jejte bolje: skupaj spodbujamo spremembe."
+    m_Localized: "Igraj se, u\u010Di se in jej bolje: skupaj spodbujamo spremembe."
     m_Metadata:
       m_Items: []
   - m_Id: 18417602513592320
@@ -56,7 +56,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18417848396275712
-    m_Localized: "Va\u0161e uporabni\u0161ko ime"
+    m_Localized: "Tvoje uporabni\u0161ko ime"
     m_Metadata:
       m_Items: []
   - m_Id: 18418052671463424
@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18418114709413888
-    m_Localized: "Va\u0161e geslo"
+    m_Localized: Tvoje geslo
     m_Metadata:
       m_Items: []
   - m_Id: 22812687661522944
@@ -72,15 +72,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22812856394178560
-    m_Localized: "Va\u0161 e-po\u0161tni naslov"
+    m_Localized: "Tvoj e-po\u0161tni naslov"
     m_Metadata:
       m_Items: []
   - m_Id: 22819676332482560
-    m_Localized: "Dr\u017Eava prebivali\u0161\u010Da"
+    m_Localized: "Dr\u017Eava bivanja"
     m_Metadata:
       m_Items: []
   - m_Id: 22819860558897152
-    m_Localized: "Izberite dr\u017Eavo, v kateri prebivate"
+    m_Localized: "Izberi svojo dr\u017Eavo bivanja"
     m_Metadata:
       m_Items: []
   - m_Id: 22820314747494400
@@ -88,7 +88,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22820425670057984
-    m_Localized: Izberite svojo regijo
+    m_Localized: Izberi svojo regijo
     m_Metadata:
       m_Items: []
   - m_Id: 25345767223844864
@@ -96,7 +96,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25351728189661184
-    m_Localized: "Pogoji in dolo\u010Dila"
+    m_Localized: "Splo\u0161ni pogoji"
     m_Metadata:
       m_Items: []
   - m_Id: 25353163560181760
@@ -108,7 +108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25353803774550016
-    m_Localized: Ok
+    m_Localized: V redu
     m_Metadata:
       m_Items: []
   - m_Id: 25354482861727744
@@ -116,7 +116,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25354925167861760
-    m_Localized: Preverjanje veljavnosti polj ni uspelo
+    m_Localized: Preverjanje polj ni uspelo
     m_Metadata:
       m_Items: []
   - m_Id: 25355658118291456
@@ -124,7 +124,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25358434474909696
-    m_Localized: "Vnesite veljaven e-po\u0161tni naslov."
+    m_Localized: "Vnesi veljaven e-po\u0161tni naslov."
     m_Metadata:
       m_Items: []
   - m_Id: 25358751560097792
@@ -136,31 +136,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284417
-    m_Localized: "Za uporabo platforme morate biti starej\u0161i od 18 let."
+    m_Localized: "Za uporabo platforme mora\u0161 biti star/-a ve\u010D kot 18 let."
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284418
-    m_Localized: "Izberite dr\u017Eavo."
+    m_Localized: "Izbrati mora\u0161 dr\u017Eavo."
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284419
-    m_Localized: Izberite regijo.
+    m_Localized: "Izbrati mora\u0161 regijo."
     m_Metadata:
       m_Items: []
   - m_Id: 25360689668284420
-    m_Localized: "Neveljaven format po\u0161tne \u0161tevilke."
+    m_Localized: "Neveljavna oblika po\u0161tne \u0161tevilke."
     m_Metadata:
       m_Items: []
   - m_Id: 25367919163596800
-    m_Localized: Prijavi se
+    m_Localized: Prijava
     m_Metadata:
       m_Items: []
   - m_Id: 25368981371084800
-    m_Localized: Ste pozabili geslo?
+    m_Localized: Pozabljeno geslo?
     m_Metadata:
       m_Items: []
   - m_Id: 25369431499595776
-    m_Localized: "\u0160e nimate ra\u010Duna? Registrirajte se"
+    m_Localized: "\u0160e nima\u0161 ra\u010Duna? Registriraj se"
     m_Metadata:
       m_Items: []
   - m_Id: 25394900353671168
@@ -168,8 +168,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25395075277119488
-    m_Localized: "Vnesite svoj e-po\u0161tni naslov in vam bomo poslali povezavo
-      za ponastavitev gesla."
+    m_Localized: "Vnesi svoj e-po\u0161tni naslov in poslali ti bomo povezavo za
+      ponastavitev gesla."
     m_Metadata:
       m_Items: []
   - m_Id: 25395779614007296
@@ -194,8 +194,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35547983100502016
-    m_Localized: "Skupaj bomo va\u0161o kuhinjo povezali s skrbjo za planet.\n\nVsak
-      dan kuhajte, se u\u010Dite, delite in rastite.\n\nSte pripravljeni za\u010Deti?"
+    m_Localized: "Skupaj bomo tvojo kuhinjo povezali s skrbjo za planet.\n\nKuhaj,
+      u\u010Di se, deli in rasti vsak dan.\n\nSi pripravljen/-a na za\u010Detek?"
     m_Metadata:
       m_Items: []
   - m_Id: 35549851969118208
@@ -203,19 +203,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35549934412357632
-    m_Localized: Dopolnite svoj profil
+    m_Localized: Dopolni svoj profil
     m_Metadata:
       m_Items: []
   - m_Id: 35550076637011968
-    m_Localized: Odpri aplikacijo
+    m_Localized: Vstopi v aplikacijo
     m_Metadata:
       m_Items: []
   - m_Id: 38372841320603648
-    m_Localized: "Nepravilen uporabni\u0161ki ime ali geslo"
+    m_Localized: "Uporabni\u0161ko ime ali geslo ni pravilno"
     m_Metadata:
       m_Items: []
   - m_Id: 38373129888718848
-    m_Localized: "Storitve ni bilo mogo\u010De najti"
+    m_Localized: "Storitve ni mogo\u010De najti"
     m_Metadata:
       m_Items: []
   - m_Id: 38373203972710400
@@ -239,7 +239,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38381665582571520
-    m_Localized: Neveljavni podatki o registraciji
+    m_Localized: Neveljavni podatki za registracijo
     m_Metadata:
       m_Items: []
   - m_Id: 38382047729803264
@@ -251,8 +251,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38465306467753984
-    m_Localized: "Ta dejanja bodo trajno izbrisala vse va\u0161e podatke s platforme.\n\nSte
-      prepri\u010Dani?"
+    m_Localized: "S tem dejanjem bo\u0161 trajno izbrisal/-a vse svoje podatke s
+      platforme.\n\nAli si prepri\u010Dan/-a?"
     m_Metadata:
       m_Items: []
   - m_Id: 39878750429503488
@@ -264,15 +264,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39878882189369344
-    m_Localized: Uvod
+    m_Localized: Ozadje
     m_Metadata:
       m_Items: []
   - m_Id: 39878980084424704
-    m_Localized: "\u010Crkovna vrsta"
+    m_Localized: Pisava
     m_Metadata:
       m_Items: []
   - m_Id: 39879011575259136
-    m_Localized: Obvestila s potisnim obvestilom
+    m_Localized: Potisna obvestila
     m_Metadata:
       m_Items: []
   - m_Id: 39879077732016128
@@ -288,15 +288,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39892766241579008
-    m_Localized: Svetloba
+    m_Localized: Svetla
     m_Metadata:
       m_Items: []
   - m_Id: 39892875138293760
-    m_Localized: Temno
+    m_Localized: Temna
     m_Metadata:
       m_Items: []
   - m_Id: 39892914422145024
-    m_Localized: Sistem
+    m_Localized: Sistemska
     m_Metadata:
       m_Items: []
   - m_Id: 39894833018429440
@@ -312,15 +312,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895357172211712
-    m_Localized: "Gr\u0161ki"
+    m_Localized: "Gr\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 39895410716696576
-    m_Localized: Italijanski
+    m_Localized: "Italijan\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 39895456581410816
-    m_Localized: "Norve\u0161ki"
+    m_Localized: "Norve\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 39895644041633792
@@ -328,23 +328,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39895706960388096
-    m_Localized: Slovenski
+    m_Localized: "Sloven\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 39895724194783232
-    m_Localized: "\u0161pan\u0161\u010Dina"
+    m_Localized: "\u0160pan\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 39897152762142720
-    m_Localized: Majhen
+    m_Localized: Majhna
     m_Metadata:
       m_Items: []
   - m_Id: 39897194361249792
-    m_Localized: Srednje
+    m_Localized: Srednja
     m_Metadata:
       m_Items: []
   - m_Id: 39897246425145344
-    m_Localized: Veliko
+    m_Localized: Velika
     m_Metadata:
       m_Items: []
   - m_Id: 39897565464879104
@@ -356,7 +356,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39897610318766080
-    m_Localized: Preprosto
+    m_Localized: Navadno
     m_Metadata:
       m_Items: []
   - m_Id: 39897672927141888
@@ -372,7 +372,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39903457170153472
-    m_Localized: Registriraj se
+    m_Localized: Registracija
     m_Metadata:
       m_Items: []
   - m_Id: 39903535817547776
@@ -380,7 +380,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39903585188700160
-    m_Localized: Uvajanje novih zaposlenih
+    m_Localized: Uvajanje
     m_Metadata:
       m_Items: []
   - m_Id: 39906068652875776
@@ -392,11 +392,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39906116358889472
-    m_Localized: Upravljanje skupin
+    m_Localized: Upravljaj skupine
     m_Metadata:
       m_Items: []
   - m_Id: 39906149892349952
-    m_Localized: "Oglej si zna\u010Dke"
+    m_Localized: "Ogled zna\u010Dk"
     m_Metadata:
       m_Items: []
   - m_Id: 39906172642254848
@@ -404,7 +404,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39906262576521216
-    m_Localized: Odjavi se
+    m_Localized: Odjava
     m_Metadata:
       m_Items: []
   - m_Id: 39910244942340096
@@ -416,7 +416,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910298566516736
-    m_Localized: Seznam nakupov
+    m_Localized: Nakupovalni seznam
     m_Metadata:
       m_Items: []
   - m_Id: 39910325154209792
@@ -424,11 +424,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910356015898624
-    m_Localized: Kuharska knjiga
+    m_Localized: Knjiga receptov
     m_Metadata:
       m_Items: []
   - m_Id: 39910387632562176
-    m_Localized: "\u017Divilske odpadke"
+    m_Localized: Odpadna hrana
     m_Metadata:
       m_Items: []
   - m_Id: 39910411816919040
@@ -436,7 +436,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39910434310971392
-    m_Localized: Svetovna skupnost
+    m_Localized: Globalna skupnost
     m_Metadata:
       m_Items: []
   - m_Id: 39910459409686528
@@ -452,7 +452,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 39915502649204736
-    m_Localized: "Va\u0161a raven prehranske ozave\u0161\u010Denosti"
+    m_Localized: Tvoj status prehranske inteligence
     m_Metadata:
       m_Items: []
   - m_Id: 39915588338835456
@@ -488,7 +488,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 40182439656546304
-    m_Localized: "Ustvarite svoj ra\u010Dun"
+    m_Localized: "Ustvari svoj ra\u010Dun"
     m_Metadata:
       m_Items: []
   - m_Id: 40270284408741888
@@ -496,17 +496,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000001
-    m_Localized: "E-po\u0161ta je bila poslana. Preverite svoj predal za prejete
-      e-po\u0161te."
+    m_Localized: "E-po\u0161ta je bila poslana. Preveri svojo mapo s prejeto po\u0161to."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000002
-    m_Localized: "E-po\u0161tnega sporo\u010Dila za ponastavitev ni bilo mogo\u010De
-      poslati. Poskusite znova."
+    m_Localized: "E-po\u0161te za ponastavitev ni bilo mogo\u010De poslati. Poskusi
+      znova."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000003
-    m_Localized: Uspeh
+    m_Localized: "Uspe\u0161no"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000008
@@ -518,15 +517,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000010
-    m_Localized: Pojedel
+    m_Localized: Obrok zunaj
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000015
-    m_Localized: "Koli\u010Dina odpadkov"
+    m_Localized: "Koli\u010Dina odpadne hrane"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000016
-    m_Localized: Nesmiselni razlog
+    m_Localized: Razlog za odpadke
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
@@ -538,19 +537,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000022
-    m_Localized: Premakni v odpadke
+    m_Localized: Premakni med odpadke
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000023
-    m_Localized: "Tvoja shramba je prazna. Tapni na +, da doda\u0161 izdelke."
+    m_Localized: "Tvoja shramba je prazna. Pritisni +, da doda\u0161 izdelke."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000033
-    m_Localized: "\u0160e ni nobenih izdelkov. Dodajte nekaj izdelkov."
+    m_Localized: "Ni \u0161e izdelkov. Dodaj nekaj izdelkov."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000038
-    m_Localized: Rok uporabnosti
+    m_Localized: Rok uporabe
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000040
@@ -558,7 +557,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000042
-    m_Localized: Izberi...
+    m_Localized: "Izberi\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000050
@@ -566,19 +565,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000052
-    m_Localized: Porabljene kalorije
+    m_Localized: "Zau\u017Eite kalorije"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000053
-    m_Localized: Levo
+    m_Localized: Preostalo
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000054
-    m_Localized: "Izbrisati \xBB{0}\xAB?"
+    m_Localized: "Izbri\u0161em \xBB{0}\xAB?"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000055
-    m_Localized: "Izbri\u0161i dnevnik"
+    m_Localized: "Izbri\u0161i vnos"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000056
@@ -590,7 +589,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000059
-    m_Localized: Seznam preimenovanj
+    m_Localized: Preimenuj seznam
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000060
@@ -602,19 +601,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000062
-    m_Localized: 1 izdelek je potekel
+    m_Localized: 1 item expired
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000063
-    m_Localized: '{0} izdelkov je potekel rok veljavnosti'
+    m_Localized: '{0} predmetov poteklo'
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000064
-    m_Localized: "{0} predmet je bil odlo\u017Een med odpadke"
+    m_Localized: "{0} predmet premaknjen v ko\u0161"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000065
-    m_Localized: "{0} predmetov je bilo odlo\u017Eenih med odpadke"
+    m_Localized: "{0} predmetov premaknjenih v ko\u0161"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000066
@@ -622,11 +621,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000068
-    m_Localized: Poglej
+    m_Localized: "Prika\u017Ei"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000069
-    m_Localized: Najprej izberite izdelek.
+    m_Localized: Najprej izberi izdelek.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000072
@@ -634,12 +633,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000073
-    m_Localized: "Ali naj 1 izdelek s prete\u010Denim rokom uporabe odlo\u017Eim
-      med \u017Eivilski odpadki?"
+    m_Localized: "Premaknem 1 izdelek s prete\u010Denim rokom uporabe med odpadke?"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000074
-    m_Localized: "Ali naj {0} izte\u010Denih izdelkov prestavim v odpadke iz hrane?"
+    m_Localized: "Premaknem {0} izdelkov s prete\u010Denim rokom uporabe med odpadke?"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000075
@@ -647,7 +645,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000080
-    m_Localized: Izberite vrsto obroka
+    m_Localized: Izberi vrsto obroka
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000085
@@ -659,15 +657,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000088
-    m_Localized: "Napaka pri nalaganju dnevnika o \u017Eivilskih odpadkih"
+    m_Localized: Napaka pri nalaganju dnevnika odpadkov
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000089
-    m_Localized: "Elementa ni bilo mogo\u010De nalo\u017Eiti"
+    m_Localized: "Izdelka ni bilo mogo\u010De nalo\u017Eiti"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000090
-    m_Localized: "Elementa ni bilo mogo\u010De shraniti"
+    m_Localized: "Izdelka ni bilo mogo\u010De shraniti"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000091
@@ -675,12 +673,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000093
-    m_Localized: "Izdelka ni bilo mogo\u010De dodati: morda manjkajo potrebni podatki
-      o izdelku"
+    m_Localized: "Izdelka ni bilo mogo\u010De dodati: izdelku morda manjkajo zahtevani
+      podatki"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000094
-    m_Localized: "Element kategorije ni bilo mogo\u010De dodati"
+    m_Localized: "Izdelka kategorije ni bilo mogo\u010De dodati"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000096
@@ -688,15 +686,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000097
-    m_Localized: "Elementov ni bilo mogo\u010De nalo\u017Eiti"
+    m_Localized: "Izdelkov ni bilo mogo\u010De nalo\u017Eiti"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000098
-    m_Localized: Iskanje izdelkov ni uspelo
+    m_Localized: "Izdelkov ni bilo mogo\u010De poiskati"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000099
-    m_Localized: "Elementa ni bilo mogo\u010De dodati"
+    m_Localized: "Izdelka ni bilo mogo\u010De dodati"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000100
@@ -704,19 +702,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000101
-    m_Localized: "Elementa ni bilo mogo\u010De dodati na seznam"
+    m_Localized: "Izdelka ni bilo mogo\u010De dodati na seznam"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000102
-    m_Localized: "Elementa ni bilo mogo\u010De posodobiti"
+    m_Localized: "Izdelka ni bilo mogo\u010De posodobiti"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000103
-    m_Localized: "Elementa ni bilo mogo\u010De izbrisati"
+    m_Localized: "Izdelka ni bilo mogo\u010De izbrisati"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000104
-    m_Localized: "Zaklju\u010Denih elementov ni bilo mogo\u010De izbrisati"
+    m_Localized: "Ozna\u010Denih izdelkov ni bilo mogo\u010De po\u010Distiti"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000105
@@ -736,11 +734,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000109
-    m_Localized: Potrebna je koda za povabilo
+    m_Localized: Koda povabila je obvezna
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000110
-    m_Localized: "Neveljavna koda za povabilo ali ste \u017Ee \u010Dlan"
+    m_Localized: "Neveljavna koda povabila ali pa si \u017Ee \u010Dlan/-ica"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000111
@@ -756,31 +754,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000114
-    m_Localized: "Prijava ni uspela. Poskusite \u0161e enkrat."
+    m_Localized: Prijava ni uspela. Prosimo, poskusi znova.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000115
-    m_Localized: "Sogla\u0161am s pogoji uporabe"
+    m_Localized: "Sprejemam splo\u0161ne pogoje"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000116
-    m_Localized: Nalaganje podatkov...
+    m_Localized: "Nalaganje podatkov\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000117
-    m_Localized: "Podatkov ni bilo mogo\u010De nalo\u017Eiti. Poskusite \u0161e enkrat."
+    m_Localized: "Podatkov ni bilo mogo\u010De nalo\u017Eiti. Prosimo, poskusi znova."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000118
-    m_Localized: "Pri nalaganju podatkov je pri\u0161lo do napake."
+    m_Localized: Napaka pri nalaganju podatkov.
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000119
-    m_Localized: "Profila ni bilo mogo\u010De shraniti. Poskusite \u0161e enkrat."
+    m_Localized: "Profila ni bilo mogo\u010De shraniti. Prosimo, poskusi znova."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000120
-    m_Localized: "Nepri\u010Dakovana napaka. Poskusite \u0161e enkrat."
+    m_Localized: "Nepri\u010Dakovana napaka. Prosimo, poskusi znova."
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000122
@@ -816,23 +814,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985733
-    m_Localized: Potekel
+    m_Localized: "Prete\u010Den rok uporabe"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985734
-    m_Localized: Razvajen
+    m_Localized: Pokvarjeno
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985735
-    m_Localized: Prekuhano
+    m_Localized: "Prekuhano/prepe\u010Deno"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985736
-    m_Localized: "Neza\u017Eeleno"
+    m_Localized: "Ne\u017Eeleno"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985737
-    m_Localized: Porcija je prevelika
+    m_Localized: Prevelika porcija
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985738
@@ -852,19 +850,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985750
-    m_Localized: Pult
+    m_Localized: Kuhinjski pult
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985751
-    m_Localized: Omara
+    m_Localized: Kuhinjska omarica
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985753
-    m_Localized: "Nalaganje uporabni\u0161kega vmesnika..."
+    m_Localized: "Nalaganje uporabni\u0161kega vmesnika\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985754
-    m_Localized: Iskanje...
+    m_Localized: "I\u0161\u010Di\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950985755
@@ -876,7 +874,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986001
-    m_Localized: "Zaenkrat \u0161e ni nobenih skupin."
+    m_Localized: "Ni \u0161e skupin."
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986002
@@ -896,7 +894,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986006
-    m_Localized: "Ustvari ali se pridru\u017Ei skupini"
+    m_Localized: "Ustvari skupino ali se ji pridru\u017Ei"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986007
@@ -912,7 +910,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986012
-    m_Localized: Obnovi
+    m_Localized: Ponovno ustvari
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986013
@@ -924,23 +922,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986015
-    m_Localized: "Dodaj \u010Dlana"
+    m_Localized: "Dodaj \u010Dlana/\u010Dlanico"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986016
-    m_Localized: Postani administrator
+    m_Localized: Nastavi kot administratorja
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986017
-    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite zapustiti to skupino?"
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 zapustiti to skupino?"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986018
-    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite to skupino izbrisati?"
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 izbrisati to skupino?"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986019
-    m_Localized: Upravitelj
+    m_Localized: Administrator
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986020
@@ -956,7 +954,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986023
-    m_Localized: "Dodaj virtualnega \u010Dlana"
+    m_Localized: "Dodaj virtualnega \u010Dlana/virtualno \u010Dlanico"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986024
@@ -964,8 +962,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986025
-    m_Localized: "Ustvarite skupino ali se ji pridru\u017Eite, da boste z dru\u017Eino
-      delili nakupovalne sezname in napredek."
+    m_Localized: "Ustvari skupino ali se ji pridru\u017Ei, da deli\u0161 nakupovalne
+      sezname in napredek s svojo dru\u017Eino."
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986026
@@ -977,7 +975,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986028
-    m_Localized: "Zaenkrat presko\u010Di"
+    m_Localized: "Presko\u010Di za zdaj"
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986029
@@ -985,7 +983,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7590950986030
-    m_Localized: "Pridru\u017Eil sem se skupini!"
+    m_Localized: "Pridru\u017Een/-a skupini!"
     m_Metadata:
       m_Items: []
   - m_Id: 319685458386944
@@ -997,7 +995,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1352600405401600
-    m_Localized: "Preverjanje razpolo\u017Eljivosti posodobitev..."
+    m_Localized: "Preverjanje posodobitev\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 1674160731316224
@@ -1009,15 +1007,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1674465741103104
-    m_Localized: 'Opombe k izdaji:'
+    m_Localized: 'Opombe ob izdaji:'
     m_Metadata:
       m_Items: []
   - m_Id: 1675915250622464
-    m_Localized: Posodobitev
+    m_Localized: Posodobi
     m_Metadata:
       m_Items: []
   - m_Id: 1675915254816768
-    m_Localized: Kasneje
+    m_Localized: Pozneje
     m_Metadata:
       m_Items: []
   - m_Id: 3882568704319488
@@ -1025,24 +1023,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6413218154012672
-    m_Localized: Rezultati niso bili najdeni
+    m_Localized: Ni najdenih rezultatov
     m_Metadata:
       m_Items: []
   - m_Id: 7835105786585088
-    m_Localized: "Generi\u010Dna hrana ni na voljo"
+    m_Localized: "Splo\u0161no \u017Eivilo ni na voljo"
     m_Metadata:
       m_Items: []
   - m_Id: 7835562022002688
-    m_Localized: "Ta generi\u010Dna \u017Eivila niso na voljo v podatkovni bazi na
-      stre\u017Eni\u0161ki strani za to okolje."
+    m_Localized: "To splo\u0161no \u017Eivilo ni na voljo v zaledni zbirki podatkov
+      za to okolje."
     m_Metadata:
       m_Items: []
   - m_Id: 6798748049989632
-    m_Localized: Backend
+    m_Localized: Zaledje
     m_Metadata:
       m_Items: []
   - m_Id: 6798836050681856
-    m_Localized: URL vmesnika API
+    m_Localized: URL-naslov API-ja
     m_Metadata:
       m_Items: []
   - m_Id: 6798909413253120
@@ -1054,7 +1052,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 6800027757305856
-    m_Localized: "S spremembo okolja se boste odjavili. Ste prepri\u010Dani?"
+    m_Localized: "Sprememba okolja te bo odjavila. Ali si prepri\u010Dan/-a?"
     m_Metadata:
       m_Items: []
   - m_Id: 14120235996012544
@@ -1062,7 +1060,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 14120384667312128
-    m_Localized: Jedli smo zunaj
+    m_Localized: Obrok zunaj
     m_Metadata:
       m_Items: []
   - m_Id: 20518970774773760
@@ -1091,7 +1089,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18736267513114624
-    m_Localized: Dlakavost na obrazu
+    m_Localized: Obrazne dlake
     m_Metadata:
       m_Items: []
   - m_Id: 18736302107734016
@@ -1099,7 +1097,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 18736328280190976
-    m_Localized: Majica
+    m_Localized: Majica s kratkimi rokavi
     m_Metadata:
       m_Items: []
   - m_Id: 18736361163534336
@@ -1115,11 +1113,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 19453408372056064
-    m_Localized: Odprti podatki o hrani
+    m_Localized: Open Food Facts
     m_Metadata:
       m_Items: []
   - m_Id: 20629525997019136
-    m_Localized: Razumel sem!
+    m_Localized: Razumem!
     m_Metadata:
       m_Items: []
   - m_Id: 25708140598124544
@@ -1132,10 +1130,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25709632411394048
-    m_Localized: "Dobrodo\u0161li v Foodmission!\nTa kratka anketa nam pomaga razumeti
-      va\u0161e prehranjevalne navade, ozave\u0161\u010Denost o izgubi hrane in trajnostne
-      odlo\u010Ditve, da vam bo {global.PET_NAME} lahko pripravil priporo\u010Dila
-      po meri."
+    m_Localized: "Dobrodo\u0161el/-la v Foodmission!\nTa hitra anketa nam pomaga
+      razumeti tvoje prehranjevalne navade, zavedanje o odpadni hrani in trajnostne
+      izbire, da lahko {global.PET_NAME} prilagodi priporo\u010Dila zate."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
@@ -1144,11 +1141,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25971230925381632
-    m_Localized: "NAJNOVEJ\u0160E DODATKE"
+    m_Localized: NEDAVNO DODANO
     m_Metadata:
       m_Items: []
   - m_Id: 25972618610860032
-    m_Localized: "Prej\u0161nja"
+    m_Localized: Nazaj
     m_Metadata:
       m_Items: []
   - m_Id: 25973559573602304
@@ -1156,15 +1153,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26077910317129728
-    m_Localized: Iskanje obrokov in receptov...
+    m_Localized: "Iskanje obrokov in receptov\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 26079908550664192
-    m_Localized: Kaj si jedel za {0}?
+    m_Localized: Kaj si jedel/jedla za {0}?
     m_Metadata:
       m_Items: []
   - m_Id: 26082273878073344
-    m_Localized: "Zadnjih obrokov ni zabele\u017Eenih."
+    m_Localized: "Ni zabele\u017Eenih nedavnih obrokov."
     m_Metadata:
       m_Items: []
   - m_Id: 26082769774829568
@@ -1176,12 +1173,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26083312333217792
-    m_Localized: "Sestavine prednastavitve \xBB{0}\xAB so se spremenile. Ali \u017Eelite
-      posodobiti obstoje\u010Do prednastavitev ali jo shraniti kot novo prednastavitev?"
+    m_Localized: "Sestavine za \xBB{0}\xAB so se spremenile. \u017Deli\u0161 posodobiti
+      obstoje\u010Do nastavitev ali jo shraniti kot novo?"
     m_Metadata:
       m_Items: []
   - m_Id: 26083867323523072
-    m_Localized: Prednastavitev je bila spremenjena.
+    m_Localized: Nastavitev je spremenjena.
     m_Metadata:
       m_Items: []
   - m_Id: 26084472809054208
@@ -1193,11 +1190,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26085108048977920
-    m_Localized: Shrani kot novo prednastavitev
+    m_Localized: Shrani kot novo nastavitev
     m_Metadata:
       m_Items: []
   - m_Id: 26085312869425152
-    m_Localized: Vnesite ime za novo prednastavitev
+    m_Localized: Vnesi ime za novo nastavitev
     m_Metadata:
       m_Items: []
   - m_Id: 26085540183924736
@@ -1205,7 +1202,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26305215656353792
-    m_Localized: "Kak\u0161en obrok \u017Eeli\u0161 vnesti?"
+    m_Localized: "Katero vrsto obroka \u017Eeli\u0161 zabele\u017Eiti?"
     m_Metadata:
       m_Items: []
   - m_Id: 26305695111438336
@@ -1213,19 +1210,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26308100574142464
-    m_Localized: Iskanje obrokov in receptov...
+    m_Localized: "I\u0161\u010Di obroke in recepte\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 26308484147437568
-    m_Localized: "Poi\u0161\u010Dite izdelke ali izberite kategorijo..."
+    m_Localized: "I\u0161\u010Di izdelke ali izberi kategorijo\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 26318181705441280
-    m_Localized: "Prosimo, dodajte vsaj eno \u017Eivilo"
+    m_Localized: "Dodaj vsaj eno \u017Eivilo"
     m_Metadata:
       m_Items: []
   - m_Id: 26341658550329344
-    m_Localized: "Izbri\u0161i element"
+    m_Localized: "Izbri\u0161i izdelek"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819914
@@ -1253,7 +1250,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819909
-    m_Localized: Izvor sestavin
+    m_Localized: Poreklo sestavin
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819906
@@ -1261,7 +1258,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142477819907
-    m_Localized: Velikost obroka
+    m_Localized: Velikost porcije
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625613
@@ -1285,7 +1282,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625644
-    m_Localized: Makronutraetov
+    m_Localized: Makrohranila
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625610
@@ -1353,7 +1350,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625605
-    m_Localized: Celovita prehrana
+    m_Localized: Celoten prehranski profil
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625606
@@ -1381,7 +1378,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625623
-    m_Localized: "Enokratno nenasi\u010Dene ma\u0161\u010Dobe"
+    m_Localized: "Enkrat nenasi\u010Dene ma\u0161\u010Dobe"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625624
@@ -1397,7 +1394,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625627
-    m_Localized: "Trans ma\u0161\u010Dobe"
+    m_Localized: "Transma\u0161\u010Dobe"
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625628
@@ -1461,7 +1458,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625643
-    m_Localized: Folna kislina
+    m_Localized: Folat
     m_Metadata:
       m_Items: []
   - m_Id: 21294142473625645
@@ -1477,11 +1474,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26661509051441152
-    m_Localized: Zamenjaj seznam
+    m_Localized: Spremeni seznam
     m_Metadata:
       m_Items: []
   - m_Id: 26664242240282624
-    m_Localized: "Ob ozna\u010Ditvi se samodejno doda v shrambo"
+    m_Localized: "Samodejno dodaj v shrambo ob ozna\u010Ditvi"
     m_Metadata:
       m_Items: []
   - m_Id: 26664711310270464
@@ -1489,11 +1486,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26665383497818112
-    m_Localized: Ponastaviti seznam?
+    m_Localized: Ponastavi seznam?
     m_Metadata:
       m_Items: []
   - m_Id: 26665444902428672
-    m_Localized: "S tem se bodo odkljukale vse mo\u017Enosti."
+    m_Localized: To bo pobrisalo izbiro vseh izdelkov.
     m_Metadata:
       m_Items: []
   - m_Id: 26665526003490816
@@ -1501,15 +1498,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26665593070411776
-    m_Localized: "Elementa ni bilo mogo\u010De dodati v shrambo"
+    m_Localized: "Izdelka ni bilo mogo\u010De dodati v shrambo"
     m_Metadata:
       m_Items: []
   - m_Id: 26665665698979840
-    m_Localized: Izdelek dodan v shrambo
+    m_Localized: Izdelek je dodan v shrambo
     m_Metadata:
       m_Items: []
   - m_Id: 26666342005334016
-    m_Localized: Kaj bi rad dodal na seznam?
+    m_Localized: "Kaj \u017Eeli\u0161 dodati na seznam?"
     m_Metadata:
       m_Items: []
   - m_Id: 26683190063128576
@@ -1521,7 +1518,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26684271409225728
-    m_Localized: Obogaten z
+    m_Localized: Obogateno z/s
     m_Metadata:
       m_Items: []
   - m_Id: 26684341949030400
@@ -1529,7 +1526,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26684380855394304
-    m_Localized: Vrednosti na 100 g
+    m_Localized: "Vrednosti na 100\_g"
     m_Metadata:
       m_Items: []
   - m_Id: 26697861683994624
@@ -1545,11 +1542,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26698245924184064
-    m_Localized: Vegetarijanski
+    m_Localized: Vegetarijansko
     m_Metadata:
       m_Items: []
   - m_Id: 26698315646099456
-    m_Localized: Veganski
+    m_Localized: Vegansko
     m_Metadata:
       m_Items: []
   - m_Id: 26698358113427456
@@ -1573,19 +1570,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26777548250669056
-    m_Localized: Izdelek je bil dodan na nakupovalni seznam
+    m_Localized: Izdelek je dodan na nakupovalni seznam
     m_Metadata:
       m_Items: []
   - m_Id: 26777752722989056
-    m_Localized: Iskanje ali skeniranje izdelka
+    m_Localized: "Poi\u0161\u010Di ali skeniraj izdelek"
     m_Metadata:
       m_Items: []
   - m_Id: 26799037893042176
-    m_Localized: Izvor
+    m_Localized: Poreklo
     m_Metadata:
       m_Items: []
   - m_Id: 27039676689801216
-    m_Localized: "Poravnajte \u010Drtno kodo znotraj okvirja"
+    m_Localized: "Poravnaj \u010Drtno kodo znotraj okvirja"
     m_Metadata:
       m_Items: []
   - m_Id: 27100895719186432
@@ -1593,15 +1590,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27100946763866112
-    m_Localized: +3 dni
+    m_Localized: "\xB4+3 dni"
     m_Metadata:
       m_Items: []
   - m_Id: 27101012291477504
-    m_Localized: +1 teden
+    m_Localized: "\xB4+1 teden"
     m_Metadata:
       m_Items: []
   - m_Id: 27101090557190144
-    m_Localized: +1 mesec
+    m_Localized: "\xB4+1 mesec"
     m_Metadata:
       m_Items: []
   - m_Id: 28899582313226240
@@ -1620,7 +1617,7 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 28538423429029888
-    m_Localized: Ni mnenj
+    m_Localized: Ni ocen
     m_Metadata:
       m_Items: []
   - m_Id: 28538760755929088
@@ -1628,11 +1625,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28540443628134400
-    m_Localized: Iskanje receptov...
+    m_Localized: "I\u0161\u010Di recepte\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 28541196946104320
-    m_Localized: Receptov ni bilo najdenih
+    m_Localized: Ni najdenih receptov
     m_Metadata:
       m_Items: []
   - m_Id: 28870311913971712
@@ -1644,7 +1641,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28870860768010240
-    m_Localized: Prehrana
+    m_Localized: Hranilna vrednost
     m_Metadata:
       m_Items: []
   - m_Id: 28872804286849024
@@ -1656,15 +1653,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28901602873040896
-    m_Localized: "\U0001F534 Te\u017Eko"
+    m_Localized: "\U0001F534 Zahtevno"
     m_Metadata:
       m_Items: []
   - m_Id: 28901779868475392
-    m_Localized: "\U0001F7E0 Srednje"
+    m_Localized: "\U0001F7E0 Srednje te\u017Eko"
     m_Metadata:
       m_Items: []
   - m_Id: 28901897447399424
-    m_Localized: "\U0001F7E2 Enostavno"
+    m_Localized: "\U0001F7E2 Lahko"
     m_Metadata:
       m_Items: []
   - m_Id: 28902986997555200
@@ -1684,7 +1681,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28908420210876416
-    m_Localized: Porcije
+    m_Localized: "\u0160tevilo porcij"
     m_Metadata:
       m_Items: []
   - m_Id: 28909425992392704
@@ -1692,7 +1689,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28910041263235072
-    m_Localized: Kuhinja
+    m_Localized: Vrsta kuhinje
     m_Metadata:
       m_Items: []
   - m_Id: 28910081239146496
@@ -1700,11 +1697,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28911397441101824
-    m_Localized: Eko-ocena
+    m_Localized: Okoljska ocena
     m_Metadata:
       m_Items: []
   - m_Id: 28911707144314880
-    m_Localized: Predvidena cena
+    m_Localized: Ocenjena cena
     m_Metadata:
       m_Items: []
   - m_Id: 28917113388261376
@@ -1716,82 +1713,81 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 29226776210169856
-    m_Localized: Koda za povabilo je kopirana!
+    m_Localized: Koda povabila je kopirana!
     m_Metadata:
       m_Items: []
   - m_Id: 29234156377464832
-    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite tega uporabnika imenovati
-      za skrbnika skupine?"
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 tega uporabnika imenovati
+      za administratorja skupine?"
     m_Metadata:
       m_Items: []
   - m_Id: 29234503556784128
-    m_Localized: "Uporabnik je bil povi\u0161an v administratorja"
+    m_Localized: Uporabnik je bil imenovan za administratorja
     m_Metadata:
       m_Items: []
   - m_Id: 31123411232088064
-    m_Localized: "Dobrodo\u0161li na FOODMISSION! \nPlatforma za dr\u017Eavljansko
-      znanost, ki vam pomaga izbolj\u0161ati trajnostne navade in prehranske navade.
-      \nV nekaj preprostih korakih si ustvarimo ra\u010Dun."
+    m_Localized: "Dobrodo\u0161el/-la v FOODMISSION! \nPlatforma za ljubiteljsko
+      znanost za izbolj\u0161anje tvojega trajnostnega in prehranskega vedenja. \nNastavimo
+      tvoj ra\u010Dun v nekaj preprostih korakih."
     m_Metadata:
       m_Items: []
   - m_Id: 31123536339787776
-    m_Localized: "Izberite uporabni\u0161ko ime, s katerim boste prepoznavni na platformi
-      FOODMISSION."
+    m_Localized: "Izberi uporabni\u0161ko ime, po katerem bo\u0161 prepoznaven/-na
+      na platformi FOODMISSION."
     m_Metadata:
       m_Items: []
   - m_Id: 31124113580875776
-    m_Localized: "Vnesite svoj e-po\u0161tni naslov. Uporabili ga bomo za za\u0161\u010Dito
-      va\u0161ega ra\u010Duna in po\u0161iljanje le pomembnih obvestil."
+    m_Localized: "Vnesi svoj e-po\u0161tni naslov. Uporabili ga bomo za zavarovanje
+      tvojega ra\u010Duna in po\u0161iljanje le pomembnih posodobitev."
     m_Metadata:
       m_Items: []
   - m_Id: 31124276500226048
-    m_Localized: "Ustvarite varno geslo z najmanj 6 znaki, da za\u0161\u010Ditite
+    m_Localized: "Ustvari varno\_geslo z vsaj 6 znaki, da za\u0161\u010Diti\u0161
       svoj ra\u010Dun."
     m_Metadata:
       m_Items: []
   - m_Id: 31124326903177216
-    m_Localized: "Povejte nam, v katerem letu ste se rodili. To nam pomaga prilagoditi
-      raziskovalne dejavnosti in priporo\u010Dila."
+    m_Localized: "Povej nam svoje leto rojstva. To nam pomaga prilagoditi raziskovalne
+      dejavnosti in priporo\u010Dila."
     m_Metadata:
       m_Items: []
   - m_Id: 31124438433914880
-    m_Localized: "Izberite dr\u017Eavo prebivali\u0161\u010Da in regijo, da se seznanite
-      z lokalnimi pobudami in geografskimi statisti\u010Dnimi podatki."
+    m_Localized: "Izberi svojo dr\u017Eavo bivanja in regijo, da se pove\u017Ee\u0161
+      z lokalnimi pobudami in geografsko statistiko."
     m_Metadata:
       m_Items: []
   - m_Id: 31124560802734080
-    m_Localized: "Preberite in sprejmite na\u0161e splo\u0161ne pogoje, da boste
-      lahko nadaljevali."
+    m_Localized: "Za nadaljevanje preglej in sprejmi na\u0161e Splo\u0161ne pogoje."
     m_Metadata:
       m_Items: []
   - m_Id: 31124623998312448
-    m_Localized: "Prosimo, da si preberete in sprejmete na\u0161o politiko zasebnosti,
-      da boste razumeli, kako varujemo va\u0161e podatke."
+    m_Localized: "Preglej in sprejmi na\u0161 Pravilnik o zasebnosti, da bo\u0161
+      razumel/-a, kako varujemo tvoje podatke."
     m_Metadata:
       m_Items: []
   - m_Id: 31124709910241280
-    m_Localized: "Prosimo, da si ogledate in potrdite obrazec o prostovoljnem soglasju
-      za sodelovanje v pilotni \u0161tudiji FOODMISSION."
+    m_Localized: "Preglej in sprejmi Obrazec za informirano privolitev za sodelovanje
+      v pilotni \u0161tudiji FOODMISSION."
     m_Metadata:
       m_Items: []
   - m_Id: 31124844652257280
-    m_Localized: Strinjam se s politiko zasebnosti
+    m_Localized: Sprejemam Pravilnik o zasebnosti
     m_Metadata:
       m_Items: []
   - m_Id: 31125157933211648
-    m_Localized: "Strinjam se s sodelovanjem v pilotni \u0161tudiji"
+    m_Localized: "Sogla\u0161am s sodelovanjem v pilotni \u0161tudiji"
     m_Metadata:
       m_Items: []
   - m_Id: 31125240456142848
-    m_Localized: "Preberite pogoje in dolo\u010Dila"
+    m_Localized: "Preberi splo\u0161ne pogoje"
     m_Metadata:
       m_Items: []
   - m_Id: 31125292482289664
-    m_Localized: Preberite politiko zasebnosti
+    m_Localized: Preberi Pravilnik o zasebnosti
     m_Metadata:
       m_Items: []
   - m_Id: 31125361180794880
-    m_Localized: "Preberite obrazec za soglasje za pilotno \u0161tudijo"
+    m_Localized: Preberi Obrazec za informirano privolitev
     m_Metadata:
       m_Items: []
   - m_Id: 31126126712578048
@@ -1799,7 +1795,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31126448877068288
-    m_Localized: Najmanj 6 znakov
+    m_Localized: Vsaj 6 znakov
     m_Metadata:
       m_Items: []
   - m_Id: 31126680599781376
@@ -1811,61 +1807,61 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 31127125703516160
-    m_Localized: Politika varstva zasebnosti
+    m_Localized: Pravilnik o zasebnosti
     m_Metadata:
       m_Items: []
   - m_Id: 31127159106953216
-    m_Localized: "Pilotna \u0161tudija \u2013 prostovoljna privolitev"
+    m_Localized: "Obrazec za informirano privolitev za sodelovanje v pilotni \u0161tudiji"
     m_Metadata:
       m_Items: []
   - m_Id: 33345134950080512
-    m_Localized: Izberite leto rojstva
+    m_Localized: Izberi svoje leto rojstva
     m_Metadata:
       m_Items: []
   - m_Id: 33550412991684608
-    m_Localized: "Dobrodo\u0161li v FOODMISSION!"
+    m_Localized: "Dobrodo\u0161el/-la v FOODMISSION!"
     m_Metadata:
       m_Items: []
   - m_Id: 33625641466191872
-    m_Localized: "V va\u0161i dr\u017Eavi se pilotni projekt ne izvaja.\nPlatformo
-      lahko raziskujete in uporabljate, vendar va\u0161i podatki ne bodo uporabljeni
-      za raziskavo v okviru pilotnega projekta."
+    m_Localized: "V tvoji dr\u017Eavi se ne izvaja nobena pilotna \u0161tudija\nPlatformo
+      lahko raziskuje\u0161 in uporablja\u0161, vendar tvoji podatki ne bodo uporabljeni
+      za pilotno raziskavo."
     m_Metadata:
       m_Items: []
   - m_Id: 34022749457342464
-    m_Localized: "Pozdravljeni! Da bi vam lahko prilagodili izku\u0161njo na Foodmissionu
-      in vam pomagali dose\u010Di va\u0161e cilje, bi vas radi malo bolje spoznali.
-      Ste za to?\n\nProsimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
-      lahko prilagodili va\u0161e nasvete, predloge receptov in izzive."
+    m_Localized: "\u017Divjo! Da bi prilagodili tvojo izku\u0161njo v aplikaciji
+      Foodmission in ti pomagali dose\u010Di cilje, bi te radi malo bolje spoznali.
+      Si za?\n\nOdgovori na nekaj neobveznih vpra\u0161anj, da ti bomo lahko prilagodili
+      nasvete, predloge receptov in izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34022967284326400
-    m_Localized: "Kaj vas najbolj motivira, da bi se pridru\u017Eili podjetju Foodmission?
-      Povejte nam, kak\u0161en je va\u0161 glavni cilj."
+    m_Localized: "Kaj te najbolj motivira za pridru\u017Eitev platformi FOODMISSION?
+      Povej nam, kaj je tvoj glavni cilj."
     m_Metadata:
       m_Items: []
   - m_Id: 34023051975712768
-    m_Localized: Nekaj podatkov o tebi nam pomaga prilagoditi aplikacijo ljudem iz
-      tvojega kroga in tvoje starostne skupine.
+    m_Localized: Nekaj podrobnosti o tebi nam pomaga prilagoditi aplikacijo ljudem
+      v tvojem krogu in starostni skupini.
     m_Metadata:
       m_Items: []
   - m_Id: 34023332885028864
-    m_Localized: "Ali imate kak\u0161ne prehranske omejitve ali \u017Eelje? Izberete
-      lahko vse, ki veljajo za vas. Tako vam bomo lahko predlagali recepte in \u017Eivila,
-      ki vam ustrezajo."
+    m_Localized: "Ima\u0161 kak\u0161ne prehranske omejitve ali preference? Izbere\u0161
+      jih lahko ve\u010D. Tako ti bomo la\u017Eje predlagali recepte in \u017Eivila,
+      ki ti ustrezajo."
     m_Metadata:
       m_Items: []
   - m_Id: 34027969428054016
-    m_Localized: "Spoznavanje va\u0161ih dnevnih navad nam omogo\u010Da, da vam ponudimo
-      nasvete, ki se prilegajo va\u0161emu vsakdanjemu \u017Eivljenju."
+    m_Localized: "Razumevanje tvojih vsakodnevnih rutin nam omogo\u010Da, da ti svetujemo
+      na na\u010Din, ki ustreza tvojemu resni\u010Dnemu \u017Eivljenju."
     m_Metadata:
       m_Items: []
   - m_Id: 34037819398676480
-    m_Localized: Glavni motiv
+    m_Localized: Glavna motivacija
     m_Metadata:
       m_Items: []
   - m_Id: 34037939833921536
-    m_Localized: Izberite svoj glavni cilj
+    m_Localized: Izberi svoj glavni cilj
     m_Metadata:
       m_Items: []
   - m_Id: 34038583797997568
@@ -1873,11 +1869,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34038675313516544
-    m_Localized: Raven izobrazbe
+    m_Localized: Stopnja izobrazbe
     m_Metadata:
       m_Items: []
   - m_Id: 34038791491543040
-    m_Localized: Izberite svojo stopnjo izobrazbe
+    m_Localized: Izberi svojo stopnjo izobrazbe
     m_Metadata:
       m_Items: []
   - m_Id: 34038925629579264
@@ -1885,7 +1881,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039030617202688
-    m_Localized: Izberite razpon bruto dohodka
+    m_Localized: Izberi razpon bruto dohodka
     m_Metadata:
       m_Items: []
   - m_Id: 34039177296207872
@@ -1893,7 +1889,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34039865006874624
-    m_Localized: Izberite vse, kar velja
+    m_Localized: Izberi vse, kar velja
     m_Metadata:
       m_Items: []
   - m_Id: 34039990223626240
@@ -1901,35 +1897,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34040218603479040
-    m_Localized: Izberite stopnjo aktivnosti
+    m_Localized: Izberi stopnjo aktivnosti
     m_Metadata:
       m_Items: []
   - m_Id: 34040348811452416
-    m_Localized: Odgovorno nakupovanje
+    m_Localized: Odgovornost za nakupovanje
     m_Metadata:
       m_Items: []
   - m_Id: 34040572049088512
-    m_Localized: Izberite stopnjo odgovornosti
+    m_Localized: Izberi svojo stopnjo odgovornosti
     m_Metadata:
       m_Items: []
   - m_Id: 34040672355868672
-    m_Localized: "Koliko \u010Dasa lahko vsak dan pre\u017Eivite z uporabo te aplikacije?"
+    m_Localized: "Koliko \u010Dasa lahko vsak dan nameni\u0161 uporabi te aplikacije?"
     m_Metadata:
       m_Items: []
   - m_Id: 34040837200404480
-    m_Localized: "Izberite predviden \u010Das"
+    m_Localized: "Izberi predvideni \u010Das"
     m_Metadata:
       m_Items: []
   - m_Id: 34041809595260928
-    m_Localized: "Prosimo, odgovorite na nekaj neobveznih vpra\u0161anj, da bomo
-      lahko prilagodili va\u0161e nasvete, predloge receptov in izzive."
+    m_Localized: "Odgovori na nekaj neobveznih vpra\u0161anj, da ti bomo lahko prilagodili
+      nasvete, predloge receptov in izzive."
     m_Metadata:
       m_Items: []
   - m_Id: 34305618675228672
-    m_Localized: "Ups! Ta razdelek \u0161e ni na voljo, a ne skrbite: delamo na tem,
-      da ga boste lahko kmalu uporabljali.\n\nFOODMISSION se nenehno razvija. Aplikacijo
-      izbolj\u0161ujemo in dodajamo nove funkcije na podlagi povratnih informacij
-      od uporabnikov, kot ste vi. Hvala, da nam pomagate rasti!"
+    m_Localized: "Ups! Ta razdelek \u0161e ni na voljo, vendar ne skrbi: delamo na
+      tem, da bo\u0161 lahko v njem u\u017Eival/-a \u017Ee zelo kmalu.\n\nFOODMISSION
+      se nenehno razvija. Aplikacijo izbolj\u0161ujemo in dodajamo nove funkcije
+      zahvaljujo\u010D povratnim informacijam ljudi, kot si ti. Hvala, ker nam pomaga\u0161
+      rasti!"
     m_Metadata:
       m_Items: []
   - m_Id: 34310338294833152
@@ -1941,7 +1938,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37187273882591232
-    m_Localized: Kviz
+    m_Localized: Kvizi
     m_Metadata:
       m_Items: []
   - m_Id: 37187301837627392
@@ -1949,11 +1946,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37187373195321344
-    m_Localized: "Za\u010Detnik"
+    m_Localized: "Za\u010Detnik/-ca"
     m_Metadata:
       m_Items: []
   - m_Id: 37187414811205632
-    m_Localized: Srednja stopnja
+    m_Localized: Nadaljevalec/-ka
     m_Metadata:
       m_Items: []
   - m_Id: 37187437674356736
@@ -1965,42 +1962,42 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37187522730647552
-    m_Localized: V obravnavi
+    m_Localized: "Na \u010Dakanju"
     m_Metadata:
       m_Items: []
   - m_Id: 37187606511869952
-    m_Localized: "Zaklju\u010Deno"
+    m_Localized: Opravljeno
     m_Metadata:
       m_Items: []
   - m_Id: 37187629354049536
-    m_Localized: Ni bilo najdenih kvizov, ki bi ustrezali izbranim filtrom.
+    m_Localized: Ni najdenih kvizov, ki bi ustrezali izbranim filtrom.
     m_Metadata:
       m_Items: []
   - m_Id: 37196650563756032
-    m_Localized: Raven
+    m_Localized: Stopnja
     m_Metadata:
       m_Items: []
   - m_Id: 37196726493241344
-    m_Localized: Stanje
+    m_Localized: Status
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103936
-    m_Localized: "Ostani na pravi poti! Vklopi obvestila, da ne bo\u0161 zamudil
-      izzivov, bele\u017Eenja obrokov in opozoril o izteku roka uporabe \u017Eivil
-      v shrambi. Ne bomo te motili, po\u0161iljali ti bomo le koristna opozorila."
+    m_Localized: "Ostani na pravi poti! Vklopi potisna obvestila, da ne zamudi\u0161
+      izzivov, vnosov obrokov in opozoril o poteku roka uporabnosti \u017Eivil v
+      shrambi. Po\u0161iljali ti bomo le koristne opomnike."
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103937
-    m_Localized: "Ob kateri uri bi \u017Eeleli prejemati dnevna opozorila za vnos
-      obrokov ali pregled shrambe?"
+    m_Localized: "Ob kateri uri bi najraje prejemal/-a dnevne opomnike za bele\u017Eenje
+      obrokov ali preverjanje shrambe?"
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103938
-    m_Localized: Obvestila s potrditvijo
+    m_Localized: Potisna obvestila
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103939
-    m_Localized: "Izberite, ali \u017Eelite omogo\u010Diti obvestila"
+    m_Localized: "Izberi, ali \u017Eeli\u0161 omogo\u010Diti obvestila"
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103940
@@ -2012,11 +2009,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103942
-    m_Localized: "\u010Cas za opomin"
+    m_Localized: "\u010Cas opomnika"
     m_Metadata:
       m_Items: []
   - m_Id: 37253702120103943
-    m_Localized: "Izberite \u017Eeleni \u010Das"
+    m_Localized: "Izberi \u017Eeleni \u010Das"
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172032
@@ -2024,11 +2021,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172033
-    m_Localized: "Ozna\u010Di kot zau\u017Eito"
+    m_Localized: "Ozna\u010Di kot pojedeno"
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172034
-    m_Localized: "Zabele\u017Ei kot odpadek hrane"
+    m_Localized: "Zabele\u017Ei kot odpadno hrano"
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172035
@@ -2036,19 +2033,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172036
-    m_Localized: "Obrok uspe\u0161no zabele\u017Een"
+    m_Localized: "Obrok je bil uspe\u0161no zabele\u017Een"
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172037
-    m_Localized: "Odpadek hrane uspe\u0161no zabele\u017Een"
+    m_Localized: "Odpadna hrana je bila uspe\u0161no zabele\u017Eena"
     m_Metadata:
       m_Items: []
   - m_Id: 38390811904172038
-    m_Localized: Izdelek odstranjen iz shrambe
+    m_Localized: Izdelek je bil odstranjen iz shrambe
     m_Metadata:
       m_Items: []
   - m_Id: 38403887139381248
-    m_Localized: "Predvideni stro\u0161ki (\u20AC, neobvezno)"
+    m_Localized: "Ocenjeni stro\u0161ek (\u20AC, neobvezno)"
     m_Metadata:
       m_Items: []
   - m_Id: 38404185903849472
@@ -2061,9 +2058,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 40878604073033728
-    m_Localized: "Posodobili smo dokument {0}. Prosimo, da ga natan\u010Dno pregledate
-      in, \u010De se z njim strinjate, ga sprejmete, da boste lahko \u0161e naprej
-      uporabljali FOODMISSION."
+    m_Localized: "Posodobili smo dokument {0}. Prosimo, da ga natan\u010Dno pregleda\u0161
+      in, \u010De se strinja\u0161, sprejme\u0161, da bo\u0161 lahko \u0161e naprej
+      uporabljal/-a FOODMISSION."
     m_Metadata:
       m_Items: []
   - m_Id: 40937444932050944
@@ -2071,22 +2068,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 40938002757705728
-    m_Localized: "\u010Ce \u017Eelite \u0161e naprej uporabljati platformo, morate
-      sprejeti nov dokument {0}. \u010Ce se s tem ne strinjate, se lahko odjavite
-      ali izbri\u0161ete svoj ra\u010Dun.\n\nVzemite si trenutek \u010Dasa in \u0161e
-      enkrat preglejte nov dokument {0} ter nas brez zadr\u017Ekov obvestite, \u010De
-      menite, da je v njem kaj narobe."
+    m_Localized: "\u010Ce \u017Eeli\u0161 nadaljevati z uporabo platforme, mora\u0161
+      sprejeti nov dokument {0}. \u010Ce se ne strinja\u0161, se lahko odjavi\u0161
+      ali izbri\u0161e\u0161 svoj ra\u010Dun.\n\nProsimo, vzemi si trenutek in ponovno
+      preglej nov dokument {0}. \u010Ce meni\u0161, da je v njem kaj narobe, nas
+      kontaktiraj."
     m_Metadata:
       m_Items: []
   - m_Id: 41170053394063360
-    m_Localized: Pregled dokumenta
+    m_Localized: Preglej dokument
     m_Metadata:
       m_Items: []
   - m_Id: 41275909230026752
-    m_Localized: "Pozdravljeni!\n\nKot udele\u017Eenec pilotnega projekta smo za
-      vas pripravili kratek vpra\u0161alnik. Va\u0161i odgovori nam bodo pomagali
-      izbolj\u0161ati platformo FOODMISSION. \n\nAli bi ga \u017Eeleli izpolniti
-      zdaj?"
+    m_Localized: "\u017Divijo!\n\nKot udele\u017Eencu/udele\u017Eenki v pilotni \u0161tudiji
+      ti po\u0161iljamo kratko anketo. Tvoji odgovori nam bodo pomagali izbolj\u0161ati
+      platformo FOODMISSION. \n\nBi jo \u017Eelel/-a izpolniti zdaj?"
     m_Metadata:
       m_Items: []
   - m_Id: 41276238197678080
@@ -2094,7 +2090,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41276749693050880
-    m_Localized: Kasneje
+    m_Localized: Pozneje
     m_Metadata:
       m_Items: []
   - m_Id: 41277120381444096
@@ -2102,16 +2098,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 41564040676237312
-    m_Localized: "Ni bilo najdenih podatkov o \u017Eivilih, ki bi ustrezali izbranim
-      filtrom."
+    m_Localized: Ni najdenih dejstev o hrani, ki bi ustrezala izbranim filtrom.
     m_Metadata:
       m_Items: []
   - m_Id: 41575049637912576
-    m_Localized: Ali ste vedeli...?
+    m_Localized: "Ali si vedel/-a\_\u2026?"
     m_Metadata:
       m_Items: []
   - m_Id: 41655488905994240
-    m_Localized: Ni bilo najdenih izzivov, ki bi ustrezali izbranim filtrom.
+    m_Localized: Ni najdenih izzivov, ki bi ustrezali izbranim filtrom.
     m_Metadata:
       m_Items: []
   - m_Id: 44130274445877248
@@ -2127,7 +2122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44130493631815680
-    m_Localized: ALI STE VEDELI...?
+    m_Localized: "ALI SI VEDEL/-A\_\u2026?"
     m_Metadata:
       m_Items: []
   - m_Id: 44130682094477312
@@ -2135,36 +2130,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44134886318006272
-    m_Localized: Naloge
+    m_Localized: "Pustolov\u0161\u010Dine"
     m_Metadata:
       m_Items: []
   - m_Id: 44135210076332032
-    m_Localized: Ni bilo najdenih nalog, ki bi ustrezale izbranim filtrom.
+    m_Localized: "Ni najdenih pustolov\u0161\u010Din, ki bi ustrezale izbranim filtrom."
     m_Metadata:
       m_Items: []
   - m_Id: 44177849203023872
-    m_Localized: 'Aktivna naloga:'
+    m_Localized: "Aktivna pustolov\u0161\u010Dina:"
     m_Metadata:
       m_Items: []
   - m_Id: 44181617910996992
-    m_Localized: "Za\u010Dni nalogo"
+    m_Localized: "Za\u010Dni pustolov\u0161\u010Dino"
     m_Metadata:
       m_Items: []
   - m_Id: 44181804343615488
-    m_Localized: Aktivna naloga
+    m_Localized: "Aktivna pustolov\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 44193049838870528
-    m_Localized: "Trenutno \u017Ee opravlja\u0161 aktivno nalogo. Si prepri\u010Dan,
-      da \u017Eeli\u0161 izvesti spremembo?"
+    m_Localized: "Ena pustolov\u0161\u010Dina je \u017Ee v teku. Ali si prepri\u010Dan/-a,
+      da jo \u017Eeli\u0161 zamenjati?"
     m_Metadata:
       m_Items: []
   - m_Id: 44196897802412032
-    m_Localized: Zamenjaj nalogo
+    m_Localized: "Zamenjaj pustolov\u0161\u010Dino"
     m_Metadata:
       m_Items: []
   - m_Id: 44197097057017856
-    m_Localized: "Ohranite trenutno razli\u010Dico"
+    m_Localized: "Obdr\u017Ei trenutno"
     m_Metadata:
       m_Items: []
   - m_Id: 46966269096747008
@@ -2174,23 +2169,23 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 46966074812391424
-    m_Localized: Nagrada je tvoja!
+    m_Localized: "Nagrada prislu\u017Eena!"
     m_Metadata:
       m_Items: []
   - m_Id: 46966143921938432
-    m_Localized: Pridobljenih XP!
+    m_Localized: "XP-to\u010Dke prislu\u017Eene!"
     m_Metadata:
       m_Items: []
   - m_Id: 46966724417806336
-    m_Localized: Pridobljen nov znak!
+    m_Localized: "Nova zna\u010Dka osvojena!"
     m_Metadata:
       m_Items: []
   - m_Id: 46966954571849728
-    m_Localized: "Nov izdelek za hi\u0161ne ljubljen\u010Dke!"
+    m_Localized: "Nov predmet za ljubljen\u010Dka!"
     m_Metadata:
       m_Items: []
   - m_Id: 46976427931721728
-    m_Localized: Nova zbirateljska izdaja!
+    m_Localized: Nov zbirateljski predmet!
     m_Metadata:
       m_Items: []
   - m_Id: 47093633499783168
@@ -2202,11 +2197,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 47094236238045184
-    m_Localized: "Naloga zaklju\u010Dena!"
+    m_Localized: "Pustolov\u0161\u010Dina opravljena!"
     m_Metadata:
       m_Items: []
   - m_Id: 47094236242239488
-    m_Localized: "Kviz zaklju\u010Den!"
+    m_Localized: Kviz opravljen!
     m_Metadata:
       m_Items: []
   - m_Id: 47094236242239489
@@ -2234,8 +2229,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395972
-    m_Localized: "Dodaj \u017Eivila v svojo shrambo za pametne predloge receptov
-      in manj zavr\u017Eene hrane!"
+    m_Localized: "Dodaj izdelke v svojo shrambo, da prejme\u0161 pametne predloge
+      za recepte, ki zmanj\u0161ujejo koli\u010Dino odpadne hrane!"
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395973
@@ -2243,7 +2238,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395974
-    m_Localized: "\u0160e niste ustvarili receptov"
+    m_Localized: "Ni \u0161e ustvarjenih receptov"
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395975
@@ -2255,11 +2250,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395977
-    m_Localized: Enostavno
+    m_Localized: Preprosto
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395978
-    m_Localized: Srednje
+    m_Localized: Srednja
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395979
@@ -2271,7 +2266,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395981
-    m_Localized: "{0} kmalu pote\u010De"
+    m_Localized: "{0} pote\u010De kmalu"
     m_Metadata:
       m_Items: []
   - m_Id: 47367747309395982
@@ -2303,7 +2298,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48511689140723712
-    m_Localized: Izkoristite kar imate doma
+    m_Localized: "Izkoristi to, kar ima\u0161 doma"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335152709632
@@ -2371,7 +2366,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098254
-    m_Localized: "Kozli\u010Dek"
+    m_Localized: Kozje meso
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098255
@@ -2411,7 +2406,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098264
-    m_Localized: Nizozemska
+    m_Localized: "Nizozem\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098265
@@ -2427,7 +2422,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098268
-    m_Localized: "Gr\u0161ka"
+    m_Localized: "Gr\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098269
@@ -2439,7 +2434,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098271
-    m_Localized: Italijanska
+    m_Localized: "Italijan\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335161098272
@@ -2463,11 +2458,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48534335165292545
-    m_Localized: "Norve\u0161ka"
+    m_Localized: "Norve\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335165292546
-    m_Localized: Poljska
+    m_Localized: "Polj\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335165292547
@@ -2483,7 +2478,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48534335165292550
-    m_Localized: "\u0160panska"
+    m_Localized: "\u0160pan\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 48534335165292551
@@ -2523,7 +2518,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107073
-    m_Localized: Npr. Testenine z zelenjavo
+    m_Localized: Npr. zelenjavne testenine
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107074
@@ -2531,7 +2526,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107075
-    m_Localized: Kratek uvod v recept...
+    m_Localized: "Kratek uvod v recept\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107076
@@ -2543,15 +2538,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107078
-    m_Localized: Porcije
+    m_Localized: "\u0160tevilo porcij"
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107079
-    m_Localized: Zahtevnost
+    m_Localized: "Te\u017Eavnost"
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107080
-    m_Localized: Izberite zahtevnost
+    m_Localized: Izberi zahtevnost
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107081
@@ -2559,23 +2554,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107082
-    m_Localized: Izberite kategorijo
+    m_Localized: Izberi kategorijo
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107083
-    m_Localized: Kuhinja
+    m_Localized: Vrsta kuhinje
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107084
-    m_Localized: Izberite kuhinjo
+    m_Localized: Izberi kuhinjo
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107085
-    m_Localized: Naredi recept javen za skupnost
+    m_Localized: Objavi recept za skupnost
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107089
-    m_Localized: "Niste \u0161e dodali sestavin."
+    m_Localized: "Nisi \u0161e dodal/-a nobene sestavine."
     m_Metadata:
       m_Items: []
   - m_Id: 48786163199107090
@@ -2583,7 +2578,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48786163203301376
-    m_Localized: Podrobni koraki za pripravo jedi...
+    m_Localized: "Podrobni koraki za pripravo jedi\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 48786163203301377
@@ -2599,7 +2594,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48826426596515840
-    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite izbrisati ta recept?"
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 izbrisati ta recept?"
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672704
@@ -2607,11 +2602,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672705
-    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite izbrisati ta vnos obroka?"
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 izbrisati ta dnevnik
+      obrokov?"
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672706
-    m_Localized: "Vnos obroka uspe\u0161no izbrisan"
+    m_Localized: "Dnevnik obrokov je bil uspe\u0161no izbrisan"
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672707
@@ -2627,7 +2623,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 48876441641672711
-    m_Localized: "Obrok uspe\u0161no posodobljen"
+    m_Localized: "Obrok je bil uspe\u0161no posodobljen"
     m_Metadata:
       m_Items: []
   - m_Id: 49247263887712256
@@ -2635,7 +2631,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49247263887712257
-    m_Localized: "Katere so bile glavne zna\u010Dilnosti va\u0161e jedi?"
+    m_Localized: "Katere so bile klju\u010Dne zna\u010Dilnosti tvoje jedi?"
     m_Metadata:
       m_Items: []
   - m_Id: 49247263887712258
@@ -2643,27 +2639,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49247263887712259
-    m_Localized: "Npr.: Solata iz le\u010De in zelenjave"
+    m_Localized: "Npr.: solata z le\u010Do in zelenjavo"
     m_Metadata:
       m_Items: []
   - m_Id: 49260137687277568
-    m_Localized: "Misija zaklju\u010Dena!"
+    m_Localized: Misija opravljena!
     m_Metadata:
       m_Items: []
   - m_Id: 49260137691471872
-    m_Localized: "Izziv zaklju\u010Den!"
+    m_Localized: Izziv opravljen!
     m_Metadata:
       m_Items: []
   - m_Id: 49265187998392320
-    m_Localized: Navade in trajnostna prehrana
+    m_Localized: Navade in trajnostna hrana
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380160
-    m_Localized: Hrana brez mesa / vegetarijanska hrana
+    m_Localized: Brezmesna/vegetarijanska hrana
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380161
-    m_Localized: "Nadomestki \u017Eivil (Swaps)"
+    m_Localized: "Zamenjave \u017Eivil"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380162
@@ -2671,16 +2667,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380163
-    m_Localized: "Porcija zau\u017Eitih stro\u010Dnic"
+    m_Localized: "Zau\u017Eita porcija stro\u010Dnic"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380164
-    m_Localized: 100 % rastlinski / veganski obrok
+    m_Localized: 100-% rastlinski/veganski obrok
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380165
-    m_Localized: "Uravnote\u017Een obrok (\xBD zelenjave, \xBC beljakovin, \xBC ogljikovih
-      hidratov)"
+    m_Localized: "Uravnote\u017Een kro\u017Enik (\xBD zelenjave, \xBC beljakovin,
+      \xBC ogljikovih hidratov)"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380166
@@ -2688,11 +2684,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380167
-    m_Localized: Gomolj ali nadomestna osnovna hrana
+    m_Localized: "Gomoljnice ali alternativna osnovna \u017Eivila"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380168
-    m_Localized: "\u0160tevilo odmerkov mesa"
+    m_Localized: "Zau\u017Eita porcija mesa"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380169
@@ -2700,39 +2696,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380170
-    m_Localized: "100 % polnozrnati kruh ali \u017Eitni izdelki"
+    m_Localized: "100-% polnozrnat kruh ali kosmi\u010Di"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380171
-    m_Localized: Obrok, bogat z vlakninami
+    m_Localized: Obrok, bogat s prehranskimi vlakninami
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380172
-    m_Localized: Brez dodane soli pri mizi
+    m_Localized: Brez dodajanja soli pri mizi
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380173
-    m_Localized: "Zdrave ma\u0161\u010Dobe (olj\u010Dno olje, ore\u0161ki)"
+    m_Localized: "Zdrave ma\u0161\u010Dobe (olj\u010Dno olje, ore\u0161\u010Dki)"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589228380174
-    m_Localized: Brez dodanih sladkorjev ali industrijskih sladil
+    m_Localized: Brez dodanih sladkorjev ali industrijskih sladic
     m_Metadata:
       m_Items: []
   - m_Id: 49269589232574464
-    m_Localized: 100 % rastlinski obrok ali obrok brez mesa?
+    m_Localized: 100-% rastlinski ali brezmesni obrok?
     m_Metadata:
       m_Items: []
   - m_Id: 49269589232574465
-    m_Localized: "Ali je vsebovala sve\u017Eo zelenjavo ali stro\u010Dnice?"
+    m_Localized: "Ali je vklju\u010Deval sve\u017Eo zelenjavo ali stro\u010Dnice?"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589232574466
-    m_Localized: "Trajnostna jed ali alternativna \u017Eitna vrsta?"
+    m_Localized: "Trajnostni kro\u017Enik ali alternativna \u017Eita?"
     m_Metadata:
       m_Items: []
   - m_Id: 49269589232574467
-    m_Localized: 'Izberite izvedeno zamenjavo:'
+    m_Localized: 'Izberi opravljeno zamenjavo:'
     m_Metadata:
       m_Items: []
   - m_Id: 49495302372057088
@@ -2740,7 +2736,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49525565470793728
-    m_Localized: "Izberite vsaj eno mo\u017Enost obroka."
+    m_Localized: "Prosimo, izberi vsaj eno mo\u017Enost obroka."
     m_Metadata:
       m_Items: []
   - m_Id: 49555340042166272
@@ -2752,7 +2748,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49555340046360577
-    m_Localized: "Obrok uspe\u0161no posodobljen!"
+    m_Localized: "Obrok je bil uspe\u0161no posodobljen!"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392702091264
@@ -2784,15 +2780,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49560392710479877
-    m_Localized: "\U0001F36A -> \U0001F34E Prigrizek s sadjem / ore\u0161\u010Dki"
+    m_Localized: "\U0001F36A -> \U0001F34E Prigrizek s sadjem/ore\u0161\u010Dki"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392714674176
-    m_Localized: "\U0001F963 -> \U0001F33E Sladkani kosmi\u010Di z ovsom"
+    m_Localized: "\U0001F963 -> \U0001F33E Sladki kosmi\u010Di z ovsom"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392718868480
-    m_Localized: "\U0001F355 -> \U0001F372 Predelana hrana z doma\u010Do"
+    m_Localized: "\U0001F355 -> \U0001F372 Ultra-predelano z doma pripravljenim"
     m_Metadata:
       m_Items: []
   - m_Id: 49560392718868481
@@ -2804,17 +2800,17 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49870781398638592
-    m_Localized: "\u0160e vedno morate dokon\u010Dati svoj profil. Ali ga \u017Eelite
-      dokon\u010Dati zdaj?"
+    m_Localized: "Svoj profil mora\u0161 \u0161e dopolniti. Bi ga \u017Eelel/-a dopolniti
+      zdaj?"
     m_Metadata:
       m_Items: []
   - m_Id: 49870781402832896
-    m_Localized: "Va\u0161a za\u010Detna anketa o prehranjevalnih navadah \u0161e
-      vedno \u010Daka. Ali jo \u017Eelite izpolniti zdaj?"
+    m_Localized: "Tvoja za\u010Detna anketa o prehranjevalnih navadah je \u0161e
+      vedno na \u010Dakanju. Bi jo \u017Eelel/-a izpolniti zdaj?"
     m_Metadata:
       m_Items: []
   - m_Id: 49870781402832897
-    m_Localized: "Dokon\u010Daj profil"
+    m_Localized: Dopolni profil
     m_Metadata:
       m_Items: []
   - m_Id: 49870781402832898
@@ -2826,48 +2822,49 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265921
-    m_Localized: "\u017Divjo! Radi bi izvedeli, katere teme o trajnosti in prehrani
-      te najbolj zanimajo. V naslednjih korakih ozna\u010Di tiste, ki so ti pomembne:
-      vsako podro\u010Dje in tema ima kratko razlago. Tvoji odgovori pomagajo raziskavi
-      projekta. Kadar koli jih lahko spremeni\u0161!"
+    m_Localized: "\u017Divjo! Radi bi izvedeli, katere teme s podro\u010Dja trajnosti
+      in prehrane te najbolj zanimajo. V naslednjih korakih ozna\u010Di tiste, ki
+      so ti pomembne. Vsako podro\u010Dje in temo spremlja kratka razlaga. Tvoji
+      odgovori bodo v pomo\u010D pri raziskavah v okviru projekta. Kadar koli jih
+      lahko spremeni\u0161!"
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265922
-    m_Localized: Prek te aplikacije bi rad prevzel bolj trajnostno prehrano z manj
-      mesa in odkrivanjem alternativnih virov beljakovin.
+    m_Localized: "S to aplikacijo bi \u017Eelel/-a sprejeti bolj trajnostno prehrano
+      z u\u017Eivanjem manj mesa in odkrivanjem alternativnih virov beljakovin."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265923
-    m_Localized: "Prek te aplikacije bi rad razumel okoljski vpliv svojih prehranskih
-      izbir (npr. oglji\u010Dni in vodni odtis) ter tako u\u017Eival bolj trajnostno."
+    m_Localized: "S to aplikacijo bi \u017Eelel/-a razumeti vpliv svojih prehranskih
+      izbir na okolje (npr. oglji\u010Dni in vodni odtis), da bi lahko u\u017Eival/-a
+      bolj trajnostno hrano."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265924
-    m_Localized: "S pomo\u010Djo te aplikacije bi rad izvedel, od kod prihaja moja
-      hrana in kako se prideluje, da bi lahko izbiral \u010Dim manj predelane \u017Eivilske
-      izdelke, ve\u010D lokalnih \u017Eivil, podpiral okolju prijazno kmetijstvo,
-      skrbel za dobro po\u010Dutje \u017Eivali in/ali izbiral izdelke pravi\u010Dne
-      trgovine."
+    m_Localized: "S to aplikacijo bi \u017Eelel/-a izvedeti, od kod prihaja moja
+      hrana in kako je pridelana, da bi lahko izbiral/-a minimalno predelana \u017Eivila,
+      ve\u010D lokalne hrane, podpiral/-a okolju prijazno kmetovanje, dobrobit \u017Eivali
+      in/ali izbiral/-a izdelke iz pravi\u010Dne trgovine."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265925
-    m_Localized: "Prek te aplikacije bi se rad nau\u010Dil izbirati izdelke z bolj
-      okolju prijazno embala\u017Eo."
+    m_Localized: "S to aplikacijo bi se \u017Eelel/-a nau\u010Diti, kako izbrati
+      izdelke z bolj okolju prijazno embala\u017Eo."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265926
-    m_Localized: "Prek te aplikacije bi rad zmanj\u0161al koli\u010Dino zavr\u017Eene
+    m_Localized: "S to aplikacijo bi \u017Eelel/-a zmanj\u0161ati koli\u010Dino odpadne
       hrane z bolj\u0161im na\u010Drtovanjem obrokov in ponovno uporabo ostankov."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265927
-    m_Localized: "Prek te aplikacije bi rad razumel prehransko vrednost svoje prehrane
-      in sprejemal bolj zdrave odlo\u010Ditve (npr. ve\u010D beljakovin, vlaknin
-      in vitaminov ter manj sladkorja in soli)."
+    m_Localized: "S to aplikacijo bi \u017Eelel/-a razumeti hranilno vrednost svoje
+      prehrane, da bi lahko izbiral/-a bolj zdrava \u017Eivila (npr. u\u017Eivanje
+      ve\u010D beljakovin, vlaknin in vitaminov ter manj dodanega sladkorja in soli)."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265928
-    m_Localized: "Za zaklju\u010Dek izberite vsaj en cilj."
+    m_Localized: "Za dokon\u010Danje izberi vsaj en cilj."
     m_Metadata:
       m_Items: []
   - m_Id: 49915767645265929
@@ -2875,25 +2872,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49923301089206272
-    m_Localized: "Svojih ciljev trajnostnosti \u0161e niste izbrali. Ali jih \u017Eelite
-      zdaj nastaviti?"
+    m_Localized: "Svojih trajnostnih ciljev \u0161e nisi izbral/-a. Bi jih \u017Eelel/-a
+      dolo\u010Diti zdaj?"
     m_Metadata:
       m_Items: []
   - m_Id: 49923301093400576
-    m_Localized: Nastavi cilje
+    m_Localized: "Dolo\u010Di cilje"
     m_Metadata:
       m_Items: []
   - m_Id: 49931095037173762
-    m_Localized: "Va\u0161 izdelek {0} se bo kmalu iztekel. Poskrbite, da ga porabite!"
+    m_Localized: "Tvojemu izdelku {0} bo kmalu pretekel rok uporabe. Poskrbi, da
+      ga porabi\u0161!"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 49931095032979456
-    m_Localized: Kaj si danes jedel?
+    m_Localized: Kaj si danes jedel/jedla?
     m_Metadata:
       m_Items: []
   - m_Id: 49931095037173760
-    m_Localized: "Ne pozabi bele\u017Eiti svojih obrokov, da bo\u0161 lahko spremljal
+    m_Localized: "Ne pozabi zabele\u017Eiti svojih obrokov, da bo\u0161 lahko spremljal/-a
       svoje navade."
     m_Metadata:
       m_Items: []
@@ -2902,19 +2900,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439040
-    m_Localized: "Izziv uspe\u0161no zaklju\u010Den!"
+    m_Localized: "Izziv je bil uspe\u0161no opravljen!"
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439041
-    m_Localized: "Prednastavljenih elementov ni bilo mogo\u010De nalo\u017Eiti"
+    m_Localized: "Vnaprej dolo\u010Denih elementov ni bilo mogo\u010De nalo\u017Eiti"
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439042
-    m_Localized: "Nepri\u010Dakovana napaka pri shranjevanju obroka"
+    m_Localized: "Nepri\u010Dakovana napaka pri shranjevanju dnevnika obrokov"
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439043
-    m_Localized: "Nepri\u010Dakovana napaka pri posodabljanju obroka"
+    m_Localized: "Nepri\u010Dakovana napaka pri posodabljanju dnevnika obrokov"
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439044
@@ -2922,7 +2920,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439045
-    m_Localized: "Izdelka za \u010Drtno kodo ni bilo mogo\u010De najti: {0}"
+    m_Localized: "Izdelka s \u010Drtno kodo {0} ni bilo mogo\u010De najti"
     m_Metadata:
       m_Items: []
   - m_Id: 49940717588439046
@@ -2952,35 +2950,36 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 50999984835780612
-    m_Localized: "{0:plural:Ali \u017Eelite odkleniti ta element za {0} FoodyCoin?|Ali
-      \u017Eelite odkleniti ta element za {0} FoodyCoina?|Ali \u017Eelite odkleniti
-      ta element za {0} FoodyCoine?|Ali \u017Eelite odkleniti ta element za {0} FoodyCoinov?}"
+    m_Localized: "{0:plural:Ali \u017Eeli\u0161 odkleniti ta element za {0} FoodyCoin?|Ali
+      \u017Eeli\u0161 odkleniti ta element za {0} \u017Eetonov FoodyCoin?|Ali \u017Eeli\u0161
+      odkleniti ta element za {0} FoodyCoine?|Ali \u017Eeli\u0161 odkleniti ta element
+      za {0} FoodyCoinov?}"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 50999984835780613
-    m_Localized: Ni dovolj FoodyCoinov
+    m_Localized: "Nima\u0161 dovolj kovancev FoodyCoins"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050452561920
-    m_Localized: "\u2696\uFE0F Primerjajte beljakovine z mojega seznama"
+    m_Localized: "\u2696\uFE0F Primerjaj beljakovine z mojega seznama"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950528
-    m_Localized: "Primerjava \u017Eivil"
+    m_Localized: Primerjava hrane
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950529
-    m_Localized: Odkrijte vpliv tega, kar kupujete, na okolje
+    m_Localized: "Odkrij okoljski vpliv tega, kar kupuje\u0161"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950530
-    m_Localized: Skoraj pripravljeni na izziv!
+    m_Localized: Skoraj pripravljen/-a na izziv!
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950531
-    m_Localized: "Za za\u010Detek tega izziva potrebujete na svojem nakupovalnem
-      seznamu vsaj 2 vira beljakovin."
+    m_Localized: "Za za\u010Detek tega izziva potrebuje\u0161 vsaj 2 vira beljakovin
+      na svojem nakupovalnem seznamu."
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950532
@@ -2988,16 +2987,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950533
-    m_Localized: "\U0001F914 Kaj ima manj\u0161i odtis?"
+    m_Localized: "\U0001F914 Katero \u017Eivilo ima ni\u017Eji odtis?"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950534
-    m_Localized: "Dotaknite se \u017Eivila, za katerega menite, da ima manj\u0161i
-      oglji\u010Dni odtis:"
+    m_Localized: "Pritisni hrano, za katero misli\u0161, da ustvarja ni\u017Eji oglji\u010Dni
+      odtis:"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950535
-    m_Localized: "\U0001F4CA Oglejte si podrobno primerjavo"
+    m_Localized: "\U0001F4CA Prika\u017Ei podrobno primerjavo"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950536
@@ -3005,12 +3004,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950537
-    m_Localized: Vpliv na okolje PNAS (0-100)
+    m_Localized: "Vpliv na okolje PNAS (0\u2013100)"
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950538
-    m_Localized: Podatki ocenjeni na podlagi Clark et al. (PNAS 2022) in svetovnih
-      baz podatkov.
+    m_Localized: "Podatki so ocenjeni na podlagi Clark et al. (PNAS 2022) in\_globalnih
+      kmetijsko-\u017Eivilskih zbirk podatkov."
     m_Metadata:
       m_Items: []
   - m_Id: 51022050460950539
@@ -3050,7 +3049,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232904
-    m_Localized: Pripravljanje dvoboja...
+    m_Localized: "Priprava dvoboja\_\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232905
@@ -3066,11 +3065,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232910
-    m_Localized: "\U0001F331 Manj\u0161i odtis"
+    m_Localized: "\U0001F331 Ni\u017Eji odtis"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232911
-    m_Localized: "\U0001F3C6 Manj\u0161i odtis"
+    m_Localized: "\U0001F3C6 Ni\u017Eji odtis"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232912
@@ -3078,7 +3077,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232913
-    m_Localized: VS
+    m_Localized: PROTI
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232914
@@ -3116,7 +3115,7 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 51673178689232921
-    m_Localized: Skupni vpliv
+    m_Localized: Globalni vpliv
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
@@ -3141,9 +3140,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232927
-    m_Localized: "Rastlinski viri beljakovin povzro\u010Dijo 10- do 50-krat manj
-      izpustov toplogrednih plinov ter zahtevajo bistveno manj zemlje in vode kot
-      rde\u010De meso (Clark et al., PNAS 2022)."
+    m_Localized: "Rastlinski viri beljakovin povzro\u010Dajo od 10- do 50-krat manj
+      emisij toplogrednih plinov ter zahtevajo znatno manj zemlje in vode kot rde\u010De
+      meso (Clark et al., PNAS 2022)."
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232928
@@ -3151,7 +3150,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232929
-    m_Localized: '* Ocena (Clark / Poore et al.)'
+    m_Localized: '* Ocena (Clark/Poore et al.)'
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232930
@@ -3163,11 +3162,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232932
-    m_Localized: "Pi\u0161\u010Dan\u010Dje prsi"
+    m_Localized: "Pi\u0161\u010Dan\u010Dja prsa"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232933
-    m_Localized: Trdi tofu
+    m_Localized: "\u010Cvrst tofu"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232934
@@ -3179,28 +3178,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44199025098874880
-    m_Localized: "Izberi nalogo, da se za\u010Dne\u0161 u\u010Diti in napredovati."
+    m_Localized: "Izberi pustolov\u0161\u010Dino, da se za\u010Dne\u0161 u\u010Diti
+      in napredovati."
     m_Metadata:
       m_Items: []
   - m_Id: 44199294499020800
-    m_Localized: "Razi\u0161\u010Di naloge"
+    m_Localized: "Razi\u0161\u010Di pustolov\u0161\u010Dine"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232936
-    m_Localized: "\u2705 Opravljeno!"
+    m_Localized: "\u2705 Uspelo mi je!"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232937
-    m_Localized: Naredim kasneje
+    m_Localized: To bom storil/-a pozneje
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232938
-    m_Localized: "\U0001F4A1 Zakaj je pomembno"
+    m_Localized: "\U0001F4A1 Zakaj je to pomembno"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232939
-    m_Localized: "{global.PET_NAME} ga bo ozna\u010Dil kot opravljenega, ko ga opravi\u0161
-      v aplikaciji."
+    m_Localized: "{global.PET_NAME} bo to ozna\u010Dil kot dokon\u010Dano, ko to
+      stori\u0161 v aplikaciji."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
@@ -3209,11 +3209,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232941
-    m_Localized: "ZA\u010CETNIK"
+    m_Localized: "ZA\u010CETNIK/-CA"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232942
-    m_Localized: SREDNJA RAVEN
+    m_Localized: NADALJEVALEC/-KA
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232943
@@ -3233,23 +3233,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232947
-    m_Localized: "\U0001F4A1 Preberi zanimivost"
+    m_Localized: "\U0001F4A1 Preberi dejstvo o hrani"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232948
-    m_Localized: "\U0001F5D1\uFE0F Zabele\u017Ei zavr\u017Eena \u017Eivila"
+    m_Localized: "\U0001F5D1\uFE0F Zabele\u017Ei odpadno hrano"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232949
-    m_Localized: "\U0001F5D1\uFE0F Odpri moj dnevnik zavr\u017Eene hrane"
+    m_Localized: "\U0001F5D1\uFE0F Odpri moj dnevnik odpadne hrane"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232950
-    m_Localized: "\U0001F37D\uFE0F Odpri dnevnik obrokov"
+    m_Localized: "\U0001F37D\uFE0F Odpri moj dnevnik obrokov"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232951
-    m_Localized: "\U0001F6D2 Odpri nakupovalni seznam"
+    m_Localized: "\U0001F6D2 Odpri moj nakupovalni seznam"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232952
@@ -3261,19 +3261,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232954
-    m_Localized: "Katero \u017Eivilo iz shrambe si zavrgel?"
+    m_Localized: Katero hrano iz svoje shrambe si zavrgel/zavrgla?
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232955
-    m_Localized: "V shrambi ni ujemajo\u010Dih se \u017Eivil"
+    m_Localized: "V tvoji shrambi ni ujemajo\u010Dih se izdelkov"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232956
-    m_Localized: "Prete\u010Dena \u017Eivila"
+    m_Localized: "Prete\u010Dena hrana"
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232957
-    m_Localized: "Tvoj dnevnik zavr\u017Eenih \u017Eivil"
+    m_Localized: Tvoj dnevnik odpadne hrane
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232959
@@ -3281,15 +3281,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232960
-    m_Localized: "Zapis bo izbrisan. \u017Divilo se ne bo vrnilo v shrambo."
+    m_Localized: "S tem bo\u0161 izbrisal/-a zapis o odpadni hrani. Izdelek se ne
+      bo vrnil v tvojo shrambo."
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232961
-    m_Localized: Zapis izbrisan
+    m_Localized: Zapis je izbrisan
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232962
-    m_Localized: "Ta mesec nisi zabele\u017Eil zavr\u017Eenih \u017Eivil"
+    m_Localized: "Ta mesec nisi zabele\u017Eil/-a nobene odpadne hrane"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725672153088
@@ -3297,170 +3298,176 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347392
-    m_Localized: Zaklenjena naloga
+    m_Localized: "Zaklenjena pustolov\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347393
-    m_Localized: "Najprej mora\u0161 dokon\u010Dati: {0}"
+    m_Localized: "Najprej mora\u0161 opraviti: {0}"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 52041725676347394
-    m_Localized: Nova naloga odklenjena!
+    m_Localized: "Odklenjena je nova pustolov\u0161\u010Dina!"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347395
-    m_Localized: "prej\u0161njo nalogo"
+    m_Localized: "prej\u0161nja pustolov\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347397
-    m_Localized: Podrobnosti izdelka
+    m_Localized: Podrobnosti o izdelku
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347399
-    m_Localized: '{0} dejavnosti'
+    m_Localized: '{0} aktivnosti'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 52041725676347400
-    m_Localized: "Koliko izdelkov si izbral ob upo\u0161tevanju dveh razli\u010Dnih
-      okoljskih vidikov? Na primer oglji\u010Dni odtis in razdaljo prevoza ali porabo
+    m_Localized: "Koliko izdelkov si izbral/izbrala ob upo\u0161tevanju dveh razli\u010Dnih
+      okoljskih vidikov? Na primer oglji\u010Dni odtis in razdalja prevoza ali poraba
       vode in na\u010Din pridelave."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347401
-    m_Localized: Pri koliko kupljenih izdelkih si skupino NOVA primerjal z Green-Score
-      ali Nutri-Score?
+    m_Localized: Pri koliko kupljenih izdelkih si primerjal/primerjala skupino NOVA
+      z oceno Green-Score ali oceno Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347402
-    m_Localized: "Pri koliko izdelkih si primerjal skupino NOVA, Nutri-Score in Green-Score?
-      \u0160tej samo tiste, ki imajo vse tri."
+    m_Localized: "Pri koliko izdelkih si primerjal/primerjala skupino NOVA, oceno
+      Nutri-Score in oceno Green-Score? \u0160tej le tiste, ki imajo vse tri."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347403
-    m_Localized: Pri koliko izdelkih si preveril skupino NOVA? Sega od 1 (nepredelano
-      ali minimalno predelano) do 4 (ultra predelano).
+    m_Localized: Pri koliko izdelkih si preveril/preverila njihovo skupino NOVA?
+      Ta sega od 1 (nepredelana ali minimalno predelana) do 4 (ultra-predelana).
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347404
-    m_Localized: "Pri koliko izdelkih si prebral seznam sestavin in iskal znake predelave?
-      Veliko rafiniranih sestavin ali aditivov obi\u010Dajno pomeni ultra predelano
-      \u017Eivilo."
+    m_Localized: "Pri koliko izdelkih si prebral/prebrala seznam sestavin in iskal/iskala
+      znake predelave? \u0160tevilne rafinirane sestavine ali aditivi obi\u010Dajno
+      ka\u017Eejo na ultra-predelano hrano."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347405
-    m_Localized: "Pri koliko nakupih je bila embala\u017Ea eno od tvojih meril za
-      odlo\u010Ditev? Bodi pozoren na njene oznake, navodila za recikliranje, simbole
-      materiala ali ali jo je mogo\u010De ponovno uporabiti."
+    m_Localized: "Pri koliko nakupih je bila embala\u017Ea eden od tvojih kriterijev
+      za odlo\u010Ditev? Poglej njene oznake, navodila za recikliranje, simbole materialov
+      ali mo\u017Enost ponovne uporabe."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347406
-    m_Localized: "Pri koliko izdelkih z zelo razli\u010Dnimi skupinami NOVA in Green-Score
-      si bil pozoren na razlike? Na primer malo predelan izdelek s slabim Green-Score
-      v primerjavi z ultra predelanim z dobrim Green-Score."
+    m_Localized: "Pri koliko izdelkih z zelo razli\u010Dnimi skupinami NOVA in ocenami
+      Green-Score si si ogledal/ogledala razlike? Na primer, minimalno predelan izdelek
+      s slabo oceno Green-Score v primerjavi z ultra-predelanim z dobro oceno Green-Score."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347407
-    m_Localized: "Kolikokrat si izbral embala\u017Eo za ve\u010Dkratno uporabo ali
-      ponovno polnjenje? Na primer povratne steklenice s kavcijo, to\u010Dke za polnjenje
-      ali nakup brez embala\u017Ee v lastno posodo."
+    m_Localized: "Kolikokrat si izbral/izbrala embala\u017Eo za ve\u010Dkratno uporabo
+      ali ponovno polnjenje? Na primer povratne steklenice, polnilne postaje ali
+      nakup \u017Eivil, ki niso pakirana, z lastno posodo."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347408
-    m_Localized: "Koliko izdelkov s pametno embala\u017Eo si na\u0161el? I\u0161\u010Di
-      kazalnike sve\u017Eine, kode QR, podatke o sledljivosti ali nadzor temperature."
+    m_Localized: "Koliko izdelkov s pametno embala\u017Eo si na\u0161el/na\u0161la?
+      I\u0161\u010Di indikatorje sve\u017Eine, kode QR, informacije o sledljivosti
+      ali spremljanje temperature."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347409
-    m_Localized: "Ali si pred glavnim nakupom naredil na\u010Drt obrokov?"
+    m_Localized: "Ali si pred glavnim nakupovanjem pripravil/pripravila na\u010Drt
+      obrokov?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347410
-    m_Localized: Ali si pred nakupovanjem preveril hladilnik, zamrzovalnik in shrambo?
+    m_Localized: Ali si pred odhodom po nakupih preveril/preverila hladilnik, zamrzovalnik
+      in omaro?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347411
-    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel? Vsaka
-      vrsta \u0161teje enkrat, ne glede na to, kolikokrat si jo jedel: jabolka, le\u010Da,
-      bazilika in oves so \u0161tiri. \u0160tejejo sadje, zelenjava, stro\u010Dnice,
-      zeli\u0161\u010Da, ore\u0161ki, semena in polnozrnata \u017Eita."
+    m_Localized: "Koliko razli\u010Dnih rastlinskih \u017Eivil si pojedel/pojedla?
+      Vsaka vrsta \u0161teje enkrat, ne glede na to, kako pogosto si jo jedel/jedla:
+      jabolka, le\u010Da, bazilika in oves so \u0161tiri. \u0160tejejo sadje, zelenjava,
+      stro\u010Dnice, zeli\u0161\u010Da, ore\u0161\u010Dki, semena in polnozrnata
+      \u017Eita."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 52041725676347412
-    m_Localized: "Pri koliko izdelkih si poiskal dr\u017Eavo porekla? Obi\u010Dajno
-      je navedena na etiketi ali v podatkih o izdelku."
+    m_Localized: "Pri koliko izdelkih si poiskal/poiskala dr\u017Eavo izvora? Obi\u010Dajno
+      je navedena na etiketi ali v podrobnostih o izdelku."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347413
-    m_Localized: "Kolikokrat si izbral izdelek z znakom trajnosti? Na primer ekolo\u0161ki,
-      pravi\u010Dne trgovine ali z za\u0161\u010Diteno geografsko ozna\u010Dbo."
+    m_Localized: "Kolikokrat si izbral/izbrala izdelek z oznako trajnosti? Na primer
+      ekolo\u0161ko, pravi\u010Dna trgovina ali za\u0161\u010Ditena geografska ozna\u010Dba."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347414
-    m_Localized: "Pri koliko izdelkih si poiskal, kako so bili narejeni? Na primer
-      na\u010Din gojenja, sistem pridelave ali program trajnosti. Poglej na embala\u017Eo,
-      v podatke o izdelku ali njegovo kodo QR."
+    m_Localized: "Pri koliko izdelkih si preveril/preverila, kako so bili pridelani?
+      Na primer na\u010Din kmetovanja, sistem pridelave ali program trajnosti. Preveri
+      embala\u017Eo, podrobnosti o izdelku ali njegovo kodo QR."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347415
-    m_Localized: "Pri koliko izdelkih si preveril Green-Score? Povzema njihov vpliv
-      na okolje, od najbolj\u0161ega do najslab\u0161ega."
+    m_Localized: "Pri koliko izdelkih si preveril/preverila oceno Green-Score? Ta
+      povzema njihov vpliv na okolje, od najbolj\u0161ega do najslab\u0161ega."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347416
-    m_Localized: "Pri koliko izdelkih si bil pozoren na material embala\u017Ee? Na
-      primer steklo, plastika, papir ali karton, kovina, sestavljeni materiali (kot
-      je embala\u017Ea za pija\u010De) ali embala\u017Ea za ponovno polnjenje."
+    m_Localized: "Pri koliko izdelkih si si ogledal/ogledala material embala\u017Ee?
+      Na primer steklo, plastika, papir ali karton, kovina, kompozitni materiali
+      (kot je kartonska embala\u017Ea za pija\u010Do) ali embala\u017Ea za ponovno
+      polnjenje."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347417
-    m_Localized: "Koliko oznak za recikliranje si prebral? I\u0161\u010Di simbole
-      za recikliranje, kode materiala ali navodila za lo\u010Devanje embala\u017Ee."
+    m_Localized: "Koliko oznak za recikliranje si prebral/prebrala? I\u0161\u010Di
+      simbole za recikliranje, kode materialov ali navodila za razvr\u0161\u010Danje
+      embala\u017Ee."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347418
-    m_Localized: "Pri koliko izdelkih si prebral, kako jih shranjevati po odprtju?
-      Obi\u010Dajno pi\u0161e na embala\u017Ei, na primer \xBBpo odprtju hraniti
+    m_Localized: "Pri koliko izdelkih si prebral/prebrala, kako jih shraniti po odprtju?
+      To je obi\u010Dajno navedeno na embala\u017Ei, na primer \xBBpo odprtju hraniti
       v hladilniku\xAB."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347419
-    m_Localized: Ali si primerjal skupino NOVA vsaj treh izdelkov iz iste kategorije,
-      na primer treh vrst sira?
+    m_Localized: Ali si primerjal/primerjala skupino NOVA vsaj treh izdelkov iz iste
+      kategorije, na primer treh vrst sira?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347420
-    m_Localized: "Pri koliko embala\u017Eah si na podlagi podatkov na njih ocenil,
-      ali jih je lahko ali te\u017Eko reciklirati?"
+    m_Localized: "Za koliko embala\u017E si na podlagi informacij, ki jih vsebujejo,
+      ocenil/ocenila, ali jih je enostavno ali te\u017Eko reciklirati?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347421
-    m_Localized: "Ali si primerjal materiale embala\u017Ee treh podobnih izdelkov?
-      Na primer jogurt v steklu, plastiki in kartonu."
+    m_Localized: "Ali si primerjal/primerjala materiale embala\u017Ee treh podobnih
+      izdelkov? Na primer jogurt v steklu, plastiki in kartonu."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347422
-    m_Localized: "Katere dni si uredil hladilnik, zamrzovalnik ali shrambo tako,
-      da je spredaj tisto, kar se prej izte\u010De, in se poje najprej?"
+    m_Localized: "Ob katerih dneh si pospravil/pospravila hladilnik, zamrzovalnik
+      ali omaro tako, da so izdelki, ki jim rok uporabe pote\u010De najprej, spredaj
+      in se prvi porabijo?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347423
-    m_Localized: "Pri koliko nakupih si se odlo\u010Dil s pomo\u010Djo kazalnika
-      pridelave? Ozna\u010Di katerega: skupina NOVA, Green-Score, na\u010Din pridelave
-      ali primerjava kazalnikov."
+    m_Localized: "Pri koliko nakupih si za odlo\u010Ditev uporabil/uporabila indikator
+      pridelave? Ozna\u010Di katerega: skupina NOVA, ocena Green-Score, na\u010Din
+      pridelave ali primerjava indikatorjev."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347424
-    m_Localized: "Na kaj si bil pozoren pri embala\u017Ei in pri koliko izdelkih?
-      \u0160tejejo material, navodila za recikliranje ali ali jo je mogo\u010De ponovno
-      uporabiti."
+    m_Localized: "Kaj si opazil/opazila pri embala\u017Ei in pri koliko izdelkih?
+      \u0160tejejo material, navodila za recikliranje ali mo\u017Enost ponovne uporabe."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347425
-    m_Localized: "Katere vire beljakovin si jedel ta teden? Ozna\u010Di vse razli\u010Dne:
-      poskusi dose\u010Di \u0161tiri."
+    m_Localized: "Katere vire beljakovin si jedel/jedla ta teden? Ozna\u010Di vse
+      razli\u010Dne: poskusi dose\u010Di \u0161tiri."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347426
@@ -3476,7 +3483,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347429
-    m_Localized: Primerjal kazalnike
+    m_Localized: Primerjava indikatorjev
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347430
@@ -3492,7 +3499,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347433
-    m_Localized: "Mo\u017Enost za ve\u010Dkratno uporabo"
+    m_Localized: "Mo\u017Enost ponovne uporabe"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347434
@@ -3540,54 +3547,54 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347445
-    m_Localized: "Certificirani izdelki (ekolo\u0161ki, pravi\u010Dna trgovina\u2026)"
+    m_Localized: "Certificirani izdelki (ekolo\u0161ki, pravi\u010Dna trgovina\_\u2026)"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347446
-    m_Localized: Z beljakovinami
+    m_Localized: "Vklju\u010Dene beljakovine"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347447
-    m_Localized: Sadje in zelenjava v mnogih barvah
+    m_Localized: "Sadje in zelenjava razli\u010Dnih barv"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347448
-    m_Localized: Postregel sem si manj in shranil ostanek
+    m_Localized: Postregel/postregla sem si manj in preostanek shranil/-a
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347449
-    m_Localized: Bili so ostanki
+    m_Localized: Bili so ostanki hrane
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347450
-    m_Localized: "Uporabil sem \u017Eivilo po datumu minimalne trajnosti"
+    m_Localized: "Uporabil/-a sem hrano po prete\u010Denem datumu minimalne trajnosti"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347451
-    m_Localized: "Katere obroke si imel {0}, o katerih mi \u0161e nisi povedal? Izberi
-      jih in mi povej, kaj so vsebovali."
+    m_Localized: "Katere obroke si imel/-a na dan {0}, o katerih mi \u0161e nisi
+      povedal/-a? Izberi jih in mi povej, kaj so vsebovali."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347452
-    m_Localized: '{0}: {1} obrok(i)'
+    m_Localized: '{0}: {1} obrok/-i'
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347453
-    m_Localized: "Zabele\u017Eeno, hvala, da si mi povedal! \U0001F64C"
+    m_Localized: "Razumem, hvala, ker si mi povedal/-a! \U0001F64C"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347454
-    m_Localized: "Na teko\u010Dem si, trenutno te nimam ni\u010Desar vpra\u0161ati
+    m_Localized: "Vse je posodobljeno, trenutno te nimam ni\u010Desar vpra\u0161ati
       \U0001F60A"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347455
-    m_Localized: "\u010Ce si to \u017Ee zabele\u017Eil v aplikaciji, mi ni treba
-      znova povedati \U0001F609"
+    m_Localized: "\u010Ce si to \u017Ee zabele\u017Eil/-a v aplikaciji, mi ni treba
+      ponovno povedati \U0001F609"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347456
-    m_Localized: "To bom zabele\u017Eil. Je vse v redu?"
+    m_Localized: "To bom zabele\u017Eil/-a. Je vse v redu?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347457
@@ -3611,11 +3618,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347462
-    m_Localized: "Zabele\u017Eeno! Tvoja misija je na {0} %."
+    m_Localized: "Zabele\u017Eeno! Tvoja misija je na {0}\_%."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347463
-    m_Localized: "Zabele\u017Eeno! Misija opravljena \U0001F389"
+    m_Localized: "Razumem! Misija opravljena \U0001F389"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347464
@@ -3632,7 +3639,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347467
-    m_Localized: "\u010Ce to zabele\u017Ei\u0161 v aplikaciji, misija napreduje sama."
+    m_Localized: "\u010Ce to zabele\u017Ei\u0161 v aplikaciji, bo misija napredovala
+      sama od sebe."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347468
@@ -3640,7 +3648,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347469
-    m_Localized: "Za\u010Dni nalogo te misije, da bo\u0161 lahko bele\u017Eil napredek."
+    m_Localized: "Za\u010Dni izziv te misije, da poro\u010Da\u0161 o svojem napredku."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347470
@@ -3648,13 +3656,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347471
-    m_Localized: "Pri \xBB{0}\xAB \u0161e ne vidim napredka. Lahko to naredi\u0161
-      v aplikaciji ali mi preprosto pove\u0161."
+    m_Localized: "V \xBB{0}\xAB \u0161e ne vidim nobenega napredka. To lahko stori\u0161
+      v aplikaciji ali pa mi preprosto pove\u0161."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347472
-    m_Localized: "Ima\u0161 {0} dni, o katerih mi \u0161e nisi povedal. Bova to nadoknadila
-      zdaj?"
+    m_Localized: "Ima\u0161 \u0161e {0} dni, o katerih mi \u0161e nisi povedal/-a.
+      Bova nadoknadila zdaj?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347473
@@ -3662,25 +3670,25 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347474
-    m_Localized: Izvor in sezona
+    m_Localized: Poreklo in sezona
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347475
-    m_Localized: "Zavr\u017Eena hrana"
+    m_Localized: Odpadna hrana
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347476
-    m_Localized: Samo to, kar potrebujejo moje misije
+    m_Localized: Samo tisto, kar zahtevajo moje misije
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347477
-    m_Localized: "Ozna\u010Di vsaj eno mo\u017Enost, da se ta obrok zabele\u017Ei."
+    m_Localized: "Ozna\u010Di vsaj eno mo\u017Enost, da zabele\u017Ei\u0161 ta obrok."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347478
-    m_Localized: "Ni\u010Desar nisi ozna\u010Dil, zato ni ni\u010Desar za bele\u017Eenje.
-      Vrni se, \u010De \u017Eeli\u0161 kaj ozna\u010Diti, ali zapri in se sli\u0161iva
-      kak drug dan \U0001F60A"
+    m_Localized: "Ni\u010Desar nima\u0161 ozna\u010Denega, zato ni ni\u010Desar za
+      zabele\u017Eiti. Pojdi nazaj, \u010De \u017Eeli\u0161 kaj ozna\u010Diti, ali
+      pa zapri in bova nadoknadila drug dan \U0001F60A"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347479
@@ -3688,19 +3696,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347480
-    m_Localized: "Zapre\u0161 brez bele\u017Eenja?"
+    m_Localized: "\u017Deli\u0161 zapustiti brez bele\u017Eenja?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347481
-    m_Localized: "Kar si ozna\u010Dil, ne bo zabele\u017Eeno."
+    m_Localized: "To, kar si ozna\u010Dil/-a, ne bo zabele\u017Eeno."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347482
-    m_Localized: "Del je \u017Ee zabele\u017Een, ostalo pa se bo izgubilo."
+    m_Localized: "Del je \u017Ee bil zabele\u017Een, preostanek pa bo izgubljen."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347483
-    m_Localized: Zapri
+    m_Localized: Zapusti
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347484
@@ -3712,11 +3720,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347486
-    m_Localized: Pridobljeno {0}
+    m_Localized: Osvojeno {0}
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347487
-    m_Localized: Pridobljeno
+    m_Localized: Osvojeno
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347488
@@ -3732,7 +3740,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347491
-    m_Localized: "Tvoj vpliv \xB7 {0}"
+    m_Localized: Tvoj vpliv {0}
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347492
@@ -3740,15 +3748,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347493
-    m_Localized: Vidna kolesa
+    m_Localized: Vidni krogi
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347494
-    m_Localized: Vsa kolesa so skrita.
+    m_Localized: Vsi krogi so skriti.
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347497
-    m_Localized: '{0:0} %'
+    m_Localized: "{0:0}\_%"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347498
@@ -3760,7 +3768,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347500
-    m_Localized: Cilj {0:0} %
+    m_Localized: "Cilj {0:0}\_%"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347501
@@ -3768,7 +3776,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347502
-    m_Localized: "Zmanj\u0161anje CO\u2082"
+    m_Localized: "Zmanj\u0161anje emisij CO\u2082"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347503
@@ -3780,7 +3788,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347505
-    m_Localized: "Manj\u0161a raba zemlji\u0161\u010D"
+    m_Localized: "Zmanj\u0161anje rabe zemlji\u0161\u010D"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347506
@@ -3800,27 +3808,27 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347510
-    m_Localized: "Za\u010Detnik"
+    m_Localized: "Za\u010Detnik/-ica"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347511
-    m_Localized: Srednja raven
+    m_Localized: Nadaljevalec/-ka
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347512
-    m_Localized: Napredni
+    m_Localized: Napredno
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347513
-    m_Localized: Prvi koraki
+    m_Localized: "Za\u010Detek poti"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347514
-    m_Localized: "Gradnja bolj\u0161ih navad"
+    m_Localized: "Oblikovanje bolj\u0161ih navad"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347515
-    m_Localized: Ustvarjanje razlike
+    m_Localized: Ustvarjanje sprememb
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347516
@@ -3840,15 +3848,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347520
-    m_Localized: "Pove\u010Devanje tvojega vpliva"
+    m_Localized: "Pove\u010Danje tvojega vpliva"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347521
-    m_Localized: Spodbujanje pozitivnih sprememb
+    m_Localized: Navdihovanje pozitivnih sprememb
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347522
-    m_Localized: Biti zgled drugim
+    m_Localized: Vodenje z zgledom
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347523
@@ -3856,11 +3864,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347524
-    m_Localized: "Kar najve\u010Dji vpliv"
+    m_Localized: "Pove\u010Danje tvojega vpliva"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347525
-    m_Localized: Okoljsko vodstvo
+    m_Localized: Okoljsko voditeljstvo
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347526
@@ -3868,7 +3876,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347527
-    m_Localized: Prvak FOODMISSION
+    m_Localized: Prvak/-inja aplikacije FOODMISSION
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347528
@@ -3876,11 +3884,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347529
-    m_Localized: "Kaj meni\u0161?"
+    m_Localized: Kaj si mislil/-a?
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347530
-    m_Localized: Tapni zvezdico in oceni recept
+    m_Localized: Pritisni zvezdico za oceno tega recepta
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347531
@@ -3892,11 +3900,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347533
-    m_Localized: "Ocene ni bilo mogo\u010De shraniti"
+    m_Localized: "Tvoje ocene ni bilo mogo\u010De shraniti"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347534
-    m_Localized: Oceni z {0} od 5
+    m_Localized: Oceni {0} od 5
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347535
@@ -3924,45 +3932,46 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347541
-    m_Localized: "Neuspe\u0161no"
+    m_Localized: Ni uspelo
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347542
-    m_Localized: "\u274C MISIJA NI USPELA"
+    m_Localized: "\u274C MISIJA NI BILA DOSE\u017DENA"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347543
-    m_Localized: "\u010Cas je potekel ali cilj tokrat ni bil dose\u017Een. Misijo
-      lahko znova za\u010Dne\u0161, kadar \u017Eeli\u0161."
+    m_Localized: "Zmanjkalo je \u010Dasa ali pa cilja tokrat ni bilo mogo\u010De
+      dose\u010Di. Misijo lahko ponovno za\u010Dne\u0161, kadarkoli \u017Eeli\u0161."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347544
-    m_Localized: "Tokrat misija {0} ni uspela. Brez skrbi, lahko poskusi\u0161 znova!"
+    m_Localized: "Tokrat misija {0} ni bila dose\u017Eena. Ne skrbi, lahko poskusi\u0161
+      znova!"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347545
-    m_Localized: "Za\u010Dni misijo znova"
+    m_Localized: "Ponovno za\u010Dni misijo"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347546
-    m_Localized: "\u017Deli\u0161 to misijo za\u010Deti znova?"
+    m_Localized: "\u017Deli\u0161 ponovno za\u010Deti to misijo?"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347547
-    m_Localized: "Napredek te misije bo izbrisan in njeno obdobje se bo za\u010Delo
-      znova od danes."
+    m_Localized: "Izgubil/-a bo\u0161 napredek te misije, njeno \u010Dasovno obdobje
+      pa se bo z dana\u0161njim dnem za\u010Delo znova."
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347548
-    m_Localized: "Odkrito v #FOODMISSION \U0001F331 https://www.foodmission.eu"
+    m_Localized: "Odkrito s #FOODMISSION \U0001F331 https://www.foodmission.eu"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347549
-    m_Localized: Ali ste vedeli...? Zanimivost iz FOODMISSION
+    m_Localized: "Ali si vedel/-a\_\u2026? Dejstvo o hrani iz FOODMISSION"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347550
-    m_Localized: Iz kviza FOODMISSION
+    m_Localized: "Nau\u010Deno v kvizu FOODMISSION"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347551
@@ -3974,8 +3983,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347553
-    m_Localized: "Pridru\u017Ei se mi v #FOODMISSION \U0001F331 in odkrij, kako jesti
-      bolj zdravo in trajnostno. Prenesi aplikacijo tukaj:"
+    m_Localized: "Pridru\u017Ei se mi na #FOODMISSION \U0001F331 in odkrij, kako
+      jesti bolj zdravo in trajnostno. Aplikacijo prenesi tukaj:"
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347554
@@ -4000,24 +4009,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347559
-    m_Localized: "\U0001F4AC Javi se prijatelju {global.PET_NAME}"
+    m_Localized: "\U0001F4AC Preveri pri {global.PET_NAME}"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 53932757066178560
-    m_Localized: Tvoje ravni
+    m_Localized: Tvoje stopnje
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979200
-    m_Localized: "Na podlagi tvojih odgovorov ti za vsako podro\u010Dje predlagamo
-      raven. Ta dolo\u010Da, kje za\u010Dne\u0161: naloge, misije in druge vsebine
-      te ravni, brez predhodnega re\u0161evanja la\u017Ejih. \u010Ce se ti zdi prav,
-      tapni Nadaljuj. \u010Ce ne, tapni podro\u010Dje, da spremeni\u0161 raven."
+    m_Localized: "Na podlagi tvojih odgovorov predlagamo raven za vsako podro\u010Dje.
+      Ta dolo\u010Da, kje za\u010Dne\u0161: pri nalogah, misijah in drugih vsebinah
+      na tej ravni, ne da bi moral/-a najprej opraviti la\u017Eje. \u010Ce ti predlog
+      ustreza, tapni Nadaljuj. Sicer tapni podro\u010Dje in ga spremeni."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979201
-    m_Localized: "Izberi svojo raven za vsako podro\u010Dje. Za\u010Dne\u0161 z vsebino
-      te ravni; vse nad njo ostane zaklenjeno."
+    m_Localized: "Izberi raven za vsako podro\u010Dje. Za\u010Del/-a bo\u0161 z vsebinami
+      na tej ravni, vse nad njo pa bo ostalo zaklenjeno."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979202
@@ -4029,15 +4038,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979204
-    m_Localized: Moje ravni
+    m_Localized: Moje stopnje
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979205
-    m_Localized: Ta vsebina je ravni {0}. Tvoja raven v {1} je {2}.
+    m_Localized: "Ta vsebina je stopnje {0}. Tvoja stopnja na podro\u010Dju {1} je
+      {2}."
     m_Metadata:
       m_Items: []
   - m_Id: 53932757212979206
-    m_Localized: Spremeni moje ravni
+    m_Localized: Spremeni moje stopnje
     m_Metadata:
       m_Items: []
   - m_Id: 53932757217173504
@@ -4049,31 +4059,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389350858752
-    m_Localized: "Dokon\u010Dati pozneje?"
+    m_Localized: "\u017Deli\u0161 kon\u010Dati pozneje?"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247360
-    m_Localized: "Tvoj profil bo za zdaj ostal nedokon\u010Dan. Kasneje te bom opomnil
-      na za\u010Detnem zaslonu, da ga bo\u0161 lahko dokon\u010Dal."
+    m_Localized: "Tvoj profil bo za zdaj ostal nepopoln. Pozneje te bom opomnil/-a
+      na za\u010Detnem zaslonu, da ga lahko dokon\u010Da\u0161."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247361
-    m_Localized: "Svojih ciljev \u0161e nisi izbral. Nastavi\u0161 jih lahko kadar
+    m_Localized: "Svojih ciljev \u0161e nisi izbral/-a. Nastavi\u0161 jih lahko kadar
       koli v svojem profilu."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247362
-    m_Localized: "Tvoji odgovori v tej anketi ne bodo shranjeni. Kasneje te bom opomnil
-      na za\u010Detnem zaslonu, da jo bo\u0161 lahko izpolnil."
+    m_Localized: "Tvoji odgovori v tej anketi ne bodo shranjeni. Pozneje te bom opomnil/-a
+      na za\u010Detnem zaslonu, da jo lahko izpolni\u0161."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247363
-    m_Localized: "Tvoja anketa je \u017Ee shranjena in ohranili bomo predlagane ravni.
-      Kadar koli jih lahko spremeni\u0161 v Uredi profil."
+    m_Localized: "Tvoja anketa je \u017Ee shranjena, predlagane stopnje pa bomo obdr\u017Eali.
+      Kadarkoli jih lahko spremeni\u0161 v Uredi profil."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247364
-    m_Localized: "Dokon\u010Daj pozneje"
+    m_Localized: "Kon\u010Daj pozneje"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247366
@@ -4093,17 +4103,17 @@ MonoBehaviour:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 53972389359247369
-    m_Localized: "Danes je zadnji dan misije \xBB{0}\xAB. Povej mi, kaj si naredil,
+    m_Localized: "Danes je zadnji dan misije \xBB{0}\xAB. Povej mi, kaj si naredil/-a,
       da bo \u0161telo!"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247370
-    m_Localized: "Danes je zadnji dan tvojih misij ({0}). Povej mi, kaj si naredil,
+    m_Localized: "Danes je zadnji dan za {0} tvojih misij. Povej mi, kaj si naredil/-a,
       da bo \u0161telo!"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247371
-    m_Localized: "Za\u010Deta {0} \xB7 Kon\u010Da se {1}"
+    m_Localized: "Za\u010Deta {0} Kon\u010Da se {1}"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247372
@@ -4115,7 +4125,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247374
-    m_Localized: Nova raven!
+    m_Localized: Nova stopnja!
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247375
@@ -4123,12 +4133,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247376
-    m_Localized: "Vse naloge zaklju\u010Dene!"
+    m_Localized: "Vse pustolov\u0161\u010Dine so opravljene!"
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247377
-    m_Localized: "Vse naloge na podro\u010Dju {0} so zaklju\u010Dene. Razi\u0161\u010Di
-      druga podro\u010Dja in napreduj naprej."
+    m_Localized: "Opravil/-a si vse pustolov\u0161\u010Dine v {0}. Razi\u0161\u010Di
+      druga podro\u010Dja za nadaljnji napredek."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247378
@@ -4136,7 +4146,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247379
-    m_Localized: "Ozna\u010Di, kar velja za ta obrok. Pomaga pri tvojih misijah."
+    m_Localized: "Ozna\u010Di, kaj velja za ta obrok. To pomaga tvojim misijam."
     m_Metadata:
       m_Items: []
   - m_Id: 53972389359247380
@@ -4148,11 +4158,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243307511808
-    m_Localized: "Prika\u017Ei prej\u0161nje ravni ({0})"
+    m_Localized: "Prika\u017Ei prej\u0161nje stopnje ({0})"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203584
-    m_Localized: "Skrij prej\u0161nje ravni"
+    m_Localized: "Skrij prej\u0161nje stopnje"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203585
@@ -4168,26 +4178,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203588
-    m_Localized: "kon\u010Dano"
+    m_Localized: opravljeno
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203589
-    m_Localized: v teku
+    m_Localized: "na \u010Dakanju"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203590
-    m_Localized: "\u0160e ni elementov."
+    m_Localized: "Ni \u0161e elementov."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203591
-    m_Localized: 'Tvoj napredek v znanju:'
+    m_Localized: 'Napredek tvojega znanja:'
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203592
-    m_Localized: "Pri koliko izdelkih si razmislil, ali se njihova embala\u017Ea
-      spla\u010Da? Bodi pozoren na velikost, materiale in ali hrano \u0161\u010Diti
-      pred kvarjenjem: v\u010Dasih je embala\u017Ea, ki prepre\u010Duje zavr\u017Eek
-      hrane, bolj\u0161a kot nobena embala\u017Ea."
+    m_Localized: "Pri koliko izdelkih si se ustavil/-a in razmislil/-a, ali je bila
+      embala\u017Ea vredna tega? Poglej njeno velikost, materiale in ali \u0161\u010Diti
+      hrano pred kvarjenjem: v\u010Dasih je embala\u017Ea, ki prepre\u010Duje, da
+      bi se hrana zavrgla, bolj\u0161a kot nobena embala\u017Ea."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203593
@@ -4195,7 +4205,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203594
-    m_Localized: Certifikat
+    m_Localized: Certificiranje
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203595
@@ -4207,11 +4217,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203597
-    m_Localized: "Ekolo\u0161ko EU"
+    m_Localized: "EU ekolo\u0161ko kmetijstvo"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203598
-    m_Localized: Fairtrade
+    m_Localized: "Pravi\u010Dna trgovina"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203599
@@ -4227,11 +4237,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203602
-    m_Localized: Znak EU za okolje
+    m_Localized: Znak za okolje EU
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203603
-    m_Localized: Drug znak
+    m_Localized: Druga oznaka
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203604
@@ -4259,37 +4269,39 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203610
-    m_Localized: "Za katere obroke si izbral izdelke glede na dr\u017Eavo porekla
-      in vsaj \u0161e en podatek o trajnosti (certifikat, na\u010Din pridelave ali
-      sezonskost)? Dodaj vsak obrok in ozna\u010Di, kaj si pogledal."
+    m_Localized: "Pri katerih obrokih si izbral/-a izdelke glede na njihovo dr\u017Eavo
+      izvora in vsaj \u0161e eno dejstvo o trajnosti (certificiranje, na\u010Din
+      pridelave ali sezonskost)? Dodaj vsak obrok in ozna\u010Di, kaj si upo\u0161teval/-a."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203611
-    m_Localized: "Pri koliko nakupih si bil pozoren na vsaj tri od teh stvari: poreklo,
-      sezonskost, na\u010Din pridelave ali certifikat? Dodaj vsak nakup in ozna\u010Di,
-      kaj si preveril."
+    m_Localized: "Pri koliko nakupih si preveril/-a vsaj tri od naslednjih elementov:
+      izvor, sezonskost, na\u010Din pridelave ali certificiranje? Dodaj vsak nakup
+      in ozna\u010Di, kaj si preveril/-a."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203612
-    m_Localized: "Pri koliko izdelkih si prebral etiketo in na\u0161el vsaj dve od
-      teh informacij: od kod prihaja, znak trajnosti ali certifikat, ali je sezonski
-      ali je pridelan blizu tebe? Dodaj vsak izdelek in ozna\u010Di, kaj si na\u0161el."
+    m_Localized: "Pri koliko izdelkih si prebral/-a etiketo in na\u0161el/-la vsaj
+      dva od naslednjih podatkov: od kod prihaja, trajnostni pe\u010Dat ali certificiranje,
+      ali je v sezoni ali je bil pridelan v tvoji bli\u017Eini? Dodaj vsak izdelek
+      in ozna\u010Di, kaj si na\u0161el/-la."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203613
-    m_Localized: "Pri katerih nakupih si upo\u0161teval material embala\u017Ee in
-      kaj se bo z njo zgodilo pozneje (recikliranje, ponovna uporaba ali zavr\u017Eenje)?
-      Dodaj vsak nakup in ozna\u010Di, kaj si pogledal."
+    m_Localized: "Pri katerih nakupih si upo\u0161teval/-a embala\u017Eni material
+      in kaj se bo z njim zgodilo pozneje (recikliranje, ponovna uporaba ali odlaganje
+      med odpadke)? Dodaj vsak nakup in ozna\u010Di, kaj si upo\u0161teval/-a."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203614
-    m_Localized: "Si izbral izdelek z vsaj dvema razli\u010Dnima znakoma trajnosti?
-      Ozna\u010Di znake, ki jih je imel, na primer Ekolo\u0161ko EU in Fairtrade."
+    m_Localized: "Ali si izbral/-a izdelek z vsaj dvema razli\u010Dnima oznakama
+      trajnosti? Ozna\u010Di oznake, ki jih je imel, na primer EU ekolo\u0161ko kmetijstvo
+      in Pravi\u010Dna trgovina."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203615
-    m_Localized: "Katere barve sadja in zelenjave si jedel vsak dan? Poskusi dose\u010Di
-      pet razli\u010Dnih barv na dan."
+    m_Localized: "Katere barve sadja in zelenjave si jedel/-la vsak dan? Poskusi
+      dose\u010Di pet razli\u010Dnih barv na dan."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203616
@@ -4301,7 +4313,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203618
-    m_Localized: "\u0160teje"
+    m_Localized: "\u0160tevilo"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203619
@@ -4317,7 +4329,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203622
-    m_Localized: "\u0160tej samo tisto, \u010Desar \u0161e nisi sporo\u010Dil."
+    m_Localized: "\u0160tej le tisto, \u010Desar {global.PET_NAME} \u0161e nisi povedal/-a."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
@@ -4338,28 +4350,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203627
-    m_Localized: "Vsak obrok za\u010Dni z manj\u0161o porcijo in si dodaj le, \u010De
-      jo potrebuje\u0161. Ozna\u010Di, ko si tako prepre\u010Dil, da bi hrano zavrgel."
+    m_Localized: "Vsak obrok za\u010Dni z manj\u0161o porcijo in dodaj ve\u010D le,
+      \u010De to potrebuje\u0161. Ozna\u010Di, ko je to prepre\u010Dilo, da bi hrana
+      postala zavr\u017Eena."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203628
-    m_Localized: "Upo\u0161tevaj ga, ko je obrok vseboval vsaj eno \u017Eivilo, bogato
-      z vlaknino: zelenjavo, sadje, stro\u010Dnice, ore\u0161\u010Dke, semena ali
+    m_Localized: "Upo\u0161tevaj, ko je obrok vseboval vsaj eno \u017Eivilo, bogato
+      z vlakninami: zelenjavo, sadje, stro\u010Dnice, ore\u0161\u010Dke, semena ali
       polnozrnata \u017Eita."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203629
-    m_Localized: "Vsak glavni obrok potrebuje vsaj 3 od teh 4: beljakovine, \u017Eivilo,
-      bogato z vlaknino, sve\u017Eo zelenjavo ali solato in zdravo ma\u0161\u010Dobo.
-      Ozna\u010Di vse, kar je vseboval."
+    m_Localized: "Vsak\_glavni obrok potrebuje vsaj 3 od teh 4 elementov: beljakovine,
+      \u017Eivilo, bogato z vlakninami, sve\u017Eo zelenjavo ali solato ter zdravo
+      ma\u0161\u010Dobo. Ozna\u010Di vse, ki jih je vseboval."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203630
-    m_Localized: Pogledal sem
+    m_Localized: To sem preveril/-a
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203631
-    m_Localized: "\u0160teto"
+    m_Localized: "Pre\u0161teto"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203632
@@ -4367,7 +4380,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203633
-    m_Localized: "Tega tu ni: poglej embala\u017Eo."
+    m_Localized: "To tukaj ni prikazano: preveri embala\u017Eo."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203634
@@ -4379,11 +4392,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203636
-    m_Localized: "Obrobljene mo\u017Enosti so navedene v podatkih tega izdelka."
+    m_Localized: "Obkro\u017Eene mo\u017Enosti se pojavijo v podrobnostih tega izdelka."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203637
-    m_Localized: "Prek izdelkov si jih \u017Ee \u0161tel {0}."
+    m_Localized: "Pre\u0161tel/-a si \u017Ee {0} iz izdelkov."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203638
@@ -4396,7 +4409,7 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203640
     m_Localized: "Ta misija se \u0161e ni za\u010Dela. Njenih 7 dni se za\u010Dne,
-      ko tapne\u0161 Za\u010Dni."
+      ko pritisne\u0161 Za\u010Dni."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203641
@@ -4405,8 +4418,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203642
-    m_Localized: "\u010Cestitke! Prej\u0161nji teden nisi jedel mesa. Tvoj cilj je
-      zdaj, da tako ostane naslednjih 7 dni."
+    m_Localized: "\u010Cestitke! Prej\u0161nji teden nisi jedel/-la mesa. Tvoj cilj
+      zdaj je, da tako ostane naslednjih 7 dni."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203643
@@ -4418,246 +4431,249 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203645
-    m_Localized: "Ali res \u017Eeli\u0161 znova za\u010Deti \xBB{0}\xAB?\r\nTrenutni
-      napredek bo izgubljen."
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 ponovno za\u010Deti
+      \xBB{0}\xAB?\r\nIzgubil/-a bo\u0161 svoj trenutni napredek."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203646
-    m_Localized: "Ali si prebral, kako shranjevati ta izdelek po odprtju? Obi\u010Dajno
-      pi\u0161e na embala\u017Ei, na primer \xBBpo odprtju hraniti v hladilniku\xAB."
+    m_Localized: "Ali si prebral/-a, kako shraniti ta izdelek po odprtju? To je obi\u010Dajno
+      na embala\u017Ei, na primer \xBBpo odprtju hraniti v hladilniku\xAB."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203647
-    m_Localized: "Ali si med misijo jedel to rastlinsko \u017Eivilo? Vsaka vrsta
-      \u0161teje enkrat, ne glede na to, kako pogosto ga je\u0161."
+    m_Localized: "Ali si med misijo jedel/-la to rastlinsko \u017Eivilo? Vsaka vrsta
+      \u0161teje enkrat, ne glede na to, kako pogosto jo je\u0161."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203648
-    m_Localized: "Ali si bil pozoren na material embala\u017Ee tega izdelka? Na primer
-      steklo, plastika, papir ali karton, kovina, sestavljeni materiali (kot je embala\u017Ea
-      za pija\u010De) ali embala\u017Ea za ponovno polnjenje."
+    m_Localized: "Ali si si ogledal/-a material embala\u017Ee tega izdelka? Na primer
+      steklo, plastika, papir ali karton, kovina, kompozitni materiali (kot je kartonska
+      embala\u017Ea za pija\u010Do) ali embala\u017Ea za ponovno polnjenje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203649
-    m_Localized: "Ali si na podlagi podatkov ocenil, ali je embala\u017Eo tega izdelka
-      lahko ali te\u017Eko reciklirati?"
+    m_Localized: "Ali si na podlagi informacij, ki jih vsebuje, ocenil/-a, ali je
+      embala\u017Eo tega izdelka enostavno ali te\u017Eko reciklirati?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203650
-    m_Localized: "Ali si prebral oznako za recikliranje na tem izdelku? I\u0161\u010Di
-      simbole za recikliranje, kode materiala ali navodila za lo\u010Devanje embala\u017Ee."
+    m_Localized: "Ali si prebral/-a oznako za recikliranje tega izdelka? I\u0161\u010Di
+      simbole za recikliranje, kode materialov ali navodila za razvr\u0161\u010Danje
+      embala\u017Ee."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203651
-    m_Localized: "Ali ima ta izdelek pametno embala\u017Eo? I\u0161\u010Di kazalnike
-      sve\u017Eine, kode QR, podatke o sledljivosti ali nadzor temperature."
+    m_Localized: "Ali ima ta izdelek pametno embala\u017Eo? I\u0161\u010Di indikatorje
+      sve\u017Eine, kode QR, informacije o sledljivosti ali spremljanje temperature."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203652
-    m_Localized: "Ali si razmislil, ali se embala\u017Ea tega izdelka spla\u010Da?
-      Bodi pozoren na velikost, materiale in ali hrano \u0161\u010Diti pred kvarjenjem."
+    m_Localized: "Ali si razmislil/-a, ali je embala\u017Ea tega izdelka vredna tega?
+      Poglej njeno velikost, materiale in ali \u0161\u010Diti hrano pred kvarjenjem."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203653
-    m_Localized: Ali si primerjal skupino NOVA, Nutri-Score in Green-Score tega izdelka?
+    m_Localized: Ali si primerjal/-a skupino NOVA, Nutri-Score in Green-Score tega
+      izdelka?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203654
-    m_Localized: "Ali si preveril Green-Score tega izdelka? Povzema njegov vpliv
-      na okolje, od najbolj\u0161ega do najslab\u0161ega."
+    m_Localized: "Ali si preveril/-a oceno Green-Score tega izdelka? Ta povzema njegov
+      vpliv na okolje, od najbolj\u0161ega do najslab\u0161ega."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203655
-    m_Localized: Ali si skupino NOVA in Green-Score tega izdelka primerjal z drugimi
-      izdelki in bil pozoren na razlike?
+    m_Localized: Ali si primerjal/-a skupino NOVA in oceno Green-Score tega izdelka
+      s tistimi pri drugih izdelkih ter si ogledal/-a razlike?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203656
-    m_Localized: "Ali si prebral seznam sestavin tega izdelka in iskal znake predelave?
-      Veliko rafiniranih sestavin ali aditivov obi\u010Dajno pomeni ultra predelano
-      \u017Eivilo."
+    m_Localized: "Ali si prebral/-a seznam sestavin tega izdelka in iskal/-a znake
+      predelave? \u0160tevilne rafinirane sestavine ali aditivi obi\u010Dajno ka\u017Eejo
+      na ultra-predelano hrano."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203657
-    m_Localized: Ali si preveril skupino NOVA tega izdelka? Sega od 1 (nepredelano
-      ali minimalno predelano) do 4 (ultra predelano).
+    m_Localized: Ali si preveril/-a skupino NOVA tega izdelka? Ta sega od 1 (nepredelana
+      ali minimalno predelana) do 4 (ultra-predelana).
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203658
-    m_Localized: Ali si skupino NOVA tega izdelka primerjal z njegovim Green-Score
+    m_Localized: Ali si primerjal/-a skupino NOVA tega izdelka z njegovo oceno Green-Score
       ali Nutri-Score?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203659
-    m_Localized: "Ali si poiskal, kako je bil ta izdelek narejen? Na primer na\u010Din
-      gojenja, sistem pridelave ali program trajnosti."
+    m_Localized: "Ali si preveril/-a, kako je bil ta izdelek pridelan? Na primer
+      na\u010Din kmetovanja, sistem pridelave ali program trajnosti."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203660
-    m_Localized: "Ali si ta izdelek izbral ob upo\u0161tevanju dveh razli\u010Dnih
-      okoljskih vidikov? Na primer oglji\u010Dni odtis in razdaljo prevoza ali porabo
+    m_Localized: "Ali si izbral/-a ta izdelek ob upo\u0161tevanju dveh razli\u010Dnih
+      okoljskih vidikov? Na primer oglji\u010Dni odtis in razdalja prevoza ali poraba
       vode in na\u010Din pridelave."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203661
-    m_Localized: "Ali si poiskal dr\u017Eavo porekla tega izdelka? Obi\u010Dajno
+    m_Localized: "Ali si poiskal/-a dr\u017Eavo izvora tega izdelka? Obi\u010Dajno
       je navedena na etiketi."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203662
-    m_Localized: "Ali je bila embala\u017Ea eno od tvojih meril pri izbiri tega izdelka?
-      Bodi pozoren na njene oznake, navodila za recikliranje, simbole materiala ali
-      ali jo je mogo\u010De ponovno uporabiti."
+    m_Localized: "Ali je bila embala\u017Ea eden od tvojih kriterijev za izbiro tega
+      izdelka? Poglej njene oznake, navodila za recikliranje, simbole materialov
+      ali mo\u017Enost ponovne uporabe."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203663
-    m_Localized: "Kateri kazalnik pridelave si uporabil, da si se odlo\u010Dil, ali
-      bo\u0161 kupil ta izdelek?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203664
-    m_Localized: "Na kaj si bil pozoren pri embala\u017Ei tega izdelka? \u0160tejejo
-      material, navodila za recikliranje ali ali jo je mogo\u010De ponovno uporabiti."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203665
-    m_Localized: "Ali si ta izdelek izbral glede na dr\u017Eavo porekla in vsaj \u0161e
-      en podatek o trajnosti: certifikat, na\u010Din pridelave ali sezonskost? Ozna\u010Di,
-      kaj si pogledal."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203666
-    m_Localized: "Kaj si pogledal, ko si kupil ta izdelek: poreklo, sezonskost, na\u010Din
-      pridelave ali certifikat? Ozna\u010Di vsaj tri."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203667
-    m_Localized: "Ali si ob nakupu tega izdelka upo\u0161teval material embala\u017Ee
-      in kaj se bo z njo zgodilo pozneje (recikliranje, ponovna uporaba ali zavr\u017Eenje)?
-      Ozna\u010Di, kaj si pogledal."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203668
-    m_Localized: "Kaj si na\u0161el na etiketi tega izdelka: od kod prihaja, znak
-      ali certifikat trajnosti, ali je sezonski ali je bil pridelan blizu tebe? Ozna\u010Di
-      vsaj dve."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203669
-    m_Localized: "Katere znake trajnosti ima ta izdelek? Ozna\u010Di vsaj dva, na
-      primer Ekolo\u0161ko EU in Fairtrade."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203670
-    m_Localized: "Pri koliko izdelkih si na embala\u017Ei na\u0161el podatek o trajnosti?
-      Na primer dr\u017Eavo porekla, znak certifikata, kako je bil pridelan ali kako
-      je bil vzgojen."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203671
-    m_Localized: "Ali si na embala\u017Ei tega izdelka na\u0161el podatek o trajnosti?
-      Na primer dr\u017Eavo porekla, znak certifikata, kako je bil pridelan ali kako
-      je bil vzgojen."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203672
-    m_Localized: "Kolikokrat si namerno izbral izdelek, potem ko si prebral okoljske
-      podatke na njegovi embala\u017Ei?"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203673
-    m_Localized: "Pri koliko nakupih si pred odlo\u010Ditvijo upo\u0161teval tako
-      skupino NOVA kot Green-Score? Najde\u0161 ju v podatkih o izdelku ali na embala\u017Ei."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 56190243387203674
-    m_Localized: "Ali si pred odlo\u010Ditvijo upo\u0161teval skupino NOVA in Green-Score
+    m_Localized: "Kateri indikator pridelave si uporabil/-a za odlo\u010Ditev o nakupu
       tega izdelka?"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203664
+    m_Localized: "Kaj si opazil/-a pri embala\u017Ei tega izdelka? \u0160tejejo material,
+      navodila za recikliranje ali mo\u017Enost ponovne uporabe."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203665
+    m_Localized: "Ali si izbral/-a ta izdelek glede na njegovo dr\u017Eavo izvora
+      in vsaj \u0161e eno dejstvo o trajnosti: certificiranje, na\u010Din pridelave
+      ali sezonskost? Ozna\u010Di, kaj si upo\u0161teval/-a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203666
+    m_Localized: "Kaj si preveril/-a pri nakupu tega izdelka: izvor, sezonskost,
+      na\u010Din pridelave ali certificiranje? Ozna\u010Di vsaj tri."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203667
+    m_Localized: "Ali si pri nakupu tega izdelka upo\u0161teval/-a embala\u017Eni
+      material in kaj se bo z njim zgodilo pozneje (recikliranje, ponovna uporaba
+      ali odlaganje med odpadke)? Ozna\u010Di, kaj si upo\u0161teval/-a."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203668
+    m_Localized: "Kaj si na\u0161el/-la na etiketi tega izdelka: od kod prihaja,
+      trajnostni pe\u010Dat ali certificiranje, ali je v sezoni ali je bil pridelan
+      v tvoji bli\u017Eini? Ozna\u010Di vsaj dva."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203669
+    m_Localized: "Katere oznake trajnosti ima ta izdelek? Ozna\u010Di vsaj dve, na
+      primer EU ekolo\u0161ko kmetijstvo in Pravi\u010Dna trgovina."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203670
+    m_Localized: "Pri koliko izdelkih si na embala\u017Ei na\u0161el/-la dejstvo
+      o trajnosti? Na primer dr\u017Eavo izvora, certifikacijsko oznako, na\u010Din
+      pridelave ali na\u010Din kmetovanja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203671
+    m_Localized: "Ali si na embala\u017Ei tega izdelka na\u0161el/-la dejstvo o trajnosti?
+      Na primer dr\u017Eavo izvora, certifikacijsko oznako, na\u010Din pridelave
+      ali na\u010Din kmetovanja."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203672
+    m_Localized: "Kolikokrat si se premi\u0161ljeno odlo\u010Dil/-a za izdelek po
+      branju okoljskih informacij na njegovi embala\u017Ei?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203673
+    m_Localized: "Pri koliko nakupih si pred odlo\u010Ditvijo upo\u0161teval/-a tako
+      skupino NOVA kot oceno Green-Score? Najde\u0161 ju v podrobnostih o izdelku
+      ali na embala\u017Ei."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203674
+    m_Localized: "Ali si pred odlo\u010Ditvijo upo\u0161teval/-a skupino NOVA in
+      oceno Green-Score tega izdelka?"
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203675
-    m_Localized: "Pri koliko izdelkih si preveril skupino NOVA? To je prvi korak,
-      da vidi\u0161, ali ima njihova predelava prednosti in slabosti."
+    m_Localized: "Pri koliko izdelkih si preveril/-a skupino NOVA? To je prvi korak,
+      da ugotovi\u0161, ali ima njihova predelava prednosti in slabosti."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203676
-    m_Localized: Ali si preveril skupino NOVA tega izdelka, da bi pretehtal prednosti
-      in slabosti njegove predelave?
+    m_Localized: Ali si preveril/-a skupino NOVA tega izdelka, da bi pretehtal/-a
+      prednosti in slabosti njegove predelave?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203677
-    m_Localized: "Pri koliko teh izdelkih si prebral seznam sestavin, da bi videl,
-      kaj prinese predelava? Na primer konzervanse, ki podalj\u0161ajo obstojnost,
-      ali dodane sladkorje in aditive."
+    m_Localized: "Pri koliko od teh izdelkov si prebral/-a seznam sestavin, da bi
+      videl/-a, kaj doda predelava? Na primer konzervanse, ki podalj\u0161ajo rok
+      trajanja, ali dodane sladkorje in aditive."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203678
-    m_Localized: "Ali si prebral seznam sestavin tega izdelka, da bi videl, kaj prinese
-      njegova predelava? Na primer konzervanse, ki podalj\u0161ajo obstojnost, ali
-      dodane sladkorje in aditive."
+    m_Localized: "Ali si prebral/-a seznam sestavin tega izdelka, da bi videl/-a,
+      kaj doda njegova predelava? Na primer konzervanse, ki podalj\u0161ajo rok trajanja,
+      ali dodane sladkorje in aditive."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203679
-    m_Localized: "Pri koliko od njih si preveril tudi podatke na embala\u017Ei, na
-      primer na\u010Din shranjevanja ali rok uporabe?"
+    m_Localized: "Pri koliko od njih si preveril/-a tudi informacije na embala\u017Ei,
+      kot sta na\u010Din shranjevanja ali rok uporabnosti?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203680
-    m_Localized: "Ali si preveril podatke na embala\u017Ei tega izdelka, na primer
-      na\u010Din shranjevanja ali rok uporabe?"
+    m_Localized: "Ali si preveril/-a informacije na embala\u017Ei tega izdelka, kot
+      sta na\u010Din shranjevanja ali rok uporabnosti?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203681
     m_Localized: "Pri koliko nakupih so ti pri odlo\u010Ditvi pomagali skupina NOVA,
-      Green-Score ali seznam sestavin? Ozna\u010Di, kaj si pogledal."
+      ocena Green-Score ali seznam sestavin? Ozna\u010Di, kaj si preveril/-a."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203682
-    m_Localized: "Kaj si pogledal pri tem izdelku, da si se odlo\u010Dil, ali ga
-      bo\u0161 kupil?"
+    m_Localized: "Kaj si preveril/-a pri tem izdelku, da si se odlo\u010Dil/-a za
+      nakup?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203683
-    m_Localized: "Pri koliko \u017Eivilih, ki si jih jedel, si si zapisal skupino
-      NOVA, Green-Score ali na\u010Din pridelave? Razmisli tudi, ali so vplivali
-      na tvojo izbiro."
+    m_Localized: "Pri koliko \u017Eivilih, ki si jih jedel/-la, si zabele\u017Eil/-a
+      skupino NOVA, oceno Green-Score ali na\u010Din pridelave? Razmisli tudi o tem,
+      ali so ti podatki vplivali na tvojo izbiro."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203684
-    m_Localized: Katere kazalnike pridelave si pogledal pri tem izdelku? Razmisli,
-      ali so vplivali na tvojo izbiro.
+    m_Localized: Katere indikatorje pridelave si preveril/-a pri tem izdelku? Razmisli
+      o tem, ali so vplivali na tvojo izbiro.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203685
-    m_Localized: "Kolikokrat si na\u0161el mo\u017Enost embala\u017Ee za ve\u010Dkratno
-      uporabo ali ponovno polnjenje? I\u0161\u010Di simbole za polnjenje, sisteme
-      vra\u010Dila s kavcijo, to\u010Dke za polnjenje ali embala\u017Eo, ki je ozna\u010Dena
-      kot primerna za ve\u010Dkratno uporabo."
+    m_Localized: "Kolikokrat si na\u0161el/-la mo\u017Enost embala\u017Ee za ve\u010Dkratno
+      uporabo ali ponovno polnjenje? Poi\u0161\u010Di simbole za ponovno polnjenje,
+      sisteme povratne embala\u017Ee, polnilne postaje ali embala\u017Eo, na kateri
+      pi\u0161e, da je za ve\u010Dkratno uporabo."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203686
-    m_Localized: "Pri koliko izdelkih si na\u0161el embala\u017Eo, ki jo je mogo\u010De
-      ponovno uporabiti, reciklirati ali znova napolniti? Ozna\u010Di, kaj si na\u0161el."
+    m_Localized: "Pri koliko izdelkih si na\u0161el/-la embala\u017Eo, ki jo je mogo\u010De
+      ponovno uporabiti, reciklirati ali ponovno napolniti? Ozna\u010Di, kaj si na\u0161el/-la."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203687
-    m_Localized: "Ali je embala\u017Eo tega izdelka mogo\u010De ponovno uporabiti,
-      reciklirati ali znova napolniti? Ozna\u010Di, kaj si na\u0161el."
+    m_Localized: "Ali je mogo\u010De embala\u017Eo tega izdelka ponovno uporabiti,
+      reciklirati ali ponovno napolniti? Ozna\u010Di, kaj si na\u0161el/-la."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203688
-    m_Localized: "Ali si pred prvim nakupom na\u010Drtoval vse glavne obroke tedna,
-      da si kupil samo tisto, kar si nameraval porabiti?"
+    m_Localized: "Ali si pred prvim nakupovanjem na\u010Drtoval/-a vse glavne obroke
+      v tednu, da si kupil/-a le tisto, kar bo\u0161 porabil/-a?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203689
-    m_Localized: "Trenutno nima\u0161 nobene naloge v teku. Si ogledava naloge in
-      izbereva eno?"
+    m_Localized: "Trenutno nima\u0161 nobene aktivne pustolov\u0161\u010Dine. Ali
+      si ogledava pustolov\u0161\u010Dine in eno izbereva?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203690
-    m_Localized: "V \xBB{0}\xAB ti \u0161e ostajajo misije, trenutno pa nobena ni
-      v teku. Bova za\u010Dela eno?"
+    m_Localized: "V \xBB{0}\xAB ima\u0161 \u0161e vedno na voljo misije, trenutno
+      pa nobena ni aktivna. Ali eno za\u010Dneva?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203691
@@ -4669,7 +4685,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203693
-    m_Localized: Naloga
+    m_Localized: "Pustolov\u0161\u010Dina"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203694
@@ -4677,25 +4693,26 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203695
-    m_Localized: "Uredi \u010Dlana"
+    m_Localized: "Uredi \u010Dlana/-ico"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203696
-    m_Localized: "Odstrani \u010Dlana"
+    m_Localized: "Odstrani \u010Dlana/-ico"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203697
-    m_Localized: "Ali ste prepri\u010Dani, da \u017Eelite odstraniti {0} iz skupine?"
+    m_Localized: "Ali si prepri\u010Dan/-a, da \u017Eeli\u0161 odstraniti uporabnika
+      {0} iz skupine?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203698
-    m_Localized: Nov predmet za avatar!
+    m_Localized: Nov predmet za avatarja!
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203699
-    m_Localized: "\u017Divjo! Sem {global.PET_NAME} in spremljal te bom v FOODMISSION.
-      Skupaj bomo postopoma izbolj\u0161ali, kako jemo, nakupujemo in izkoristimo
-      hrano."
+    m_Localized: "\u017Divjo! Moje ime je {global.PET_NAME} in s tabo bom na poti
+      skozi FOODMISSION. Skupaj bomo postopoma izbolj\u0161evali, kako se prehranjujemo,
+      nakupujemo in \u010Dim bolje izkoristimo hrano."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
@@ -4706,22 +4723,22 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203701
-    m_Localized: "Tukaj na doma\u010Di strani vidi\u0161 svoj napredek: vrstice znanja
-      rastejo s kvizi, zanimivostmi, misijami in izzivi, kolesa pa ka\u017Eejo vpliv
-      tvojih obrokov na CO\u2082, energijo, vodo in zemljo."
+    m_Localized: "Tukaj na doma\u010Di strani lahko spremlja\u0161 svoj napredek:
+      kazalniki znanja rastejo s kvizi, zanimivostmi o hrani, misijami in izzivi,
+      krogi pa prikazujejo vpliv tvojih obrokov na CO\u2082, energijo, vodo in tla."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203702
     m_Localized: "Kako se premikati: spodaj ima\u0161 vsakodnevna orodja \u2014 dnevnik
       obrokov, hitro iskanje, seznam nakupov in shrambo. Tapni \u2630 za naloge,
-      misije, izzive, znanje, recepte in \u017Eivilske odpadke. \u010Ce se kdaj izgubi\u0161,
+      misije, izzive, znanje, recepte in odpadno hrano. \u010Ce se kdaj izgubi\u0161,
       tapni ? v vsakem razdelku."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203703
     m_Localized: "Tukaj bele\u017Ei\u0161, kaj je\u0161. To lahko naredi\u0161 na
       dva na\u010Dina: s polnim dnevnikom, kamor dodaja\u0161 \u017Eivilo za \u017Eivilom,
-      ali s poenostavljenim, s katerim z nekaj dotiki zabele\u017Ei\u0161 najpomembnej\u0161e
+      ali s poenostavljenim, s katerim v nekaj korakih zabele\u017Ei\u0161 najpomembnej\u0161e
       o obroku. Ni obvezno \u2014 o obrokih mi lahko pove\u0161 tudi v misijah \u2014
       a \u010De jih zabele\u017Ei\u0161 tukaj, bodo tvoje misije s temi podatki napredovale
       same."
@@ -4751,16 +4768,16 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203707
     m_Localized: "Naloge so veliki cilji FOODMISSION, razvr\u0161\u010Deni po temah
-      in ravneh. Vsaka naloga ima ve\u010D misij. Izberi eno za za\u010Detek: ko
-      jo opravi\u0161, se odklene naslednja, in ko kon\u010Da\u0161 vse naloge svoje
-      ravni, napreduje\u0161 na vi\u0161jo raven v tej temi."
+      in ravneh. Vsaka naloga vsebuje ve\u010D misij. Izberi eno in za\u010Dni: ko
+      jo opravi\u0161, odklene\u0161 naslednjo, ko opravi\u0161 vse naloge svoje
+      ravni, pa na tem podro\u010Dju napreduje\u0161 na vi\u0161jo raven."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203708
     m_Localized: "Tukaj vidi\u0161 vse misije, razvr\u0161\u010Dene po temah. Vsaka
       misija je majhna sprememba navade za nekaj dni in spada v nalogo: da jo opravi\u0161,
       za\u010Dni njeno nalogo in nato misijo za\u010Dni tam. Napredujejo same z dnevnikom
-      obrokov, lahko pa mi pove\u0161 z gumbom \xBBPovej prijatelju {global.PET_NAME}\xAB."
+      obrokov, lahko pa mi pove\u0161 z gumbom \xBBPovej {global.PET_NAME}\xAB."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
@@ -4784,9 +4801,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203712
-    m_Localized: "Bele\u017Ei hrano, ki kon\u010Da v smeteh. Izbere\u0161 jo lahko
-      iz shrambe, \u017Eivila, ki jim je \u017Ee potekel rok, pa so prikazana posebej.
-      Vedeti, kaj in koliko zavr\u017Eemo, je prvi korak k manj zavr\u017Eene hrane."
+    m_Localized: "Zabele\u017Ei hrano, ki kon\u010Da v smeteh. Izbere\u0161 jo lahko
+      iz shrambe, izdelki s prete\u010Denim rokom uporabe pa so prikazani posebej.
+      \u010Ce vemo, kaj in koliko zavr\u017Eemo, lahko naredimo prvi korak k zmanj\u0161anju
+      koli\u010Dine odpadne hrane."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203713
@@ -4844,13 +4862,13 @@ MonoBehaviour:
       - rid: 4008881209995690412
   - m_Id: 56190243387203725
     m_Localized: "\u017Divjo! Sem {global.PET_NAME}. Z nekaj hitrimi koraki bomo
-      aplikacijo prilagodili tebi. Za\u010Dnimo s tvojim profilom."
+      aplikacijo prilagodili tebi. Za\u010Dniva s tvojim profilom."
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
   - m_Id: 56190243387203726
-    m_Localized: "Zdaj mi povej, kaj \u017Eeli\u0161 izbolj\u0161ati, da bom bolje
-      izbral tvoje misije."
+    m_Localized: "Povej mi, kaj \u017Eeli\u0161 izbolj\u0161ati, da bom bolje izbral
+      tvoje misije."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203727
@@ -4930,21 +4948,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203745
-    m_Localized: "Tukaj eno za drugim doda\u0161 vsako zau\u017Eito \u017Eivilo.
-      Se ti mudi? Poenostavljen dnevnik vzame le nekaj dotikov."
+    m_Localized: "Tukaj doda\u0161 vsako zau\u017Eito \u017Eivilo posebej. Se ti
+      mudi? Za poenostavljen vnos potrebuje\u0161 le nekaj klikov."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203746
-    m_Localized: "Izberi vrsto obroka in ozna\u010Di, kaj je vsebovala tvoja jed,
-      brez dodajanja vsakega \u017Eivila. \u017Deli\u0161 ve\u010D podrobnosti? Uporabi
-      poln dnevnik."
+    m_Localized: "Izberi vrsto obroka in ozna\u010Di, kaj je vseboval, ne da bi dodajal/-a
+      vsako \u017Eivilo posebej. \u017Deli\u0161 dodati ve\u010D podrobnosti? Uporabi
+      polni dnevnik.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203747
-    m_Localized: "To je poenostavljen dnevnik: izberi vrsto obroka in ozna\u010Di
-      glavne zna\u010Dilnosti svoje jedi, brez dodajanja vsakega \u017Eivila. Tvoje
-      misije napredujejo s temi odgovori. \u010Ce raje bele\u017Ei\u0161 \u017Eivilo
-      za \u017Eivilom, odpri poln dnevnik z gumbom na vrhu."
+    m_Localized: "To je poenostavljeni dnevnik: izberi vrsto obroka in ozna\u010Di
+      glavne zna\u010Dilnosti jedi, ne da bi dodajal/-a vsako \u017Eivilo posebej.
+      Na podlagi teh odgovorov bodo tvoje misije napredovale. \u010Ce \u017Eeli\u0161
+      bele\u017Eiti vsako \u017Eivilo posebej, z gumbom na vrhu odpri polni dnevnik.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203748
@@ -4992,7 +5010,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203758
-    m_Localized: Kaj meri to kolo?
+    m_Localized: Kaj meri ta prikaz?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203759
@@ -5024,7 +5042,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203766
-    m_Localized: "Kolo zmanj\u0161anja CO\u2082"
+    m_Localized: "Prikaz zmanj\u0161anja emisij CO\u2082\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203767
@@ -5036,29 +5054,29 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203769
-    m_Localized: "Kolo zmanj\u0161anja CO\u2082 prikazuje, koliko vpliva na podnebje
-      je bilo prepre\u010Denega s tvojimi prehranskimi izbirami. Vsaki\u010D, ko
-      poje\u0161 manj mesa, izbere\u0161 beljakovine z manj\u0161im vplivom, prepre\u010Di\u0161
-      zavr\u017Eek hrane, ultra predelano hrano nadomesti\u0161 s trajnostnej\u0161imi
-      mo\u017Enostmi ali uporabi\u0161 sisteme za ponovno polnjenje in embala\u017Eo
-      za ve\u010Dkratno uporabo, zmanj\u0161a\u0161 izpuste toplogrednih plinov."
+    m_Localized: "Prikaz zmanj\u0161anja emisij CO\u2082 ka\u017Ee, koliko vpliva
+      na podnebje si prepre\u010Dil/-a s svojimi prehranskimi izbirami. Vsaki\u010D,
+      ko zau\u017Eije\u0161 manj mesa, izbere\u0161 beljakovinske vire z manj\u0161im
+      vplivom, prepre\u010Di\u0161 nastajanje odpadne hrane, nadomesti\u0161 visoko
+      predelana \u017Eivila z bolj trajnostnimi mo\u017Enostmi ali uporabi\u0161
+      embala\u017Eo za ponovno polnjenje oziroma ve\u010Dkratno uporabo, zmanj\u0161a\u0161
+      emisije toplogrednih plinov."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203770
-    m_Localized: "Kolo meri te prihranke v <b>kilogramih ekvivalenta ogljikovega
-      dioksida (kg CO\u2082e)</b>. Ekvivalent ogljikovega dioksida je standardni
-      na\u010Din izra\u017Eanja vpliva razli\u010Dnih toplogrednih plinov na podnebje
-      z eno samo mero."
+    m_Localized: "Prihranki so prikazani v kilogramih ekvivalenta ogljikovega dioksida
+      (kg CO\u2082e). Ekvivalent ogljikovega dioksida je standardna enota za izra\u017Eanje
+      podnebnega vpliva razli\u010Dnih toplogrednih plinov.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203771
     m_Localized: "Vsako opravljeno dejanje prispeva k skupnemu prihranku, izra\u017Eenemu
-      v ekvivalentu CO\u2082 (CO\u2082e). Ko se prihranek pove\u010Duje, se kolo
+      v ekvivalentu CO\u2082 (CO\u2082e). Ko se prihranek pove\u010Duje, se prikaz
       postopoma polni, dokler ne dose\u017Ee\u0161 trenutnega trajnostnega cilja."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203772
-    m_Localized: "Kolo zmanj\u0161anja porabe energije"
+    m_Localized: "Prikaz zmanj\u0161anja porabe energije"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203773
@@ -5070,31 +5088,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203775
-    m_Localized: "Kolo zmanj\u0161anja porabe energije spremlja, koliko energije
+    m_Localized: "Prikaz zmanj\u0161anja porabe energije spremlja, koliko energije
       je bilo prihranjene s tvojimi izbirami, povezanimi s hrano. Pridelava hrane
       zahteva energijo na vsakem koraku prehranskega sistema. Energija se porablja
       za proizvodnjo gnojil, namakanje pridelkov, delovanje kmetijskih strojev, predelavo
       hrane, prevoz izdelkov, hlajenje hrane in pripravo obrokov. Z izbiro hrane
-      z manj\u0161im vplivom in zmanj\u0161evanjem zavr\u017Ekov pomaga\u0161 zmanj\u0161ati
+      z manj\u0161im vplivom in zmanj\u0161evanjem odpadne hrane pomaga\u0161 zmanj\u0161ati
       povpra\u0161evanje po teh virih."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203776
-    m_Localized: Kolo meri prihranke v <b>kilovatnih urah (kWh)</b>.
+    m_Localized: Prikaz meri prihranke v <b>kilovatnih urah (kWh)</b>.
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203777
     m_Localized: "Vsako opravljeno dejanje prispeva k skupnemu prihranku energije,
-      merjenemu v <b>kWh</b>. Ko se prihranek pove\u010Duje, se kolo postopoma polni,
-      dokler ne dose\u017Ee\u0161 trenutnega trajnostnega cilja."
+      merjenemu v <b>kWh</b>. Ko se prihranek pove\u010Duje, se prikaz postopoma
+      polni, dokler ne dose\u017Ee\u0161 trenutnega trajnostnega cilja."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203778
-    m_Localized: Kolo prihranka vode
+    m_Localized: Prikaz prihranka vode
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203779
-    m_Localized: Prihranjeni litri modre vode
+    m_Localized: "Prihranek povr\u0161inske in podzemne vode (v litrih)"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203780
@@ -5102,23 +5120,23 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203781
-    m_Localized: "Kolo prihranka vode prikazuje, koliko sladke vode je bilo prihranjene
-      s tvojimi prehranskimi izbirami. Kmetijstvo je najve\u010Dji porabnik sladke
-      vode na svetu. Razli\u010Dna \u017Eivila imajo zelo razli\u010Dne vodne odtise.
+    m_Localized: "Prikaz prihranka vode ka\u017Ee, koliko sladke vode si prihranil/-a
+      s svojimi prehranskimi izbirami. Kmetijstvo je najve\u010Dji porabnik sladke
+      vode na svetu. Vodni odtisi razli\u010Dnih \u017Eivil se mo\u010Dno razlikujejo.
       \u017Divila \u017Eivalskega izvora na splo\u0161no zahtevajo veliko ve\u010D
-      vode kot rastlinske mo\u017Enosti. S prepre\u010Devanjem zavr\u017Ekov hrane
-      prihrani\u0161 tudi vso vodo, ki bi bila sicer porabljena za pridelavo nadomestne
-      hrane."
+      vode kot rastlinske alternative. S prepre\u010Devanjem odpadne hrane prihranimo
+      tudi vso vodo, ki bi bila sicer potrebna za proizvodnjo nadomestne hrane.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203782
-    m_Localized: "Kolo meri prihranek v <b>litrih (L)</b> modre vode. Vsako opravljeno
-      dejanje prispeva k skupnemu prihranku vode. Ko se prihranek pove\u010Duje,
-      se kolo postopoma polni, dokler ne dose\u017Ee\u0161 trenutnega cilja trajnosti."
+    m_Localized: "Prikaz meri prihranek v <b>litrih (L)</b> povr\u0161inske in podzemne
+      vode. Vsako opravljeno dejanje prispeva k skupnemu prihranku vode. Ko se prihranek
+      pove\u010Duje, se prikaz postopoma polni, dokler ne dose\u017Ee\u0161 trenutnega
+      cilja trajnosti."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203783
-    m_Localized: "Kolo manj\u0161e rabe zemlji\u0161\u010D"
+    m_Localized: "Prikaz manj\u0161e rabe zemlji\u0161\u010D"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203784
@@ -5130,19 +5148,19 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203786
-    m_Localized: "Kolo manj\u0161e rabe zemlji\u0161\u010D meri, koliko kmetijskih
-      zemlji\u0161\u010D je bilo prihranjenih s tvojimi prehranskimi izbirami. Za
-      pridelavo hrane so potrebna zemlji\u0161\u010Da. \u017Divalski izdelki na splo\u0161no
-      porabijo veliko ve\u010D zemlji\u0161\u010D kot rastlinska hrana, saj so zemlji\u0161\u010Da
-      potrebna tako za rejo \u017Eivali kot za pridelavo krme. Manj zavr\u017Eene
-      hrane zmanj\u0161a tudi povr\u0161ino zemlji\u0161\u010D, ki je potrebna za
-      pridelavo hrane, ki se na koncu zavr\u017Ee."
+    m_Localized: "Prikaz zmanj\u0161anja rabe zemlji\u0161\u010D ka\u017Ee, koliko
+      kmetijskih zemlji\u0161\u010D si prihranil/-a s svojimi prehranskimi izbirami.
+      Za proizvodnjo hrane so potrebna zemlji\u0161\u010Da. \u017Divila \u017Eivalskega
+      izvora jih na splo\u0161no zahtevajo veliko ve\u010D kot rastlinska, saj so
+      potrebna tako za rejo \u017Eivali kot za pridelavo krme. Zmanj\u0161evanje
+      koli\u010Dine odpadne hrane zmanj\u0161uje tudi obseg zemlji\u0161\u010D, potrebnih
+      za proizvodnjo hrane, ki je nazadnje zavr\u017Eena.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203787
-    m_Localized: "Kolo meri prihranek zemlji\u0161\u010Da v <b>kvadratnih metrih
+    m_Localized: "Prikaz meri prihranek zemlji\u0161\u010Da v <b>kvadratnih metrih
       (m\xB2)</b>. Vsako opravljeno dejanje prispeva k skupni prihranjeni povr\u0161ini.
-      Ko se prihranek pove\u010Duje, se kolo postopoma polni, dokler ne dose\u017Ee\u0161
+      Ko se prihranek pove\u010Duje, se prikaz postopoma polni, dokler ne dose\u017Ee\u0161
       trenutnega cilja trajnosti."
     m_Metadata:
       m_Items: []
@@ -5187,15 +5205,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203798
-    m_Localized: "Pol kro\u017Enika hrane, ki je ni bilo treba zavre\u010Di"
+    m_Localized: "Prihranjena polovica kro\u017Enika hrane"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203799
-    m_Localized: "Poln kro\u017Enik hrane, ki je ni bilo treba zavre\u010Di"
+    m_Localized: "Prihranjen cel kro\u017Enik hrane"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203800
-    m_Localized: "\u017Divilo, uporabljeno po datumu minimalne trajnosti"
+    m_Localized: "\n\n\u017Divilo, uporabljeno po datumu \xBBuporabno najmanj do\xAB"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203801
@@ -5266,12 +5284,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203901
-    m_Localized: "Si re\u0161il kaj hrane pred zavr\u017Eenjem?"
+    m_Localized: Ali ste porabili ali shranili za pozneje kaj hrane, ki bi jo sicer
+      zavrgli?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203902
-    m_Localized: "Je vsaj en obrok vseboval \u017Eivilo, bogato z beljakovinami (stro\u010Dnice,
-      jajca, ribe, mle\u010Dni izdelki, tofu, ore\u0161\u010Dki \u2026)?"
+    m_Localized: "Ali je vsaj en obrok vseboval \u017Eivilo, bogato z beljakovinami
+      (npr. stro\u010Dnice, jajca, ribe, mle\u010Dne izdelke, tofu ali ore\u0161\u010Dke)?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203903
@@ -5283,12 +5302,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203905
-    m_Localized: "Si se izogibal \u017Eivilom in pija\u010Dam z dodanim sladkorjem
-      med prvimi tremi sestavinami?"
+    m_Localized: "Ali ste se izognili \u017Eivilom in pija\u010Dam, pri katerih je
+      dodani sladkor naveden med prvimi tremi sestavinami?"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203906
-    m_Localized: Ali si se pri vsakem obroku izognil dodajanju soli za mizo?
+    m_Localized: Ali ste se pri vseh obrokih izognili dosoljevanju hrane pri mizi?
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203907
@@ -5380,24 +5399,24 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203928
-    m_Localized: "Zakaj je pomembno: za meso je potrebno veliko ve\u010D zemlje,
-      vode in energije kot za rastlinsko hrano. Zamenjava dela mesa s stro\u010Dnicami,
-      ore\u0161\u010Dki ali drugimi viri beljakovin in preizku\u0161anje druga\u010Dnih
-      osnovnih \u017Eivil je ena najve\u010Djih sprememb, ki jih lahko naredi\u0161
-      za planet."
+    m_Localized: "Zakaj je to pomembno: pridelava mesa zahteva veliko ve\u010D zemlje,
+      vode in energije kot pridelava rastlinskih \u017Eivil. \u010Ce del mesa nadomesti\u0161
+      s stro\u010Dnicami, ore\u0161\u010Dki ali drugimi viri beljakovin ter poskusi\u0161
+      razli\u010Dna osnovna \u017Eivila, lahko naredi\u0161 eno najve\u010Djih sprememb
+      za planet.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203929
     m_Localized: "Zakaj je pomembno: vsako \u017Eivilo ima skrite okoljske stro\u0161ke,
       od zemlje in vode za pridelavo do energije in prevoza, potrebnih, da pride
-      do tebe. \u010Ce pozna\u0161 te stro\u0161ke, lahko primerja\u0161 izdelke
-      in izbere\u0161 mo\u017Enost z manj\u0161im vplivom na okolje."
+      do tebe. \u010Ce jih pozna\u0161, lahko primerja\u0161 izdelke in izbere\u0161
+      tistega z manj\u0161im vplivom na okolje."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203930
-    m_Localized: "Zakaj je pomembno: kako se \u017Eivilo prideluje, vzreja, predeluje
-      in prodaja, vpliva na okolje, \u017Eivali in ljudi, ki ga pridelajo. Etiketa
-      ti pogosto pove ve\u010D, kot misli\u0161."
+    m_Localized: "Zakaj je to pomembno: na\u010Din pridelave, reje, predelave in
+      trgovanja z \u017Eivili vpliva na okolje, \u017Eivali in ljudi, ki jih proizvajajo.
+      Oznaka na \u017Eivilih pogosto pove ve\u010D, kot si misli\u0161.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203931
@@ -5410,7 +5429,7 @@ MonoBehaviour:
     m_Localized: "Zakaj je pomembno: velik del pridelane hrane zavr\u017Eemo, z njo
       pa tudi zemljo, vodo in energijo, porabljene za njeno proizvodnjo. Z na\u010Drtovanjem
       obrokov, pravilnim shranjevanjem hrane in uporabo ostankov lahko zmanj\u0161a\u0161
-      koli\u010Dino zavr\u017Eene hrane in prihrani\u0161 denar."
+      koli\u010Dino odpadne hrane in prihrani\u0161 denar."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203933
@@ -5467,8 +5486,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203944
-    m_Localized: "Kako se gojijo rastline, npr. ekolo\u0161ko ali konvencionalno
-      kmetovanje."
+    m_Localized: "Na\u010Din pridelave polj\u0161\u010Din, npr. ekolo\u0161ko ali
+      konvencionalno kmetovanje.\n"
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203945
@@ -5491,7 +5510,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203949
-    m_Localized: "Hrana, postre\u017Eena na kro\u017Eniku, ki ostane nepojedena."
+    m_Localized: "Hrana, ki ostane na kro\u017Eniku in je ne pojemo."
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203950
