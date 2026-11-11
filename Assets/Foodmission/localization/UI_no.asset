@@ -5559,6 +5559,10 @@ MonoBehaviour:
     m_Localized: Om appen
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203967
+    m_Localized: "Hvilke m\xE5ltider hadde du i dag som du ikke har fortalt meg om enn\xE5? Velg dem og fortell meg hva de inneholdt."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

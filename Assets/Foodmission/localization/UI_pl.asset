@@ -5676,6 +5676,10 @@ MonoBehaviour:
     m_Localized: O aplikacji
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203967
+    m_Localized: "Jakie posi\u0142ki zjad\u0142e\u015B dzi\u015B, o kt\xF3rych jeszcze mi nie powiedzia\u0142e\u015B? Wybierz je i powiedz, co w nich by\u0142o."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

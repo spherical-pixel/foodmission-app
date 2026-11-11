@@ -5584,6 +5584,10 @@ MonoBehaviour:
     m_Localized: O aplikaciji
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203967
+    m_Localized: "Katere obroke si imel/-a danes, o katerih mi \u0161e nisi povedal/-a? Izberi jih in mi povej, kaj so vsebovali."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

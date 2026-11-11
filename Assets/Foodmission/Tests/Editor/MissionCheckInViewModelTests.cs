@@ -542,6 +542,19 @@ namespace eu.foodmission.platform.Tests
         }
 
         [Test]
+        public async Task MealDayToday_UsesTodayPrompt_OtherDaysTheDayPrompt()
+        {
+            await LoadAsync(null, CheckInPlannerTests.M("M.A1.3", Now.Date.AddDays(-1)), CheckInPlannerTests.M("M.B1.1", Now.Date));
+            Assert.AreEqual(Now.Date.AddDays(-1), _vm.Plan.MealDays[0].Day.Date);
+            Assert.AreEqual("MISSION_CHECKIN_Q_MEALS", _vm.NutriPromptKey);
+
+            await _vm.GoNextAsync();
+
+            Assert.AreEqual(Now.Date, _vm.Plan.MealDays[1].Day.Date);
+            Assert.AreEqual("MISSION_CHECKIN_Q_MEALS_TODAY", _vm.NutriPromptKey);
+        }
+
+        [Test]
         public async Task DayWithoutMeals_UsesDayPrompt()
         {
             await LoadAsync(null, CheckInPlannerTests.MP("M.B6.2", 0f));

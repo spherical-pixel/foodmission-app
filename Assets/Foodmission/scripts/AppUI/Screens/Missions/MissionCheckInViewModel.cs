@@ -14,6 +14,8 @@ namespace eu.foodmission.platform
     public partial class MissionCheckInViewModel : StepFlowViewModelBase
     {
         private const string MealDayPromptKey = "MISSION_CHECKIN_Q_MEALS";
+        // The day label is "Today" on its own (chips, summary): in a sentence today needs its own phrasing
+        private const string MealTodayPromptKey = "MISSION_CHECKIN_Q_MEALS_TODAY";
         private const string DayPromptKey = "MISSION_CHECKIN_Q_DAY";
         private const string SummaryPromptKey = "MISSION_REPORT_SUMMARY_TITLE";
         private const string EmptySummaryPromptKey = "MISSION_CHECKIN_SUMMARY_EMPTY";
@@ -641,11 +643,20 @@ namespace eu.foodmission.platform
 
         private string PromptKeyFor(int stepIndex) => KindOf(stepIndex) switch
         {
-            CheckInStepKind.MealDay => Plan.MealDays[ItemIndexOf(stepIndex)].OpenMealTypes.Count > 0 ? MealDayPromptKey : DayPromptKey,
+            CheckInStepKind.MealDay => MealDayPromptKeyFor(Plan.MealDays[ItemIndexOf(stepIndex)]),
             CheckInStepKind.DayEvent => Plan.DayEvents[ItemIndexOf(stepIndex)].Step.PromptKey,
             CheckInStepKind.MissionStep => Plan.MissionSteps[ItemIndexOf(stepIndex)].Step.PromptKey,
             _ => IsSummaryEmpty ? EmptySummaryPromptKey : SummaryPromptKey
         };
+
+        private string MealDayPromptKeyFor(CheckInMealDay day)
+        {
+            if (day.OpenMealTypes.Count == 0)
+            {
+                return DayPromptKey;
+            }
+            return day.Day.Date == Clock().Date ? MealTodayPromptKey : MealDayPromptKey;
+        }
 
         private bool CanEdit(int stepIndex, CheckInStepKind kind) =>
             !HasPartialSend && !IsSubmitting && stepIndex >= 0 && stepIndex < Plan.StepCount && KindOf(stepIndex) == kind;
