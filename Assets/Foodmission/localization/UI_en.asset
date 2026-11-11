@@ -3554,9 +3554,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347452
-    m_Localized: '{0}: {1} meal(s)'
+    m_Localized: '{0}: {1:plural:{} meal|{} meals}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690406
   - m_Id: 52041725676347453
     m_Localized: "Got it, thanks for telling me! \U0001F64C"
     m_Metadata:
@@ -5536,6 +5537,7 @@ MonoBehaviour:
       data:
         m_Entries: 
         m_SharedEntries:
+        - id: 52041725676347452
         - id: 27512489452232704
         - id: 20518970774773760
         - id: 25708140598124544

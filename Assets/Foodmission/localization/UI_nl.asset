@@ -3583,9 +3583,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347452
-    m_Localized: '{0}: {1} maaltijd(en)'
+    m_Localized: '{0}: {1:plural:{} maaltijd|{} maaltijden}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690405
   - m_Id: 52041725676347453
     m_Localized: "Genoteerd, bedankt dat je het me vertelde! \U0001F64C"
     m_Metadata:
@@ -5577,6 +5578,7 @@ MonoBehaviour:
       data:
         m_Entries: 
         m_SharedEntries:
+        - id: 52041725676347452
         - id: 27512489452232704
         - id: 20518970774773760
         - id: 25708140598124544
