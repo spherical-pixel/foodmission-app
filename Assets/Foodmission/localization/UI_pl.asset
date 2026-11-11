@@ -3612,9 +3612,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347452
-    m_Localized: "{0}: {1} posi\u0142ek/posi\u0142ki"
+    m_Localized: "{0}: {1:plural:{} posi\u0142ek|{} posi\u0142ki|{} posi\u0142k\xF3w|{} posi\u0142ku}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690411
   - m_Id: 52041725676347453
     m_Localized: "Zapisane, dzi\u0119ki, \u017Ce mi powiedzia\u0142e\u015B! \U0001F64C"
     m_Metadata:
@@ -5683,6 +5684,7 @@ MonoBehaviour:
       data:
         m_Entries: 
         m_SharedEntries:
+        - id: 52041725676347452
         - id: 27512489452232704
         - id: 20518970774773760
         - id: 25708140598124544
