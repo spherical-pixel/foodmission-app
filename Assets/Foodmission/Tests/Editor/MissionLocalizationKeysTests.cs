@@ -35,7 +35,7 @@ namespace eu.foodmission.platform.Tests
             HashSet<string> keys = UiKeys();
             var needed = new SortedSet<string>
             {
-                "MISSION_CHECKIN_Q_MEALS", "MISSION_REPORT_SUMMARY_TITLE", "MISSION_CHECKIN_UP_TO_DATE"
+                "MISSION_CHECKIN_Q_MEALS", "MISSION_CHECKIN_Q_MEALS_TODAY", "MISSION_REPORT_SUMMARY_TITLE", "MISSION_CHECKIN_UP_TO_DATE"
             };
             foreach (MissionInteraction interaction in MissionInteractionCatalog.Entries.Values)
             {

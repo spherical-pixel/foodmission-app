@@ -5571,6 +5571,10 @@ MonoBehaviour:
     m_Localized: Acerca de la app
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203967
+    m_Localized: "\xBFQu\xE9 comidas hiciste hoy que a\xFAn no me has contado? El\xEDgelas y cu\xE9ntame qu\xE9 llevaban."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

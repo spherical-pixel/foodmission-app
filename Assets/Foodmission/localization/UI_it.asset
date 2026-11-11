@@ -5567,6 +5567,10 @@ MonoBehaviour:
     m_Localized: Informazioni sull'app
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203967
+    m_Localized: "Quali pasti hai fatto oggi di cui non mi hai ancora parlato? Sceglili e dimmi cosa contenevano."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

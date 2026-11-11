@@ -5578,6 +5578,10 @@ MonoBehaviour:
     m_Localized: "\xDCber die App"
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203967
+    m_Localized: "Welche Mahlzeiten hattest du heute, von denen du mir noch nichts erz\xE4hlt hast? W\xE4hle sie aus und sag mir, was drin war."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
