@@ -5175,6 +5175,30 @@ MonoBehaviour:
     m_Key: MISSION_CHECKIN_Q_MEALS_TODAY
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203974
+    m_Key: SCORE_INFO_NUTRISCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Key: SCORE_INFO_NOVA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Key: SCORE_INFO_GREEN_SCORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Key: SCORE_INFO_THIS_PRODUCT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Key: SCORE_INFO_UNKNOWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Key: SCORE_INFO_NOT_APPLICABLE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

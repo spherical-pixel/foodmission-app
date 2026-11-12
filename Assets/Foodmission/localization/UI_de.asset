@@ -3112,7 +3112,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5580,7 +5580,45 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Welche Mahlzeiten hattest du heute, von denen du mir noch nichts erz\xE4hlt hast? W\xE4hle sie aus und sag mir, was drin war."
+    m_Localized: "Welche Mahlzeiten hattest du heute, von denen du mir noch nichts
+      erz\xE4hlt hast? W\xE4hle sie aus und sag mir, was drin war."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "Der Nutri-Score bewertet die gesamte N\xE4hrwertqualit\xE4t eines
+      Lebensmittels, von A (besser) bis E (weniger gut). Er w\xE4gt ab, was man eher
+      begrenzen sollte (Kalorien, Zucker, ges\xE4ttigte Fetts\xE4uren, Salz), und
+      was gut ist (Ballaststoffe, Eiwei\xDF, Obst, Gem\xFCse, H\xFClsenfr\xFCchte
+      und N\xFCsse). Am n\xFCtzlichsten ist er, um Produkte derselben Art zu vergleichen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA ordnet Lebensmittel danach ein, wie stark sie verarbeitet
+      sind: 1 unverarbeitete oder minimal verarbeitete Lebensmittel, 2 verarbeitete
+      K\xFCchenzutaten (\xD6l, Butter, Zucker \u2026), 3 verarbeitete Lebensmittel,
+      4 hochverarbeitete Lebensmittel. Versuche, deine Mahlzeiten vor allem auf den
+      Gruppen 1 und 2 aufzubauen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: "Der Green-Score (fr\xFCher Eco-Score) sch\xE4tzt die Umweltauswirkungen
+      eines Lebensmittels, von A+ (sehr gering) bis F (sehr hoch). Er betrachtet
+      den gesamten Lebenszyklus (Anbau, Verarbeitung, Transport und Verpackung) und
+      vergibt Bonus- oder Maluspunkte, zum Beispiel f\xFCr Herkunft, Siegel und recycelbare
+      Verpackungen."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Dieses Produkt: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: Open Food Facts hat noch nicht genug Daten zu diesem Produkt, um
+      diesen Wert zu berechnen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: "Dieser Wert gilt nicht f\xFCr diese Art von Produkt."
     m_Metadata:
       m_Items: []
   references:

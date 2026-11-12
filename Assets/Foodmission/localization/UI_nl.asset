@@ -3134,7 +3134,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5571,7 +5571,43 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Welke maaltijden had je vandaag die je me nog niet hebt verteld? Kies ze en vertel me wat erin zat."
+    m_Localized: Welke maaltijden had je vandaag die je me nog niet hebt verteld?
+      Kies ze en vertel me wat erin zat.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "De Nutri-Score beoordeelt de algemene voedingskwaliteit van een
+      product, van A (beter) tot E (minder goed). Hij weegt af wat je beter kunt
+      beperken (calorie\xEBn, suiker, verzadigd vet, zout) tegen wat goed is (vezels,
+      eiwitten, fruit, groenten, peulvruchten en noten). Hij is vooral handig om
+      producten van dezelfde soort te vergelijken."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA deelt voedingsmiddelen in naar hoe sterk ze bewerkt zijn:
+      1 onbewerkte of minimaal bewerkte voedingsmiddelen, 2 bewerkte keukeningredi\xEBnten
+      (olie, boter, suiker\u2026), 3 bewerkte voedingsmiddelen, 4 ultrabewerkte voedingsmiddelen.
+      Probeer je maaltijden vooral op groep 1 en 2 te baseren."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: De Green-Score (vroeger Eco-Score) schat de milieu-impact van een
+      product in, van A+ (zeer laag) tot F (zeer hoog). Hij kijkt naar de hele levenscyclus
+      (teelt, verwerking, transport en verpakking) en geeft bonus- of strafpunten
+      voor zaken als herkomst, keurmerken en recyclebare verpakking.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Dit product: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: Open Food Facts heeft nog niet genoeg gegevens over dit product
+      om deze score te berekenen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: Deze score is niet van toepassing op dit soort product.
     m_Metadata:
       m_Items: []
   references:

@@ -192,6 +192,8 @@ namespace eu.foodmission.platform.Components
                 {
                     content.AddToClassList("fm-nutri-dialog-content");
                     messageContainer.Add(content);
+                    // Long text plus content doesn't fit: Nutri's image gives way instead of the message overflowing
+                    messageContainer.AddToClassList("fm-nutri-card--with-content");
                 }
             }
 

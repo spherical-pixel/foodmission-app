@@ -2070,6 +2070,10 @@
     margin-bottom: 12px;
 }
 
+.fm-nutri-card--with-content {
+    flex-shrink: 0;
+}
+
 .fm-edito-avatar-box {
     background-color: var(--fm-surface-bg-transparent-50);
 }
@@ -3380,3 +3384,53 @@
     position: absolute;
     background-color: var(--appui-foregrounds-200);
 }
+
+/* ── Product score logos (Open Food Facts icons; ProductScoreLogos) ── */
+/* Global: the Nutri explanation dialog is a modal and doesn't get screen USS */
+.fm-score-card {
+    background-color:var(--fm-shadowColorInner);
+    border-radius: 24px;
+    padding: 25px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* In the Nutri dialog the card sits in a column that shares its height with the text: never shrink below the logo */
+.fm-score-card--dialog {
+    align-self: center;
+    flex-shrink: 0;
+    margin-top: 42px;
+    margin-bottom: 42px;
+}
+
+.fm-score-logo {
+    -unity-background-scale-mode: scale-to-fit;
+    flex-shrink: 0;
+}
+
+/* The panel is always 1080 wide (scale with screen width), so px sizes are a share of the screen on phones and tablets alike:
+   three logos 170 high plus cards and gaps take about 990 of it (aspect 240x130 and 68x114) */
+.fm-score-logo--wide { width: 314px; height: 170px; }
+.fm-score-logo--tall { width: 102px; height: 170px; }
+
+.fm-score-logo--nutriscore-a { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-a.svg"); }
+.fm-score-logo--nutriscore-b { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-b.svg"); }
+.fm-score-logo--nutriscore-c { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-c.svg"); }
+.fm-score-logo--nutriscore-d { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-d.svg"); }
+.fm-score-logo--nutriscore-e { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-e.svg"); }
+.fm-score-logo--nutriscore-unknown { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-unknown.svg"); }
+.fm-score-logo--nutriscore-not-applicable { background-image: url("project://database/Assets/Foodmission/graphics/scores/nutriscore-not-applicable.svg"); }
+.fm-score-logo--nova-1 { background-image: url("project://database/Assets/Foodmission/graphics/scores/nova-group-1.svg"); }
+.fm-score-logo--nova-2 { background-image: url("project://database/Assets/Foodmission/graphics/scores/nova-group-2.svg"); }
+.fm-score-logo--nova-3 { background-image: url("project://database/Assets/Foodmission/graphics/scores/nova-group-3.svg"); }
+.fm-score-logo--nova-4 { background-image: url("project://database/Assets/Foodmission/graphics/scores/nova-group-4.svg"); }
+.fm-score-logo--nova-unknown { background-image: url("project://database/Assets/Foodmission/graphics/scores/nova-group-unknown.svg"); }
+.fm-score-logo--green-score-a-plus { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-a-plus.svg"); }
+.fm-score-logo--green-score-a { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-a.svg"); }
+.fm-score-logo--green-score-b { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-b.svg"); }
+.fm-score-logo--green-score-c { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-c.svg"); }
+.fm-score-logo--green-score-d { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-d.svg"); }
+.fm-score-logo--green-score-e { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-e.svg"); }
+.fm-score-logo--green-score-f { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-f.svg"); }
+.fm-score-logo--green-score-unknown { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-unknown.svg"); }
+.fm-score-logo--green-score-not-applicable { background-image: url("project://database/Assets/Foodmission/graphics/scores/green-score-not-applicable.svg"); }

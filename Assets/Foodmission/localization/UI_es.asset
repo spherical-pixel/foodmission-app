@@ -3118,7 +3118,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5573,7 +5573,44 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "\xBFQu\xE9 comidas hiciste hoy que a\xFAn no me has contado? El\xEDgelas y cu\xE9ntame qu\xE9 llevaban."
+    m_Localized: "\xBFQu\xE9 comidas hiciste hoy que a\xFAn no me has contado? El\xEDgelas
+      y cu\xE9ntame qu\xE9 llevaban."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "El Nutri-Score valora la calidad nutricional global de un alimento,
+      de la A (mejor) a la E (menos buena). Compara lo que conviene limitar (calor\xEDas,
+      az\xFAcar, grasas saturadas, sal) con lo que es bueno (fibra, prote\xEDnas,
+      fruta, verdura, legumbres y frutos secos). Es m\xE1s \xFAtil para comparar
+      productos del mismo tipo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA clasifica los alimentos seg\xFAn lo procesados que est\xE1n:
+      1 alimentos sin procesar o m\xEDnimamente procesados, 2 ingredientes culinarios
+      procesados (aceite, mantequilla, az\xFAcar\u2026), 3 alimentos procesados,
+      4 alimentos ultraprocesados. Intenta basar tus comidas sobre todo en los grupos
+      1 y 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: El Green-Score (antes Eco-Score) estima el impacto ambiental de
+      un alimento, de A+ (muy bajo) a F (muy alto). Tiene en cuenta todo su ciclo
+      de vida (cultivo, procesado, transporte y envase) y suma o resta puntos por
+      aspectos como el origen, los sellos y los envases reciclables.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Este producto: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: "Open Food Facts a\xFAn no tiene datos suficientes de este producto
+      para calcular este \xEDndice."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: "Este \xEDndice no se aplica a este tipo de producto."
     m_Metadata:
       m_Items: []
   references:

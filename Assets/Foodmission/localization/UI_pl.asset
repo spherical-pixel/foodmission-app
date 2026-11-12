@@ -3151,7 +3151,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -3612,7 +3612,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 52041725676347452
-    m_Localized: "{0}: {1:plural:{} posi\u0142ek|{} posi\u0142ki|{} posi\u0142k\xF3w|{} posi\u0142ku}"
+    m_Localized: "{0}: {1:plural:{} posi\u0142ek|{} posi\u0142ki|{} posi\u0142k\xF3w|{}
+      posi\u0142ku}"
     m_Metadata:
       m_Items:
       - rid: 4008881209995690411
@@ -5677,7 +5678,45 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Jakie posi\u0142ki zjad\u0142e\u015B dzi\u015B, o kt\xF3rych jeszcze mi nie powiedzia\u0142e\u015B? Wybierz je i powiedz, co w nich by\u0142o."
+    m_Localized: "Jakie posi\u0142ki zjad\u0142e\u015B dzi\u015B, o kt\xF3rych jeszcze
+      mi nie powiedzia\u0142e\u015B? Wybierz je i powiedz, co w nich by\u0142o."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "Nutri-Score ocenia og\xF3ln\u0105 jako\u015B\u0107 od\u017Cywcz\u0105
+      produktu, od A (lepsza) do E (gorsza). Por\xF3wnuje to, co warto ogranicza\u0107
+      (kalorie, cukier, t\u0142uszcze nasycone, s\xF3l), z tym, co korzystne (b\u0142onnik,
+      bia\u0142ko, owoce, warzywa, ro\u015Bliny str\u0105czkowe i orzechy). Najbardziej
+      przydaje si\u0119 do por\xF3wnywania produkt\xF3w tego samego rodzaju."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA dzieli \u017Cywno\u015B\u0107 wed\u0142ug stopnia przetworzenia:
+      1 \u017Cywno\u015B\u0107 nieprzetworzona lub minimalnie przetworzona, 2 przetworzone
+      sk\u0142adniki kulinarne (olej, mas\u0142o, cukier\u2026), 3 \u017Cywno\u015B\u0107
+      przetworzona, 4 \u017Cywno\u015B\u0107 ultraprzetworzona. Staraj si\u0119 opiera\u0107
+      posi\u0142ki g\u0142\xF3wnie na grupach 1 i 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: "Green-Score (dawniej Eco-Score) szacuje wp\u0142yw produktu na
+      \u015Brodowisko, od A+ (bardzo niski) do F (bardzo wysoki). Uwzgl\u0119dnia
+      ca\u0142y cykl \u017Cycia (upraw\u0119, przetwarzanie, transport i opakowanie)
+      oraz przyznaje punkty dodatnie lub ujemne m.in. za pochodzenie, certyfikaty
+      i opakowania nadaj\u0105ce si\u0119 do recyklingu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Ten produkt: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: "Open Food Facts nie ma jeszcze wystarczaj\u0105cych danych o tym
+      produkcie, aby obliczy\u0107 t\u0119 ocen\u0119."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: Ta ocena nie dotyczy tego rodzaju produktu.
     m_Metadata:
       m_Items: []
   references:
