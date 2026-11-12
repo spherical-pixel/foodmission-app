@@ -11,6 +11,8 @@ namespace eu.foodmission.platform
     {
         private readonly IStoreService _storeService;
 
+        public event Action<MealLog> MealLogSaved;
+
         public MealLogService(IStoreService storeService)
         {
             _storeService = storeService;
@@ -59,7 +61,12 @@ namespace eu.foodmission.platform
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] CreateAsync response: {raw}");
 #endif
-            return (JsonConvert.DeserializeObject<MealLog>(raw), null);
+            MealLog created = JsonConvert.DeserializeObject<MealLog>(raw);
+            if (request.draft != true)
+            {
+                RaiseMealLogSaved(created, request.timestamp);
+            }
+            return (created, null);
         }
 
         public async Task<(PaginatedMealLogResponse Result, ApiErrorResponse Error)> GetLogsAsync(
@@ -208,7 +215,29 @@ namespace eu.foodmission.platform
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[{GetType().Name}] ConfirmAsync response: {raw}");
 #endif
-            return (JsonConvert.DeserializeObject<MealLog>(raw), null);
+            MealLog confirmed = JsonConvert.DeserializeObject<MealLog>(raw);
+            RaiseMealLogSaved(confirmed, null);
+            return (confirmed, null);
+        }
+
+        private void RaiseMealLogSaved(MealLog log, string fallbackTimestamp)
+        {
+            if (log == null)
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(log.timestamp))
+            {
+                log.timestamp = fallbackTimestamp;
+            }
+            try
+            {
+                MealLogSaved?.Invoke(log);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] MealLogSaved handler failed: {ex.Message}");
+            }
         }
     }
 }

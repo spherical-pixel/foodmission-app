@@ -41,6 +41,7 @@ namespace eu.foodmission.platform
 
         public event Action<NotificationPayload> OnNotificationOpened;
         public event Action<NotificationModel> OnNotificationReceived;
+        public event Action RemindersChanged;
 
         public NotificationService(IStoreService storeService, ILocalStorageService localStorageService, IAuthService authService = null)
         {
@@ -204,6 +205,23 @@ namespace eu.foodmission.platform
 
             _localStorageService.SetValue(STORAGE_KEY_PUSH_REG, reg);
             _storeService.store?.Dispatch(AppActions.setDevicePushRegistration.Invoke(reg));
+
+            if (enabled)
+            {
+                RaiseRemindersChanged();
+            }
+        }
+
+        private void RaiseRemindersChanged()
+        {
+            try
+            {
+                RemindersChanged?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[NotificationService] RemindersChanged handler failed: {ex.Message}");
+            }
         }
 
         private Dictionary<string, ScheduledPantryReminderRecord> EnsureScheduledPantryRegistryLoaded()
@@ -437,28 +455,6 @@ namespace eu.foodmission.platform
             ScheduleLocalNotification(id, title, body, fireTime, channelId, action, targetId);
         }
 
-        public void ScheduleDailyMealReminder(TimeSpan preferredTime)
-        {
-            if (!AreNotificationsEnabled())
-            {
-                return;
-            }
-
-            DateTime now = DateTime.Now;
-            DateTime target = now.Date.Add(preferredTime);
-            if (target <= now)
-            {
-                target = target.AddDays(1);
-            }
-
-            string notifId = "daily_meal_reminder";
-            string title = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOTIFICATION_DAILY_MEAL_REMINDER_TITLE");
-            string body = LocalizationSettings.StringDatabase.GetLocalizedString("UI", "NOTIFICATION_DAILY_MEAL_REMINDER_BODY");
-
-            CancelNotification(notifId);
-            ScheduleNativeNotification(notifId, NotificationChannels.DailyRemindersId, title, body, target, "go_to_meal_log", "");
-        }
-
         public void RescheduleAllNotifications(TimeSpan preferredTime)
         {
             if (!AreNotificationsEnabled())
@@ -467,8 +463,8 @@ namespace eu.foodmission.platform
                 return;
             }
 
-            // 1. Reschedule daily meal reminder
-            ScheduleDailyMealReminder(preferredTime);
+            // 1. Daily meal reminders depend on the meal logs: IDailyMealReminderService reschedules them
+            RaiseRemindersChanged();
 
             // 2. Reschedule any cached pantry expiry items with recalculated delivery times
             var cachedPantry = _localStorageService.GetValue<PantryItemArrayWrapper>("pantry_cache");

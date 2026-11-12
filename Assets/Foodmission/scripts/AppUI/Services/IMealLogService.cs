@@ -1,9 +1,13 @@
+using System;
 using System.Threading.Tasks;
 
 namespace eu.foodmission.platform
 {
     public interface IMealLogService
     {
+        /// <summary>A meal log was created (not as a draft) or a draft was confirmed.</summary>
+        event Action<MealLog> MealLogSaved;
+
         Task<(MealLog Result, ApiErrorResponse Error)> CreateAsync(CreateMealLogRequest request);
         Task<(PaginatedMealLogResponse Result, ApiErrorResponse Error)> GetLogsAsync(
             int page = 1,

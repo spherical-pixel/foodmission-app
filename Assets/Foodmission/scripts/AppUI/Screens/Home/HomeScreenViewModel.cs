@@ -61,6 +61,7 @@ namespace eu.foodmission.platform
         private readonly IOnboardingRun _onboardingRun;
         private readonly IMissionNudgeService _missionNudgeService;
         private readonly IMissionLastDayService _missionLastDayService;
+        private readonly IDailyMealReminderService _dailyMealReminderService;
         private readonly IMissionFailureService _missionFailureService;
         private readonly IMissionInputsService _missionInputsService;
         private readonly IDailyFoodFactService _dailyFoodFactService;
@@ -106,8 +107,10 @@ namespace eu.foodmission.platform
             IMissionLastDayService missionLastDayService = null,
             IKnowledgeProgressService knowledgeProgressService = null,
             IMissionInputsService missionInputsService = null,
-            IOnboardingRun onboardingRun = null) : base(storeService)
+            IOnboardingRun onboardingRun = null,
+            IDailyMealReminderService dailyMealReminderService = null) : base(storeService)
         {
+            _dailyMealReminderService = dailyMealReminderService ?? App.current?.services?.GetService<IDailyMealReminderService>();
             _onboardingRun = onboardingRun ?? App.current?.services?.GetService<IOnboardingRun>();
             _notificationService = notificationService;
             _legalService = legalService ?? App.current?.services?.GetService<ILegalService>();
@@ -398,12 +401,31 @@ namespace eu.foodmission.platform
 
         public bool IsMissionLastDayShownToday => _missionLastDayService?.ShownToday ?? false;
 
-        /// <summary>Reschedules the last-day notifications from the current missions (progress, preferred time).</summary>
+        /// <summary>
+        /// Reschedules the last-day notifications from the current missions (progress, preferred time), then the daily
+        /// meal reminders, which skip the days that already have a last-day notification.
+        /// </summary>
         public void SyncMissionLastDayReminders()
         {
-            if (_missionLastDayService != null)
+            _ = SyncRemindersAsync();
+        }
+
+        private async Task SyncRemindersAsync()
+        {
+            try
             {
-                _ = _missionLastDayService.SyncRemindersAsync();
+                if (_missionLastDayService != null)
+                {
+                    await _missionLastDayService.SyncRemindersAsync();
+                }
+                if (_dailyMealReminderService != null)
+                {
+                    await _dailyMealReminderService.SyncAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[{GetType().Name}] SyncMissionLastDayReminders failed: {ex.Message}");
             }
         }
 
