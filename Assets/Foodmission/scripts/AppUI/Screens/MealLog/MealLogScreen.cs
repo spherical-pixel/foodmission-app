@@ -608,7 +608,12 @@ namespace eu.foodmission.platform
             {
                 var heading = _step3?.Q<Heading>("step-3-heading");
                 if (heading != null && _viewModel.SelectedTypeOfMeal != null)
-                    heading.text = new LocalizedOption("UI", "txtWHAT_DID_YOU_HAVE_FOR", _viewModel.SelectedTypeOfMeal.label.ToLowerInvariant()).GetText();
+                {
+                    string questionKey = MealLogQuestion.KeyFor(_viewModel.SelectedTypeOfMeal.code);
+                    heading.text = questionKey != null
+                        ? new LocalizedOption("UI", questionKey).GetText()
+                        : new LocalizedOption("UI", "txtWHAT_DID_YOU_HAVE_FOR", _viewModel.SelectedTypeOfMeal.label.ToLowerInvariant()).GetText();
+                }
             }
             else
             {

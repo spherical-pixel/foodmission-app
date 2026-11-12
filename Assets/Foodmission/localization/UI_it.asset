@@ -5569,7 +5569,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Quali pasti hai fatto oggi di cui non mi hai ancora parlato? Sceglili e dimmi cosa contenevano."
+    m_Localized: Quali pasti hai fatto oggi di cui non mi hai ancora parlato? Sceglili
+      e dimmi cosa contenevano.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: Cosa hai mangiato a colazione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Cosa hai mangiato a pranzo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: Cosa hai mangiato a cena?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: Cosa hai mangiato come spuntino?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Cosa hai bevuto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Cosa hai mangiato o bevuto?
     m_Metadata:
       m_Items: []
   references:
