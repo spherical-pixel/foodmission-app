@@ -343,6 +343,18 @@ namespace eu.foodmission.platform.Tests
             Assert.AreEqual(expected, AuthService.IsSessionRejected(responseCode));
         }
 
+        [TestCase(400, "API_ERROR_LOGIN_401")]
+        [TestCase(401, "API_ERROR_LOGIN_401")]
+        [TestCase(404, "API_ERROR_404")]
+        [TestCase(500, "API_ERROR_500")]
+        [TestCase(0, "API_ERROR_CONNECTION")]
+        [TestCase(503, "API_ERROR_CONNECTION")]
+        public void AuthService_LoginErrorKey_TreatsBadRequestAsWrongCredentials(long responseCode, string expected)
+        {
+            // Keycloak answers wrong credentials with 400 since the 2026-11-10 upgrade, 401 before
+            Assert.AreEqual(expected, AuthService.LoginErrorKey(responseCode));
+        }
+
         [Test]
         public void AppState_Copy_IncludesFont()
         {
