@@ -3114,7 +3114,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5586,6 +5586,46 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203973
     m_Localized: Hva spiste eller drakk du?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "Nutri-Score vurderer den samlede ern\xE6ringskvaliteten til en
+      matvare, fra A (bedre) til E (mindre bra). Den veier det som er lurt \xE5 begrense
+      (kalorier, sukker, mettet fett, salt) mot det som er bra (fiber, protein, frukt,
+      gr\xF8nnsaker, belgfrukter og n\xF8tter). Den er mest nyttig for \xE5 sammenligne
+      produkter av samme type."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA deler inn matvarer etter hvor bearbeidet de er: 1 ubearbeidede
+      eller minimalt bearbeidede matvarer, 2 bearbeidede matlagingsingredienser (olje,
+      sm\xF8r, sukker \u2026), 3 bearbeidede matvarer, 4 ultrabearbeidede matvarer.
+      Pr\xF8v \xE5 bygge m\xE5ltidene dine mest p\xE5 gruppe 1 og 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: "Green-Score (tidligere Eco-Score) ansl\xE5r milj\xF8p\xE5virkningen
+      til en matvare, fra A+ (sv\xE6rt lav) til F (sv\xE6rt h\xF8y). Den ser p\xE5
+      hele livsl\xF8pet (dyrking, bearbeiding, transport og emballasje) og gir pluss-
+      eller minuspoeng for ting som opprinnelse, merkeordninger og resirkulerbar
+      emballasje."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Dette produktet: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: "Open Food Facts har enn\xE5 ikke nok data om dette produktet til
+      \xE5 beregne denne verdien."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: Denne verdien gjelder ikke for denne typen produkt.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Nutri-Score-, NOVA- og Green-Score-ikoner fra Open Food Facts. Nutri-Score-logoen er et varemerke som tilh\xF8rer Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:

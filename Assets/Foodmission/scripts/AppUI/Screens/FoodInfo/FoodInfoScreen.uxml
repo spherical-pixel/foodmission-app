@@ -14,17 +14,17 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="badges-row" class="fm-fi-scores-strip">
-            <ui:VisualElement name="nutriscore-pill" class="fm-fi-score-pill">
-                <appui:Text name="nutriscore-badge" size="L" class="fm-fi-nutriscore fm-fi-score-pill__badge"/>
-                <appui:Text name="nutriscore-label" size="S" text="NUTRI-SCORE" class="fm-fi-score-pill__label"/>
+            <ui:VisualElement name="nutriscore-pill" class="fm-fi-score-pill fm-score-card">
+                <ui:VisualElement name="nutriscore-logo" class="fm-score-logo fm-score-logo--wide"/>
+                <appui:Icon icon="info" class="fm-fi-score-pill__info"/>
             </ui:VisualElement>
-            <ui:VisualElement name="nova-pill" class="fm-fi-score-pill">
-                <appui:Text name="nova-badge" size="L" class="fm-fi-nova fm-fi-score-pill__badge"/>
-                <appui:Text name="nova-label" size="S" text="NOVA" class="fm-fi-score-pill__label"/>
+            <ui:VisualElement name="nova-pill" class="fm-fi-score-pill fm-score-card">
+                <ui:VisualElement name="nova-logo" class="fm-score-logo fm-score-logo--tall"/>
+                <appui:Icon icon="info" class="fm-fi-score-pill__info"/>
             </ui:VisualElement>
-            <ui:VisualElement name="eco-pill" class="fm-fi-score-pill">
-                <appui:Text name="eco-badge" size="L" class="fm-fi-eco fm-fi-score-pill__badge"/>
-                <appui:Text name="eco-label" size="S" text="ECO-SCORE" class="fm-fi-score-pill__label"/>
+            <ui:VisualElement name="eco-pill" class="fm-fi-score-pill fm-score-card">
+                <ui:VisualElement name="eco-logo" class="fm-score-logo fm-score-logo--wide"/>
+                <appui:Icon icon="info" class="fm-fi-score-pill__info"/>
             </ui:VisualElement>
             <ui:VisualElement name="traffic-lights" class="fm-fi-traffic"/>
         </ui:VisualElement>

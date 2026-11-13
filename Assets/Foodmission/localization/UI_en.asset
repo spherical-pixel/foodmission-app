@@ -3108,7 +3108,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5556,6 +5556,44 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203973
     m_Localized: What did you eat or drink?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: Nutri-Score rates the overall nutritional quality of a food, from
+      A (better) to E (less good). It weighs what's worth limiting (calories, sugar,
+      saturated fat, salt) against what's good (fibre, protein, fruit, vegetables,
+      legumes and nuts). It's most useful to compare products of the same type.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA groups foods by how processed they are: 1 unprocessed or minimally
+      processed foods, 2 processed culinary ingredients (oil, butter, sugar\u2026),
+      3 processed foods, 4 ultra-processed foods. Try to base your meals mostly on
+      groups 1 and 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: Green-Score (formerly Eco-Score) estimates the environmental impact
+      of a food, from A+ (very low) to F (very high). It looks at the whole life
+      cycle (farming, processing, transport and packaging) and adds bonuses or penalties
+      for things like origin, labels and recyclable packaging.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'This product: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: Open Food Facts doesn't have enough data about this product to calculate
+      this score yet.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: This score doesn't apply to this type of product.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Nutri-Score, NOVA and Green-Score icons from Open Food Facts. The Nutri-Score logo is a trademark of Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:

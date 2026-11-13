@@ -36,9 +36,9 @@ namespace eu.foodmission.platform
         private static Text _foodSubtitle;
         private static VisualElement _badgesRow;
         private static Text _dataSourceNote;
-        private static Text _nutriscoreBadge;
-        private static Text _novaBadge;
-        private static Text _ecoBadge;
+        private static VisualElement _nutriscoreLogo;
+        private static VisualElement _novaLogo;
+        private static VisualElement _ecoLogo;
         private static VisualElement _trafficLights;
         private static VisualElement _macroCards;
         private static Text _macroHeader;
@@ -192,9 +192,13 @@ namespace eu.foodmission.platform
             _badgesRow = content.Q<VisualElement>("badges-row");
             _dataSourceNote = content.Q<Text>("data-source-note");
             DataSources.BindLinks(_dataSourceNote);
-            _nutriscoreBadge = content.Q<Text>("nutriscore-badge");
-            _novaBadge = content.Q<Text>("nova-badge");
-            _ecoBadge = content.Q<Text>("eco-badge");
+            _nutriscoreLogo = content.Q<VisualElement>("nutriscore-logo");
+            _novaLogo = content.Q<VisualElement>("nova-logo");
+            _ecoLogo = content.Q<VisualElement>("eco-logo");
+            // The tree is cloned on every show, so these callbacks go away with it
+            content.Q<VisualElement>("nutriscore-pill")?.RegisterCallback<ClickEvent>(_ => ShowScoreInfo(ProductScore.NutriScore));
+            content.Q<VisualElement>("nova-pill")?.RegisterCallback<ClickEvent>(_ => ShowScoreInfo(ProductScore.Nova));
+            content.Q<VisualElement>("eco-pill")?.RegisterCallback<ClickEvent>(_ => ShowScoreInfo(ProductScore.GreenScore));
             _trafficLights = content.Q<VisualElement>("traffic-lights");
             _macroCards = content.Q<VisualElement>("macro-cards");
             _macroHeader = content.Q<Text>("macro-header");
@@ -341,7 +345,7 @@ namespace eu.foodmission.platform
 
             _foodImageContainer = null;
             _foodImage = null; _foodEmoji = null; _foodName = null; _foodSubtitle = null;
-            _badgesRow = null; _dataSourceNote = null; _nutriscoreBadge = null; _novaBadge = null; _ecoBadge = null;
+            _badgesRow = null; _dataSourceNote = null; _nutriscoreLogo = null; _novaLogo = null; _ecoLogo = null;
             _trafficLights = null; _macroCards = null; _macroHeader = null;
             _ingredientsSection = null; _ingredientsBody = null;
             _allergensSection = null; _allergensBody = null;
@@ -574,67 +578,56 @@ namespace eu.foodmission.platform
 
         private static void UpdateNutriScoreBadge()
         {
-            if (_nutriscoreBadge == null || _viewModel == null) return;
-            var pill = _nutriscoreBadge.parent;
-            _nutriscoreBadge.RemoveFromClassList(_lastNutriScoreClass);
-            string grade = _viewModel.NutritionGrade?.Trim().ToLowerInvariant();
-            if (string.IsNullOrEmpty(grade) || grade == "unknown" || grade == "not-applicable" || grade.Length > 2)
-            {
-                if (pill != null) pill.style.display = DisplayStyle.Flex;
-                _nutriscoreBadge.style.display = DisplayStyle.Flex;
-                _nutriscoreBadge.text = "—";
-                _lastNutriScoreClass = "fm-fi-score-badge--unknown";
-                _nutriscoreBadge.AddToClassList(_lastNutriScoreClass);
-                return;
-            }
-            if (pill != null) pill.style.display = DisplayStyle.Flex;
-            _nutriscoreBadge.style.display = DisplayStyle.Flex;
-            _nutriscoreBadge.text = grade.ToUpper();
-            _lastNutriScoreClass = $"fm-fi-score-badge--{grade}";
-            _nutriscoreBadge.AddToClassList(_lastNutriScoreClass);
+            UpdateScoreLogo(_nutriscoreLogo, ProductScore.NutriScore, ref _lastNutriScoreClass);
         }
 
         private static void UpdateNovaBadge()
         {
-            if (_novaBadge == null || _viewModel == null) return;
-            var pill = _novaBadge.parent;
-            _novaBadge.RemoveFromClassList(_lastNovaClass);
-            if (_viewModel.NovaGroup < 1 || _viewModel.NovaGroup > 4)
-            {
-                if (pill != null) pill.style.display = DisplayStyle.Flex;
-                _novaBadge.style.display = DisplayStyle.Flex;
-                _novaBadge.text = "—";
-                _lastNovaClass = "fm-fi-nova-badge--unknown";
-                _novaBadge.AddToClassList(_lastNovaClass);
-                return;
-            }
-            if (pill != null) pill.style.display = DisplayStyle.Flex;
-            _novaBadge.style.display = DisplayStyle.Flex;
-            _novaBadge.text = $"{_viewModel.NovaGroup}";
-            _lastNovaClass = $"fm-fi-nova-badge--{_viewModel.NovaGroup}";
-            _novaBadge.AddToClassList(_lastNovaClass);
+            UpdateScoreLogo(_novaLogo, ProductScore.Nova, ref _lastNovaClass);
         }
 
         private static void UpdateEcoBadge()
         {
-            if (_ecoBadge == null || _viewModel == null) return;
-            var pill = _ecoBadge.parent;
-            _ecoBadge.RemoveFromClassList(_lastEcoClass);
-            string grade = _viewModel.EcoScoreGrade?.Trim().ToLowerInvariant();
-            if (string.IsNullOrEmpty(grade) || grade == "unknown" || grade == "not-applicable" || grade.Length > 2)
+            UpdateScoreLogo(_ecoLogo, ProductScore.GreenScore, ref _lastEcoClass);
+        }
+
+        private static void UpdateScoreLogo(VisualElement logo, ProductScore score, ref string lastClass)
+        {
+            if (logo == null || _viewModel == null) return;
+            logo.RemoveFromClassList(lastClass);
+            lastClass = ProductScoreLogos.ClassFor(score, ScoreValue(score));
+            logo.AddToClassList(lastClass);
+        }
+
+        private static string ScoreValue(ProductScore score)
+        {
+            return score switch
             {
-                if (pill != null) pill.style.display = DisplayStyle.Flex;
-                _ecoBadge.style.display = DisplayStyle.Flex;
-                _ecoBadge.text = "—";
-                _lastEcoClass = "fm-fi-eco-badge--unknown";
-                _ecoBadge.AddToClassList(_lastEcoClass);
-                return;
+                ProductScore.NutriScore => ProductScoreLogos.NutriScoreValue(_viewModel.NutritionGrade),
+                ProductScore.Nova => ProductScoreLogos.NovaValue(_viewModel.NovaGroup),
+                _ => ProductScoreLogos.GreenScoreValue(_viewModel.EcoScoreGrade)
+            };
+        }
+
+        /// <summary>Nutri explains the score (what it measures, how to read it) and this product's grade, with the logo below.</summary>
+        private static void ShowScoreInfo(ProductScore score)
+        {
+            if (_viewModel == null) return;
+            try
+            {
+                string value = ScoreValue(score);
+                string valueKey = ProductScoreLogos.ValueKey(value);
+                string valueText = ProductScoreLogos.HasGrade(value)
+                    ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", valueKey, new object[] { ProductScoreLogos.DisplayName(score, value) })
+                    : LocalizationSettings.StringDatabase.GetLocalizedString("UI", valueKey);
+                string message = LocalizationSettings.StringDatabase.GetLocalizedString("UI", ProductScoreLogos.InfoKey(score)) + "\n\n" + valueText;
+                NutriMessageDialog.ShowWithContent(message, ProductScoreLogos.CreateLogo(score, value), null,
+                    new FMDialogAction("@UI:txtGotIt", null, ButtonVariant.Accent));
             }
-            if (pill != null) pill.style.display = DisplayStyle.Flex;
-            _ecoBadge.style.display = DisplayStyle.Flex;
-            _ecoBadge.text = grade.ToUpper();
-            _lastEcoClass = $"fm-fi-eco-badge--{grade}";
-            _ecoBadge.AddToClassList(_lastEcoClass);
+            catch (Exception ex)
+            {
+                Debug.LogError($"[FoodInfoOverlay] ShowScoreInfo failed: {ex.Message}");
+            }
         }
 
         private static void UpdateTrafficLights()

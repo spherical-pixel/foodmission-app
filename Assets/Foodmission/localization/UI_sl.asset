@@ -3119,7 +3119,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5611,6 +5611,47 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203973
     m_Localized: Kaj si jedel/jedla ali pil/pila?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "Nutri-Score ocenjuje splo\u0161no hranilno kakovost \u017Eivila,
+      od A (bolj\u0161e) do E (manj dobro). Primerja tisto, kar je bolje omejiti
+      (kalorije, sladkor, nasi\u010Dene ma\u0161\u010Dobe, sol), s tistim, kar je
+      dobro (vlaknine, beljakovine, sadje, zelenjava, stro\u010Dnice in ore\u0161\u010Dki).
+      Najbolj je uporaben za primerjavo izdelkov iste vrste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA razvr\u0161\u010Da \u017Eivila glede na to, kako mo\u010Dno
+      so predelana: 1 nepredelana ali minimalno predelana \u017Eivila, 2 predelane
+      kuhinjske sestavine (olje, maslo, sladkor \u2026), 3 predelana \u017Eivila,
+      4 ultrapredelana \u017Eivila. Poskusi obroke graditi predvsem na skupinah 1
+      in 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: "Green-Score (prej Eco-Score) ocenjuje vpliv \u017Eivila na okolje,
+      od A+ (zelo majhen) do F (zelo velik). Upo\u0161teva celoten \u017Eivljenjski
+      cikel (pridelavo, predelavo, prevoz in embala\u017Eo) ter doda bonus ali odbitek
+      za dejavnike, kot so poreklo, oznake kakovosti in embala\u017Ea, ki jo je mogo\u010De
+      reciklirati."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Ta izdelek: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: "Open Food Facts o tem izdelku \u0161e nima dovolj podatkov, da
+      bi izra\u010Dunal to oceno."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: Ta ocena ne velja za to vrsto izdelka.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Ikone Nutri-Score, NOVA in Green-Score so iz Open Food Facts. Logotip Nutri-Score je blagovna znamka Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:

@@ -3122,7 +3122,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232922
-    m_Localized: Eco-Score
+    m_Localized: Green-Score
     m_Metadata:
       m_Items: []
   - m_Id: 51673178689232923
@@ -5595,6 +5595,47 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 56190243387203973
     m_Localized: Cosa hai mangiato o bevuto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203974
+    m_Localized: "Il Nutri-Score valuta la qualit\xE0 nutrizionale complessiva di
+      un alimento, da A (migliore) a E (meno buona). Mette a confronto ci\xF2 che
+      \xE8 meglio limitare (calorie, zuccheri, grassi saturi, sale) con ci\xF2 che
+      fa bene (fibre, proteine, frutta, verdura, legumi e frutta a guscio). \xC8
+      pi\xF9 utile per confrontare prodotti dello stesso tipo."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203975
+    m_Localized: "NOVA classifica gli alimenti in base a quanto sono trasformati:
+      1 alimenti non trasformati o minimamente trasformati, 2 ingredienti culinari
+      trasformati (olio, burro, zucchero\u2026), 3 alimenti trasformati, 4 alimenti
+      ultra-trasformati. Cerca di basare i tuoi pasti soprattutto sui gruppi 1 e
+      2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203976
+    m_Localized: "Il Green-Score (ex Eco-Score) stima l'impatto ambientale di un
+      alimento, da A+ (molto basso) a F (molto alto). Considera l'intero ciclo di
+      vita (coltivazione, trasformazione, trasporto e imballaggio) e aggiunge bonus
+      o penalit\xE0 per aspetti come l'origine, le certificazioni e gli imballaggi
+      riciclabili."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203977
+    m_Localized: 'Questo prodotto: {0}.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203978
+    m_Localized: Open Food Facts non ha ancora abbastanza dati su questo prodotto
+      per calcolare questo punteggio.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203979
+    m_Localized: Questo punteggio non si applica a questo tipo di prodotto.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Icone Nutri-Score, NOVA e Green-Score da Open Food Facts. Il logo Nutri-Score \xE8 un marchio di Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:
