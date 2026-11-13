@@ -27,6 +27,7 @@ namespace eu.foodmission.platform
         private Unity.AppUI.UI.Text _versionValue;
         private bool _isSettingEnvironment;
         private FMButton _testSurveyButton;
+        private FMButton _likertSurveyButton;
 
         private VisualElement _developerOptions;
         private FMButton _aboutButton;
@@ -67,6 +68,7 @@ namespace eu.foodmission.platform
             _localUrlFieldComponent = contentContainer.Q<FormFieldItemTextField>("local-url-field");
             _versionValue = contentContainer.Q<Unity.AppUI.UI.Text>("version-value");
             _testSurveyButton = contentContainer.Q<FMButton>("btn-test-survey");
+            _likertSurveyButton = contentContainer.Q<FMButton>("btn-likert-survey");
             _aboutButton = contentContainer.Q<FMButton>("btn-about");
 
             _developerOptions = contentContainer.Q<VisualElement>("developer-options");
@@ -91,6 +93,11 @@ namespace eu.foodmission.platform
             if (_testSurveyButton != null)
             {
                 _testSurveyButton.clicked += OnTestSurveyClicked;
+            }
+
+            if (_likertSurveyButton != null)
+            {
+                _likertSurveyButton.clicked += OnLikertSurveyClicked;
             }
 
             if (_aboutButton != null)
@@ -132,6 +139,13 @@ namespace eu.foodmission.platform
         private void OnTestSurveyClicked()
         {
             _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.goto_test_survey);
+        }
+
+        // Opens a real pilot survey from the backend (current language) regardless of the cycle rules
+        private void OnLikertSurveyClicked()
+        {
+            _navController?.Navigate(Unity.AppUI.Navigation.Generated.Actions.open_pilot_survey,
+                new Unity.AppUI.Navigation.Argument("slugOrId", PilotSurveyService.FirstSurveySlug));
         }
 
         // --------------------------------------------------------------------
@@ -255,6 +269,11 @@ namespace eu.foodmission.platform
             if (_testSurveyButton != null)
             {
                 _testSurveyButton.clicked -= OnTestSurveyClicked;
+            }
+
+            if (_likertSurveyButton != null)
+            {
+                _likertSurveyButton.clicked -= OnLikertSurveyClicked;
             }
 
             if (_aboutButton != null)

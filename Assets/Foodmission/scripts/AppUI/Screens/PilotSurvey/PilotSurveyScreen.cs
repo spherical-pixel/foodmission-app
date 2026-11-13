@@ -99,7 +99,8 @@ namespace eu.foodmission.platform
             // card.AddToClassList("fm-shadow-wrapper");
             card.style.flexDirection = FlexDirection.Column;
             card.style.width = new StyleLength(Length.Percent(100));
-            card.style.justifyContent = Justify.Center;
+            // Top-aligned: centered, the slider sat low and its labels fell below the fold on small screens
+            card.style.justifyContent = Justify.FlexStart;
             card.style.flexGrow = 1;
             card.style.paddingTop = 16;
             card.style.paddingBottom = 16;
