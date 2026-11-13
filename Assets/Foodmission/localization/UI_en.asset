@@ -230,7 +230,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38373338052026368
-    m_Localized: 'Conection error: {0}'
+    m_Localized: 'Connection error: {0}'
     m_Metadata:
       m_Items: []
   - m_Id: 38380494998462464
