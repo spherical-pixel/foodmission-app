@@ -97,7 +97,7 @@ namespace eu.foodmission.platform
 
         /// <summary>Day the backend resolves a mission started at <paramref name="startLocal"/> (its window end).</summary>
         public static string CompletionDay(DateTime startLocal) =>
-            MissionDeadlines.DeadlineLocal(startLocal).ToString("dddd d", Formatter);
+            DayFormat.Long(MissionDeadlines.DeadlineLocal(startLocal), Formatter);
 
         protected override void OnCloseRequested()
         {
@@ -199,7 +199,8 @@ namespace eu.foodmission.platform
 
             int step = _viewModel.CurrentStepIndex;
             string message = _viewModel.KindOf(step) == CheckInStepKind.MealDay
-                ? LF(_viewModel.NutriPromptKey, DayLabel(_viewModel.Plan.MealDays[_viewModel.ItemIndexOf(step)].Day))
+                ? LF(_viewModel.NutriPromptKey, DayLabel(_viewModel.Plan.MealDays[_viewModel.ItemIndexOf(step)].Day,
+                    capitalize: L(_viewModel.NutriPromptKey).StartsWith("{0}", StringComparison.Ordinal)))
                 : L(_viewModel.NutriPromptKey);
             if (_bubbleText.text == message && _bubbleCard != null && _bubbleCard.ClassListContains("fm-step-flow__guide-card--visible"))
             {
@@ -486,7 +487,7 @@ namespace eu.foodmission.platform
             foreach (DateTime day in dayEvent.OpenDays)
             {
                 DateTime captured = day;
-                row.Add(Chip(DayLabel(day), selected.Contains(day), () =>
+                row.Add(Chip(DayChipLabel(day), selected.Contains(day), () =>
                 {
                     _viewModel.ToggleEventDay(stepIndex, captured);
                     RenderStepLater(stepIndex);
@@ -620,7 +621,7 @@ namespace eu.foodmission.platform
                     selected.UnionWith(added);
                 }
 
-                VisualElement item = ChecklistItem(DayLabel(day), null);
+                VisualElement item = ChecklistItem(DayLabel(day, capitalize: true), null);
                 var row = new VisualElement();
                 row.AddToClassList("fm-mission-report-row");
                 row.AddToClassList("fm-mission-checklist-grid");
@@ -720,7 +721,7 @@ namespace eu.foodmission.platform
             foreach (CheckInSummaryLine line in _viewModel.BuildSummary())
             {
                 string text = line.Kind == CheckInStepKind.MealDay
-                    ? LF("MISSION_CHECKIN_SUMMARY_MEALS", DayLabel(line.Day.Value), line.Count)
+                    ? LF("MISSION_CHECKIN_SUMMARY_MEALS", DayLabel(line.Day.Value, capitalize: true), line.Count)
                     : LF("MISSION_REPORT_SUMMARY_LINE", MissionPromptText.Question(L(line.PromptKey)), line.Count);
                 var row = new Text { text = text };
                 row.AddToClassList("fm-mission-report-label");
@@ -740,10 +741,22 @@ namespace eu.foodmission.platform
             return stepper;
         }
 
-        private string DayLabel(DateTime day)
+        // "Monday, November 2": the check-in reaches 7 days back, so the weekday alone can be ambiguous
+        private string DayLabel(DateTime day, bool capitalize = false)
         {
             DateTime today = _viewModel.Clock().Date;
-            return day.Date == today ? L("MISSION_REPORT_DAY_TODAY") : day.ToString("dddd d", Formatter);
+            if (day.Date == today)
+            {
+                return L("MISSION_REPORT_DAY_TODAY");
+            }
+            string label = DayFormat.Long(day, Formatter);
+            return capitalize ? DayFormat.Capitalize(label, Formatter) : label;
+        }
+
+        private string DayChipLabel(DateTime day)
+        {
+            DateTime today = _viewModel.Clock().Date;
+            return day.Date == today ? L("MISSION_REPORT_DAY_TODAY") : DayFormat.Capitalize(DayFormat.Short(day, Formatter), Formatter);
         }
 
         // ── Completion ────────────────────────────────────────
