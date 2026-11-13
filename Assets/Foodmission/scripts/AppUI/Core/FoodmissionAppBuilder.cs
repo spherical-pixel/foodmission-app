@@ -76,6 +76,7 @@ namespace eu.foodmission.platform
             builder.services.AddSingleton<IProductMissionService, ProductMissionService>();
             builder.services.AddSingleton<IMissionNudgeService, MissionNudgeService>();
             builder.services.AddSingleton<IMissionLastDayService, MissionLastDayService>();
+            builder.services.AddSingleton<IDailyMealReminderService, DailyMealReminderService>();
             builder.services.AddSingleton<IMissionFailureService, MissionFailureService>();
             builder.services.AddSingleton<IMissionInputsService, MissionInputsService>();
             builder.services.AddSingleton<IDailyFoodFactService, DailyFoodFactService>();
@@ -240,6 +241,13 @@ namespace eu.foodmission.platform
                             if (eventService != null)
                             {
                                 _ = eventService.TrackSessionStartAsync();
+                            }
+
+                            // Renews the 7-day window and skips today if a meal was logged meanwhile (e.g. on another device)
+                            var dailyReminders = App.current?.services?.GetService<IDailyMealReminderService>();
+                            if (dailyReminders != null)
+                            {
+                                _ = dailyReminders.SyncAsync();
                             }
                         }
                     }

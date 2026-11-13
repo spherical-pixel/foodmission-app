@@ -76,12 +76,8 @@ namespace eu.foodmission.platform
         void ScheduleLocalNotificationInSeconds(string id, string title, string body, int secondsDelay, string channelId = null, string action = null, string targetId = null);
 
         /// <summary>
-        /// Schedules recurring daily meal logging reminder according to user preferred time.
-        /// </summary>
-        void ScheduleDailyMealReminder(TimeSpan preferredTime);
-
-        /// <summary>
-        /// Reschedules daily meal reminders and active pantry expiry notifications according to the preferred time.
+        /// Reschedules active pantry expiry notifications according to the preferred time and raises <see cref="RemindersChanged"/>
+        /// (the daily meal reminders are scheduled by IDailyMealReminderService).
         /// </summary>
         void RescheduleAllNotifications(TimeSpan preferredTime);
 
@@ -109,5 +105,10 @@ namespace eu.foodmission.platform
         /// Event fired when a new remote/local notification is received.
         /// </summary>
         event Action<NotificationModel> OnNotificationReceived;
+
+        /// <summary>
+        /// Notifications were enabled or the preferred time changed: reminders scheduled elsewhere must be rescheduled.
+        /// </summary>
+        event Action RemindersChanged;
     }
 }

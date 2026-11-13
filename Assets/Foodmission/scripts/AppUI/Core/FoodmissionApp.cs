@@ -110,6 +110,9 @@ namespace eu.foodmission.platform
                 });
             }
 
+            // Created now so it hears RemindersChanged / MealLogSaved from the first screen on
+            services.GetService<IDailyMealReminderService>();
+
             var notificationService = services.GetService<INotificationService>();
             if (notificationService != null)
             {
