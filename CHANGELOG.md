@@ -1,3 +1,24 @@
+v0.1.1 - Changelog
+✨ New Features & Modules
+- Product detail: official Open Food Facts logos for Nutri-Score (A–E), NOVA (1–4) and Green-Score (A+–F, unknown, not applicable) as `VectorImage`; tapping one opens Nutri with what the score measures and this product's grade (`ProductScoreLogos`). Eco-Score renamed Green-Score; A+ and F were shown as unknown before (#106, #118).
+- Data source attributions: Open Food Facts / NEVO notes at the end of the food detail, USDA FoodKeeper note under estimated pantry expiry dates, TheMealDB on imported recipes; Settings → About the app lists every source with its links, the score logos credit and the app version, all built from `DataSources` (#101, #102).
+- Daily meal reminder: scheduled for the next 7 days (`daily_meal_reminder_<yyyy-MM-dd>`), renewed on Home, on resume and when reminders change; skips today once a meal dated today is logged and days with a mission last-day notification (#109, #111, #117).
+
+🐛 Bug Fixes
+- Login: 400 from `POST /auth/login` (Keycloak upgrade) shows the wrong credentials message instead of "Invalid request" (#112, #113).
+- Check-in: day labels with weekday, day and month per language (`DayFormat`) (#110, #115); own question for today (`MISSION_CHECKIN_Q_MEALS_TODAY`) (#104); meal count with plural forms (#103).
+- Meal log: one question per meal type (`MEAL_LOG_Q_*`) instead of "What did you have for {0}?" (#108, #116).
+- Surveys: Likert extreme labels wrap and no longer overlap; the Likert card is top-aligned (#105, #114).
+- Splash: a failed init step falls back to Home or Login instead of staying on the splash; Register re-enables submit after unexpected errors (#99).
+- Typo "Conection" in the English connection error.
+
+🎨 UI / UX & Enhancements
+- Nutri dialog: with extra content the message card no longer shrinks below it.
+- Localization: 2026-11-09 linguistic review imported for German, Slovenian (informal address) and Italian (#100).
+
+🧪 Tests
+- 0.1.0 saved state fixture and `async void` handling guard (#99). EditMode suite 2808 tests.
+
 v0.1.0 - Changelog
 First version for the pilot participants. The in-app notes summarise what the platform offers; the technical changes since 0.0.12 are below.
 
