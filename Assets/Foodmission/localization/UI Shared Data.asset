@@ -5175,6 +5175,30 @@ MonoBehaviour:
     m_Key: MISSION_CHECKIN_Q_MEALS_TODAY
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Key: MEAL_LOG_Q_BREAKFAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Key: MEAL_LOG_Q_LUNCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Key: MEAL_LOG_Q_DINNER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Key: MEAL_LOG_Q_SNACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Key: MEAL_LOG_Q_DRINKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Key: MEAL_LOG_Q_OTHER
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Key: SCORE_INFO_NUTRISCORE
     m_Metadata:

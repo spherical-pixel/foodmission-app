@@ -147,16 +147,18 @@ namespace eu.foodmission.platform.Components
             _extremesRow.style.width = new StyleLength(Length.Percent(100));
             _extremesRow.style.flexDirection = FlexDirection.Row;
             _extremesRow.style.justifyContent = Justify.SpaceBetween;
+            _extremesRow.style.alignItems = Align.FlexStart;
             _extremesRow.style.marginTop = 6;
             _extremesRow.style.paddingLeft = 4;
             _extremesRow.style.paddingRight = 4;
 
-            _leftExtremeLabel = new Text { size = TextSize.M };
-            _leftExtremeLabel.style.color = new StyleColor(new Color(0.8f, 0.8f, 0.8f, 0.85f));
+            // Each label gets half the row and wraps: long labels (e.g. German) overlapped on one line
+            _leftExtremeLabel = CreateExtremeLabel(TextAnchor.UpperLeft);
+            _leftExtremeLabel.style.marginRight = 12;
             _extremesRow.Add(_leftExtremeLabel);
 
-            _rightExtremeLabel = new Text { size = TextSize.M };
-            _rightExtremeLabel.style.color = new StyleColor(new Color(0.8f, 0.8f, 0.8f, 0.85f));
+            _rightExtremeLabel = CreateExtremeLabel(TextAnchor.UpperRight);
+            _rightExtremeLabel.style.marginLeft = 12;
             _extremesRow.Add(_rightExtremeLabel);
 
             Add(_extremesRow);
@@ -189,6 +191,19 @@ namespace eu.foodmission.platform.Components
 
             // Default 5-point setup
             SetOptions(GetDefault5LikertOptions(), -1);
+        }
+
+        private static Text CreateExtremeLabel(TextAnchor alignment)
+        {
+            var label = new Text { size = TextSize.M };
+            label.style.color = new StyleColor(new Color(0.8f, 0.8f, 0.8f, 0.85f));
+            label.style.flexBasis = 0;
+            label.style.flexGrow = 1;
+            label.style.flexShrink = 1;
+            label.style.minWidth = 0;
+            label.style.whiteSpace = WhiteSpace.Normal;
+            label.style.unityTextAlign = alignment;
+            return label;
         }
 
         public void SetOptions(AnswerOptionDto[] options, int initialValue = -1)

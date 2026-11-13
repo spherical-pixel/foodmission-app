@@ -5584,6 +5584,30 @@ MonoBehaviour:
       erz\xE4hlt hast? W\xE4hle sie aus und sag mir, was drin war."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: "Was hast du zum Fr\xFChst\xFCck gegessen?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Was hast du zu Mittag gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: Was hast du zu Abend gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: Was hast du als Snack gegessen?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Was hast du getrunken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Was hast du gegessen oder getrunken?
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Localized: "Der Nutri-Score bewertet die gesamte N\xE4hrwertqualit\xE4t eines
       Lebensmittels, von A (besser) bis E (weniger gut). Er w\xE4gt ab, was man eher

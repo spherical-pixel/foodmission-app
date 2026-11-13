@@ -52,6 +52,21 @@ namespace eu.foodmission.platform
         }
 
         /// <summary>
+        /// Localization key for a failed login. Keycloak answers wrong credentials with 400 or 401 depending on the
+        /// version, and the form only sends username and password, so both mean wrong credentials.
+        /// </summary>
+        public static string LoginErrorKey(long responseCode)
+        {
+            return responseCode switch
+            {
+                400 or 401 => "API_ERROR_LOGIN_401",
+                404 => "API_ERROR_404",
+                500 => "API_ERROR_500",
+                _ => "API_ERROR_CONNECTION"
+            };
+        }
+
+        /// <summary>
         /// False only when the session is known to be invalid. When the backend can't be reached the stored session is kept.
         /// </summary>
         public Task<bool> CheckSessionAsync()
@@ -371,14 +386,10 @@ namespace eu.foodmission.platform
 
                 if (request.result != UnityWebRequest.Result.Success)
                 {
-                    string errorMessage = request.responseCode switch
-                    {
-                        401 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_LOGIN_401"),
-                        404 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_404"),
-                        400 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_400"),
-                        500 => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_500"),
-                        _ => LocalizationSettings.StringDatabase.GetLocalizedString("UI", "API_ERROR_CONNECTION", new object[] { request.error })
-                    };
+                    string errorKey = LoginErrorKey(request.responseCode);
+                    string errorMessage = errorKey == "API_ERROR_CONNECTION"
+                        ? LocalizationSettings.StringDatabase.GetLocalizedString("UI", errorKey, new object[] { request.error })
+                        : LocalizationSettings.StringDatabase.GetLocalizedString("UI", errorKey);
 
                     Debug.LogError($"[{GetType().Name}] Login failed: {errorMessage} (Code: {request.responseCode})");
                     _storeService.store.Dispatch(AppActions.loginFailure.Invoke(errorMessage));

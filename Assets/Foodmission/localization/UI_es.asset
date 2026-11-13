@@ -5577,6 +5577,30 @@ MonoBehaviour:
       y cu\xE9ntame qu\xE9 llevaban."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: "\xBFQu\xE9 has desayunado?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: "\xBFQu\xE9 has tomado en el almuerzo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: "\xBFQu\xE9 has cenado?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: "\xBFQu\xE9 has tomado de merienda o snack?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: "\xBFQu\xE9 has bebido?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: "\xBFQu\xE9 has comido o bebido?"
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Localized: "El Nutri-Score valora la calidad nutricional global de un alimento,
       de la A (mejor) a la E (menos buena). Compara lo que conviene limitar (calor\xEDas,

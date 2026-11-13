@@ -5573,6 +5573,30 @@ MonoBehaviour:
       e dimmi cosa contenevano.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: Cosa hai mangiato a colazione?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Cosa hai mangiato a pranzo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: Cosa hai mangiato a cena?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: Cosa hai mangiato come spuntino?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Cosa hai bevuto?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Cosa hai mangiato o bevuto?
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Localized: "Il Nutri-Score valuta la qualit\xE0 nutrizionale complessiva di
       un alimento, da A (migliore) a E (meno buona). Mette a confronto ci\xF2 che

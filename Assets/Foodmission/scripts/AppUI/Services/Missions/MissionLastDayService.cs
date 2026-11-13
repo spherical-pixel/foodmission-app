@@ -45,6 +45,22 @@ namespace eu.foodmission.platform
         }
 
         public static string ScheduledIdsKey(string userId) => "mission_last_day_ids_" + userId;
+
+        /// <summary>Days with a last-day reminder scheduled for the user (from the ids saved by <see cref="SyncRemindersAsync"/>).</summary>
+        public static HashSet<DateTime> ReminderDays(ILocalStorageService localStorage, string userId)
+        {
+            var days = new HashSet<DateTime>();
+            List<string> ids = localStorage?.GetValue<List<string>>(ScheduledIdsKey(userId));
+            foreach (string id in ids ?? new List<string>())
+            {
+                if (id != null && id.StartsWith(NotificationIdPrefix, StringComparison.Ordinal) &&
+                    DateTime.TryParseExact(id.Substring(NotificationIdPrefix.Length), DayFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime day))
+                {
+                    days.Add(day.Date);
+                }
+            }
+            return days;
+        }
         private static string ShownKey(string userId) => "mission_last_day_shown_" + userId;
         private static string SecuredKey(string userId) => "mission_secured_shown_" + userId;
 

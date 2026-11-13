@@ -5575,6 +5575,30 @@ MonoBehaviour:
       Kies ze en vertel me wat erin zat.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: Wat heb je als ontbijt gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Wat heb je als lunch gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: Wat heb je als avondeten gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: Wat heb je als tussendoortje gegeten?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Wat heb je gedronken?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Wat heb je gegeten of gedronken?
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Localized: "De Nutri-Score beoordeelt de algemene voedingskwaliteit van een
       product, van A (beter) tot E (minder goed). Hij weegt af wat je beter kunt

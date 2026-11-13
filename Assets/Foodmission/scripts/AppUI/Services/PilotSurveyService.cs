@@ -35,6 +35,9 @@ namespace eu.foodmission.platform
             new PilotSurveyRule("end", minActiveDaysInCycle: 11, minDaysSinceCycleStart: 30, isEndSurvey: true)
         };
 
+        /// <summary>First survey of the cycle, launched from the developer settings to test the Likert screen.</summary>
+        public static string FirstSurveySlug => s_Rules[0].Slug;
+
         public Func<DateTime> NowLocal { get; set; } = () => DateTime.Now;
 
         private string TodayLocal => NowLocal().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);

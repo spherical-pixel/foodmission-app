@@ -439,11 +439,8 @@ namespace eu.foodmission.platform
 
                     if (pushEnabled)
                     {
+                        // Raises RemindersChanged: the daily meal reminders are scheduled with the preferred time set above
                         _notificationService?.SetNotificationsEnabled(true);
-                        if (TimeSpan.TryParse(preferredTime, out var ts))
-                        {
-                            _notificationService?.ScheduleDailyMealReminder(ts);
-                        }
                         _ = _notificationService?.RequestPermissionsAsync();
                     }
                     else

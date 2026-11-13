@@ -5589,6 +5589,30 @@ MonoBehaviour:
       Izberi jih in mi povej, kaj so vsebovali."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: Kaj si jedel/jedla za zajtrk?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Kaj si jedel/jedla za kosilo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: "Kaj si jedel/jedla za ve\u010Derjo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: Kaj si jedel/jedla za prigrizek?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Kaj si pil/pila?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Kaj si jedel/jedla ali pil/pila?
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Localized: "Nutri-Score ocenjuje splo\u0161no hranilno kakovost \u017Eivila,
       od A (bolj\u0161e) do E (manj dobro). Primerja tisto, kar je bolje omejiti

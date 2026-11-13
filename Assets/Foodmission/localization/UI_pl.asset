@@ -5682,6 +5682,30 @@ MonoBehaviour:
       mi nie powiedzia\u0142e\u015B? Wybierz je i powiedz, co w nich by\u0142o."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: "Co by\u0142o na \u015Bniadanie?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: "Co by\u0142o na lunch lub obiad?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: "Co by\u0142o na kolacj\u0119?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: "Co by\u0142o na przek\u0105sk\u0119?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: "Co by\u0142o do picia?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: "Co by\u0142o do jedzenia lub picia?"
+    m_Metadata:
+      m_Items: []
   - m_Id: 56190243387203974
     m_Localized: "Nutri-Score ocenia og\xF3ln\u0105 jako\u015B\u0107 od\u017Cywcz\u0105
       produktu, od A (lepsza) do E (gorsza). Por\xF3wnuje to, co warto ogranicza\u0107
