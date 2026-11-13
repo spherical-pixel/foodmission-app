@@ -5530,7 +5530,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Which meals did you have today that you haven't told me about yet? Pick them and tell me what they had."
+    m_Localized: Which meals did you have today that you haven't told me about yet?
+      Pick them and tell me what they had.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: What did you have for breakfast?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: What did you have for lunch?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: What did you have for dinner?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: What did you have as a snack?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: What did you drink?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: What did you eat or drink?
     m_Metadata:
       m_Items: []
   references:

@@ -5585,7 +5585,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Katere obroke si imel/-a danes, o katerih mi \u0161e nisi povedal/-a? Izberi jih in mi povej, kaj so vsebovali."
+    m_Localized: "Katere obroke si imel/-a danes, o katerih mi \u0161e nisi povedal/-a?
+      Izberi jih in mi povej, kaj so vsebovali."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: Kaj si jedel/jedla za zajtrk?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Kaj si jedel/jedla za kosilo?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: "Kaj si jedel/jedla za ve\u010Derjo?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: Kaj si jedel/jedla za prigrizek?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Kaj si pil/pila?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Kaj si jedel/jedla ali pil/pila?
     m_Metadata:
       m_Items: []
   references:

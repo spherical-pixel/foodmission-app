@@ -5560,7 +5560,32 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203967
-    m_Localized: "Hvilke m\xE5ltider hadde du i dag som du ikke har fortalt meg om enn\xE5? Velg dem og fortell meg hva de inneholdt."
+    m_Localized: "Hvilke m\xE5ltider hadde du i dag som du ikke har fortalt meg om
+      enn\xE5? Velg dem og fortell meg hva de inneholdt."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203968
+    m_Localized: Hva spiste du til frokost?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203969
+    m_Localized: Hva spiste du til lunsj?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203970
+    m_Localized: Hva spiste du til middag?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203971
+    m_Localized: "Hva spiste du som mellomm\xE5ltid?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203972
+    m_Localized: Hva drakk du?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56190243387203973
+    m_Localized: Hva spiste eller drakk du?
     m_Metadata:
       m_Items: []
   references:
