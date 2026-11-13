@@ -35,11 +35,20 @@ namespace eu.foodmission.platform
         public string NoticeKey { get; }
         public IReadOnlyList<DataSourceLink> Links { get; }
 
+        /// <summary>Extra credit shown only in the About summary (e.g. the score logos), or null.</summary>
+        public string AboutNoteKey { get; }
+
         public DataSourceInfo(DataSource source, string name, string noticeKey, params DataSourceLink[] links)
+            : this(source, name, noticeKey, null, links)
+        {
+        }
+
+        public DataSourceInfo(DataSource source, string name, string noticeKey, string aboutNoteKey, params DataSourceLink[] links)
         {
             Source = source;
             Name = name;
             NoticeKey = noticeKey;
+            AboutNoteKey = aboutNoteKey;
             Links = links ?? Array.Empty<DataSourceLink>();
         }
     }
@@ -55,10 +64,11 @@ namespace eu.foodmission.platform
         public const string AppVersionKey = "APP_VERSION";
         public const string ExpiryEstimatedKey = "EXPIRY_DATE_ESTIMATED";
         public const string FoodKeeperExpirySource = "auto_foodkeeper";
+        public const string ScoreLogosCreditKey = "SCORE_LOGOS_CREDIT";
 
         public static readonly IReadOnlyList<DataSourceInfo> All = new[]
         {
-            new DataSourceInfo(DataSource.OpenFoodFacts, "Open Food Facts", "DATA_SOURCE_OFF",
+            new DataSourceInfo(DataSource.OpenFoodFacts, "Open Food Facts", "DATA_SOURCE_OFF", ScoreLogosCreditKey,
                 new DataSourceLink("openfoodfacts.org", "https://world.openfoodfacts.org"),
                 new DataSourceLink("Open Database License", "https://opendatacommons.org/licenses/odbl/1-0/")),
             new DataSourceInfo(DataSource.Nevo, "NEVO (RIVM)", "DATA_SOURCE_NEVO",
@@ -149,7 +159,7 @@ namespace eu.foodmission.platform
             return !string.IsNullOrEmpty(url) && url.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
         }
 
-        /// <summary>Markdown body of the About dialog: every data source with its notice and links, then the app version.</summary>
+        /// <summary>Markdown body of the About dialog: every data source with its notice, links and About note, then the app version.</summary>
         public static string AboutMarkdown(string appVersion)
         {
             return AboutMarkdown(Localize, appVersion);
@@ -166,6 +176,10 @@ namespace eu.foodmission.platform
                 foreach (var link in info.Links)
                 {
                     md.Append('[').Append(link.Label).Append("](").Append(link.Url).Append(")\n\n");
+                }
+                if (!string.IsNullOrEmpty(info.AboutNoteKey))
+                {
+                    md.Append(localize(info.AboutNoteKey)).Append("\n\n");
                 }
             }
             if (!string.IsNullOrEmpty(appVersion))

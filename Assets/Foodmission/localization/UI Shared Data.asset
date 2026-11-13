@@ -5199,6 +5199,10 @@ MonoBehaviour:
     m_Key: SCORE_INFO_NOT_APPLICABLE
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203980
+    m_Key: SCORE_LOGOS_CREDIT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

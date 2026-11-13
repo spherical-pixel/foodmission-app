@@ -90,8 +90,32 @@ namespace eu.foodmission.platform.Tests
                 {
                     StringAssert.Contains($"[{link.Label}]({link.Url})", md);
                 }
+                if (info.AboutNoteKey != null)
+                {
+                    StringAssert.Contains($"<{info.AboutNoteKey}>", md);
+                }
             }
             StringAssert.Contains("<APP_VERSION>: 1.2.3", md);
+        }
+
+        [Test]
+        public void AboutMarkdown_CreditsScoreLogosUnderOpenFoodFacts()
+        {
+            string md = DataSources.AboutMarkdown(FakeLocalize, null);
+
+            int off = md.IndexOf("**Open Food Facts**", StringComparison.Ordinal);
+            int credit = md.IndexOf($"<{DataSources.ScoreLogosCreditKey}>", StringComparison.Ordinal);
+            int next = md.IndexOf("**NEVO (RIVM)**", StringComparison.Ordinal);
+            Assert.That(credit, Is.GreaterThan(off));
+            Assert.That(credit, Is.LessThan(next));
+        }
+
+        [Test]
+        public void NoticeWithLinks_LeavesTheAboutNoteOut()
+        {
+            string notice = DataSources.NoticeWithLinks(DataSource.OpenFoodFacts, FakeLocalize);
+
+            StringAssert.DoesNotContain(DataSources.ScoreLogosCreditKey, notice);
         }
 
         [Test]
@@ -135,6 +159,7 @@ namespace eu.foodmission.platform.Tests
             }
 
             var expected = DataSources.All.Select(i => i.NoticeKey).ToList();
+            expected.AddRange(DataSources.All.Where(i => i.AboutNoteKey != null).Select(i => i.AboutNoteKey));
             expected.Add(DataSources.AboutTitleKey);
             expected.Add(DataSources.DataSourcesHeadingKey);
             expected.Add(DataSources.AppVersionKey);

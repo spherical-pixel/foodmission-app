@@ -5610,6 +5610,10 @@ MonoBehaviour:
     m_Localized: Deze score is niet van toepassing op dit soort product.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Nutri-Score-, NOVA- en Green-Score-pictogrammen van Open Food Facts. Het Nutri-Score-logo is een handelsmerk van Sant\xE9 publique France."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

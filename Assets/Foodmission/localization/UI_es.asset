@@ -5613,6 +5613,10 @@ MonoBehaviour:
     m_Localized: "Este \xEDndice no se aplica a este tipo de producto."
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Iconos de Nutri-Score, NOVA y Green-Score de Open Food Facts. El logotipo de Nutri-Score es una marca de Sant\xE9 publique France."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

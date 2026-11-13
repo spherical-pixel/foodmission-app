@@ -5719,6 +5719,10 @@ MonoBehaviour:
     m_Localized: Ta ocena nie dotyczy tego rodzaju produktu.
     m_Metadata:
       m_Items: []
+  - m_Id: 56190243387203980
+    m_Localized: "Ikony Nutri-Score, NOVA i Green-Score pochodz\u0105 z Open Food Facts. Logo Nutri-Score jest znakiem towarowym Sant\xE9 publique France."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
