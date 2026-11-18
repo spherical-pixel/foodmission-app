@@ -1621,7 +1621,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28538760755929088
-    m_Localized: Najdeni recepti ({0})
+    m_Localized: '{0:plural:Najden {} recept|Najdena {} recepta|Najdeni {} recepti|Najdenih
+      {} receptov}'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690412
@@ -5652,7 +5653,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203980
-    m_Localized: "Ikone Nutri-Score, NOVA in Green-Score so iz Open Food Facts. Logotip Nutri-Score je blagovna znamka Sant\xE9 publique France."
+    m_Localized: "Ikone Nutri-Score, NOVA in Green-Score so iz Open Food Facts. Logotip
+      Nutri-Score je blagovna znamka Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:

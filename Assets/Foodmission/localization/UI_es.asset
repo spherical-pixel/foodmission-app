@@ -1633,7 +1633,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28538760755929088
-    m_Localized: Recetas encontradas ({0})
+    m_Localized: '{0:plural:{} receta encontrada|{} recetas encontradas}'
     m_Metadata:
       m_Items:
       - rid: 4008881209995690413
@@ -5639,7 +5639,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203980
-    m_Localized: "Iconos de Nutri-Score, NOVA y Green-Score de Open Food Facts. El logotipo de Nutri-Score es una marca de Sant\xE9 publique France."
+    m_Localized: "Iconos de Nutri-Score, NOVA y Green-Score de Open Food Facts. El
+      logotipo de Nutri-Score es una marca de Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:
