@@ -1624,9 +1624,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 28538760755929088
-    m_Localized: Oppskrifter funnet ({0})
+    m_Localized: '{0:plural:{} oppskrift funnet|{} oppskrifter funnet}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 4008881209995690410
   - m_Id: 28540443628134400
     m_Localized: "S\xF8k etter oppskrifter..."
     m_Metadata:
@@ -5625,7 +5626,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203980
-    m_Localized: "Nutri-Score-, NOVA- og Green-Score-ikoner fra Open Food Facts. Nutri-Score-logoen er et varemerke som tilh\xF8rer Sant\xE9 publique France."
+    m_Localized: "Nutri-Score-, NOVA- og Green-Score-ikoner fra Open Food Facts.
+      Nutri-Score-logoen er et varemerke som tilh\xF8rer Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
   references:
@@ -5636,6 +5638,7 @@ MonoBehaviour:
       data:
         m_Entries: 
         m_SharedEntries:
+        - id: 28538760755929088
         - id: 52041725676347452
         - id: 27512489452232704
         - id: 20518970774773760
