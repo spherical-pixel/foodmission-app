@@ -5640,6 +5640,38 @@ MonoBehaviour:
       Nutri-Score \xE8 un marchio di Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: Registro dei pasti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: Ricerca rapida
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: Lista della spesa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: Dispensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: Scelte alimentari
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: Alimentazione e rifiuti
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Salute
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

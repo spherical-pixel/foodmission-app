@@ -5651,6 +5651,38 @@ MonoBehaviour:
       Das Nutri-Score-Logo ist eine Marke von Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: Startseite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: "Ern\xE4hrungstagebuch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: Schnellsuche
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: Einkaufsliste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: Vorrat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: Lebensmittelwahl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: Essen & Abfall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Gesundheit
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

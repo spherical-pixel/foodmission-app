@@ -5640,6 +5640,38 @@ MonoBehaviour:
       Het Nutri-Score-logo is een handelsmerk van Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: Eetdagboek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: Snel zoeken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: Boodschappenlijstje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: Voorraadkast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: Voedingskeuzes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: Voeding & Afval
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Gezondheid
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -5594,7 +5594,40 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 56190243387203980
-    m_Localized: "Nutri-Score, NOVA and Green-Score icons from Open Food Facts. The Nutri-Score logo is a trademark of Sant\xE9 publique France."
+    m_Localized: "Nutri-Score, NOVA and Green-Score icons from Open Food Facts. The
+      Nutri-Score logo is a trademark of Sant\xE9 publique France."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: Home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: Meal log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: Quick search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: Shopping list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: Pantry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: Food choices
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: Food & Waste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Health
     m_Metadata:
       m_Items: []
   references:
