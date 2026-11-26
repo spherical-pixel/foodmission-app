@@ -903,11 +903,11 @@ namespace eu.foodmission.platform
 
             var activeTab = BottomNavBarHelper.GetActiveTab(destination.name);
 
-            AddNavItem(bottomNavBar, "fm-home", "@UI:NAV_HOME", activeTab == NavTab.Home, navController, Actions.go_to_home);
-            AddNavItem(bottomNavBar, "fm-meal-log", "@UI:NAV_MEAL_LOG", activeTab == NavTab.MealLog, navController, Actions.go_to_meallog);
-            AddNavItem(bottomNavBar, "fm-search", "@UI:QUICK_SEARCH", activeTab == NavTab.Search, navController, Actions.go_to_quicksearch);
-            AddNavItem(bottomNavBar, "fm-shopping-list", "@UI:SHOPPING_LIST", activeTab == NavTab.ShoppingList, navController, Actions.go_to_shopping_list, false, new[] { new Argument("fromMenu", "true") });
-            AddNavItem(bottomNavBar, "fm-pantry", "@UI:PANTRY", activeTab == NavTab.Pantry, navController, Actions.go_to_pantry);
+            AddNavItem(bottomNavBar, "fm-home", "@UI:NAV_BAR_HOME", activeTab == NavTab.Home, navController, Actions.go_to_home);
+            AddNavItem(bottomNavBar, "fm-meal-log", "@UI:NAV_BAR_MEAL_LOG", activeTab == NavTab.MealLog, navController, Actions.go_to_meallog);
+            AddNavItem(bottomNavBar, "fm-search", "@UI:NAV_BAR_SEARCH", activeTab == NavTab.Search, navController, Actions.go_to_quicksearch);
+            AddNavItem(bottomNavBar, "fm-shopping-list", "@UI:NAV_BAR_SHOPPING_LIST", activeTab == NavTab.ShoppingList, navController, Actions.go_to_shopping_list, false, new[] { new Argument("fromMenu", "true") });
+            AddNavItem(bottomNavBar, "fm-pantry", "@UI:NAV_BAR_PANTRY", activeTab == NavTab.Pantry, navController, Actions.go_to_pantry);
             // AddMenuItem(container, "📝 " + LocalizationSettings.StringDatabase.GetLocalizedString("UI", "SHOPPING_LIST"), () =>
             // {
             //     CloseMenuDrawer();

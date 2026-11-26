@@ -5750,6 +5750,38 @@ MonoBehaviour:
       Facts. Logo Nutri-Score jest znakiem towarowym Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: "Strona g\u0142\xF3wna"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: "Dziennik posi\u0142k\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: Szybkie wyszukiwanie
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: "Lista zakup\xF3w"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: "Spi\u017Carnia"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: "Wyb\xF3r produkt\xF3w spo\u017Cywczych"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: "\u017Bywno\u015B\u0107 i odpady"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Zdrowie
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

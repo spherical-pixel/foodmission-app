@@ -5643,6 +5643,38 @@ MonoBehaviour:
       logotipo de Nutri-Score es una marca de Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: Hogar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: Registro de comidas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: "B\xFAsqueda r\xE1pida"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: Lista de compras
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: Despensa
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: Opciones alimentarias
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: "Alimentaci\xF3n y residuos"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Salud
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

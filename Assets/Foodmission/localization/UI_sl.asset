@@ -5657,6 +5657,38 @@ MonoBehaviour:
       Nutri-Score je blagovna znamka Sant\xE9 publique France."
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Localized: Domov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Localized: Dnevnik obrokov
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Localized: Hitro iskanje
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Localized: Nakupovalni seznam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Localized: Shramba
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Localized: Izbira hrane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Localized: Hrana in odpadki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Localized: Zdravje
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -5227,6 +5227,38 @@ MonoBehaviour:
     m_Key: SCORE_LOGOS_CREDIT
     m_Metadata:
       m_Items: []
+  - m_Id: 71273129542934528
+    m_Key: NAV_BAR_HOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129693929472
+    m_Key: NAV_BAR_MEAL_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123776
+    m_Key: NAV_BAR_SEARCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123777
+    m_Key: NAV_BAR_SHOPPING_LIST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123778
+    m_Key: NAV_BAR_PANTRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123779
+    m_Key: T_B_FOOD_CHOICES_SHORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123780
+    m_Key: T_B_FOOD_AND_WASTE_SHORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71273129698123781
+    m_Key: T_B_HEALTH_SHORT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
